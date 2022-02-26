@@ -1,0 +1,45 @@
+// MISSION CONFIGS
+class Header 
+{
+	gameType 			= Sandbox; 	
+	minPlayers			= 1;		
+	maxPlayers			= 1;
+};
+
+	// About
+	onLoadName 			= "VEHICLES OVERHAULING";
+	author 				= "thy"; 						
+	overviewPicture 	= "images\thumb.jpg"; 			
+	onLoadMission 		= "A simple way to rearm, refuel and repair ground, air and nautic vehicles, case by case, following the Editor rules."; 
+
+	// Gameplay
+	joinUnassigned 		= 0;
+	respawnButton 		= 0;
+	respawnDialog 		= 0;
+	debriefing 			= 0;
+	saving 				= 0;
+	enableDebugConsole 	= 1;
+	
+	// Performance
+	DisabledAI				= 1;
+	corpseManagerMode 		= 1;
+	corpseLimit 			= 30;
+	corpseRemovalMinTime	= 1200;
+	corpseRemovalMaxTime 	= 3600;
+	wreckManagerMode 		= 1;
+	wreckLimit 				= 5;
+	wreckRemovalMinTime 	= 1200;
+	wreckRemovalMaxTime 	= 3600;
+
+// CBA MOD
+cba_settings_hasSettingsFile = 0;
+
+
+// - - - - - - - - - EVERYTHING ABOVE IS NOT NEEDED FOR THIS SCRIPT WORKS - - - - - - - - -
+// - - - - - - - - - - - TAKE ONLY THESE LINES BELOW FOR YOUR MISSION - - - - - - - - - - -
+
+class cfgFunctions 
+{
+	// VEHICLE OVERHAULING: REPAIR, REARM, REFUEL
+	#include "vehiclesOverhauling\THY_functions.hpp"
+};
