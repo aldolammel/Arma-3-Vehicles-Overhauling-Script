@@ -1,4 +1,4 @@
-# arma-3-vehicles-overhauling
+# Arma 3 > Vehicles Overhauling (v0.2)
 
 ### EDITOR CAN EASILY CHANGE:
 
