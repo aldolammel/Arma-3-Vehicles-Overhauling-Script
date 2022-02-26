@@ -1,5 +1,4 @@
 # arma-3-vehicles-overhauling
-soon...
 
 ## EDITOR CAN EASILY CHANGE:
 
@@ -16,21 +15,21 @@ soon...
 - The vehicle must not be completely destroyed;
 - For a service to be performed, the station cannot be busy with another one.
 
-## GROUND STATION RULES
-
-- Must be a land vehicle;
-- The vehicle must have its speed at or close to zero;
-
 **To repair:**
 - Must have some damage;
 - The engine must be off;
-
+- 
 **To refuel:**
 - Must have had some fuel consumption;
 - The engine must be off;
-
+- 
 **To rearm:**
 - Must have spent some ammunition in the vehicle;
+
+## GROUND STATION RULES
+
+- Must be a land vehicle;
+- The vehicle must have its speed at zero or very close to it;
 
 ## AIR STATION RULES
 
@@ -38,29 +37,8 @@ soon...
 - The vehicle must be touching the ground;
 - The vehicle must be completely stopped;
 
-**To repair:**
-- The engine must be off;
-
-**To refuel:**
-- Must have had some fuel consumption;
-- The engine must be off;
-
-**To rearm:**
-- Must have spent some ammunition in the vehicle;
-
 ## NAUTIC STATION RULES
 
 - Must be a nautical vehicle;
 - The vehicle cannot be submerged;
 - The vehicle must have its speed at zero or very close to it;
-
-**To repair:**
-- Must have some damage;
-- The engine must be off;
-
-**To refuel:**
-- Must have had some fuel consumption;
-- The engine must be off;
-
-**To rearm:**
-- Must have spent some ammunition in the vehicle;
