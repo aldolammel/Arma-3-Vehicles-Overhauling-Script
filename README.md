@@ -14,12 +14,15 @@
 - At least one player must be close to the vehicle;
 - The vehicle must not be completely destroyed;
 - For a service to be performed, the station cannot be busy with another one.
+
 **To repair:**
 - Must have some damage;
 - The engine must be off;
+
 **To refuel:**
 - Must have had some fuel consumption;
 - The engine must be off;
+
 **To rearm:**
 - Must have spent some ammunition in the vehicle;
 
