@@ -1,6 +1,6 @@
 # arma-3-vehicles-overhauling
 
-## EDITOR CAN EASILY CHANGE:
+### EDITOR CAN EASILY CHANGE:
 
 - What types of vehicles have access to stations (land, air, nautical);
 - What services are available (repair, refuel, rearm);
@@ -8,7 +8,7 @@
 - Waiting time between one service and another;
 - Defined which types of assets will automatically receive the attributes of a station;
 
-## GLOBAL STATION RULES
+### GLOBAL STATION RULES
 
 - The vehicle must be within the station's range of action;
 - At least one player must be close to the vehicle;
@@ -26,18 +26,18 @@
 **To rearm:**
 - Must have spent some ammunition in the vehicle;
 
-## GROUND STATION RULES
+### GROUND STATION RULES
 
 - Must be a land vehicle;
 - The vehicle must have its speed at zero or very close to it;
 
-## AIR STATION RULES
+### AIR STATION RULES
 
 - Must be an air vehicle;
 - The vehicle must be touching the ground;
 - The vehicle must be completely stopped;
 
-## NAUTIC STATION RULES
+### NAUTIC STATION RULES
 
 - Must be a nautical vehicle;
 - The vehicle cannot be submerged;
