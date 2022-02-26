@@ -1,80 +1,66 @@
 # arma-3-vehicles-overhauling
 soon...
 
+## EDITOR CAN EASILY CHANGE:
 
-EDITOR CAN EASILY CHANGE:
+- What types of vehicles have access to stations (land, air, nautical);
+- What services are available (repair, refuel, rearm);
+- Action radius of each type of station;
+- Waiting time between one service and another;
+- Defined which types of assets will automatically receive the attributes of a station;
 
-- Quais tipos de veículo têm acesso às estações (terrestres, aéreos, náuticos);
-- Quais serviços estão disponíveis (reparar, reabastecer, rearmar);
-- Raio de ação de cada tipo de estação;
-- Tempo de espera entre um serviço e outro;
-- Defini quais tipos de assets receberão automaticamente os atributos de uma estação;
+## GLOBAL STATION RULES
 
+- The vehicle must be within the station's range of action;
+- At least one player must be close to the vehicle;
+- The vehicle must not be completely destroyed;
+- For a service to be performed, the station cannot be busy with another one.
 
+## GROUND STATION RULES
 
+- Must be a land vehicle;
+- The vehicle must have its speed at or close to zero;
 
-GLOBAL STATION RULES
+**To repair:**
+- Must have some damage;
+- The engine must be off;
 
-- O veículo deve estar dentro do raio de ação da estação;
-- Pelo menos um player deve estar próximo do veículo;
-- O veículo não deve estar completamente destruído;
-- Para um serviço ser executado, a estação não pode estar ocupada com outro.
+**To refuel:**
+- Must have had some fuel consumption;
+- The engine must be off;
 
+**To rearm:**
+- Must have spent some ammunition in the vehicle;
 
+## AIR STATION RULES
 
+- Must be an air vehicle;
+- The vehicle must be touching the ground;
+- The vehicle must be completely stopped;
 
-GROUND STATION RULES
+**To repair:**
+- The engine must be off;
 
-- Precisa ser veículo terrestre; 
-- O veículo deve ter sua velocidade em zero ou próximo disso; 
+**To refuel:**
+- Must have had some fuel consumption;
+- The engine must be off;
 
-- Para reparar:
-- - Deve ter algum dano;
-- - O motor deve estar desligado;
+**To rearm:**
+- Must have spent some ammunition in the vehicle;
 
-- Para reabastecer:
-- -  Deve ter tido algum consumo de combustível;
-- - O motor deve estar desligado;
+## NAUTIC STATION RULES
 
-- Rearmar:
-- - Deve ter tido algum gasto de munição do veículo;
+- Must be a nautical vehicle;
+- The vehicle cannot be submerged;
+- The vehicle must have its speed at zero or very close to it;
 
+**To repair:**
+- Must have some damage;
+- The engine must be off;
 
+**To refuel:**
+- Must have had some fuel consumption;
+- The engine must be off;
 
-
-AIR STATION RULES
-
-- Precisa ser veículo aéreo; 
-- O veículo deve estar tocando o solo;
-- O veículo deve estar completamente parado;
-
-- Para reparar:
-- - O motor deve estar desligado;
-
-- Reabastecer:
-- -  Deve ter tido algum consumo de combustível;
-- - O motor deve estar desligado;
-
-- Rearmar:
-- - Deve ter tido algum gasto de munição do veículo;
-
-
-
-
-
-NAUTIC STATION RULES
-
-- Precisa ser veículo náutico;
-- O veículo não pode estar submerso;
-- O veículo deve ter sua velocidade em zero ou muito próxima disso; 
-
-- Para reparar:
-- - Deve ter algum dano;
-- - O motor deve estar desligado;
-
-- Reabastecer: 
-- -  Deve ter tido algum consumo de combustível;
-- - O motor deve estar desligado;
-
-- Rearmar:
-- - Deve ter tido algum gasto de munição do veículo;
+**To rearm:**
+- Must have spent some ammunition in the vehicle;
