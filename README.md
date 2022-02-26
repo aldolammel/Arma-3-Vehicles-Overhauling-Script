@@ -13,7 +13,7 @@
 - The vehicle must be within the station's range of action;
 - At least one player must be close to the vehicle;
 - The vehicle must not be completely destroyed;
-- For a service to be performed, the station cannot be busy with another one.
+- For a service to be performed, the station cannot be busy with another player.
 
 **To repair:**
 - Must have some damage;
