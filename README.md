@@ -1,4 +1,16 @@
 # Arma 3 > Vehicles Overhauling (v0.2)
+>*Dependencies: none.*
+
+xxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxx
+xxxxx xxx xxxxxxxx xxxxxxxxxxxx
+
+**What to expect from this script**
+
+- xxxxxxxx
+- xxxxxxxxx
+- xxxxxxxxxxxxxx.
+
+...............
 
 ### EDITOR CAN EASILY CHANGE:
 
@@ -42,3 +54,13 @@
 - Must be a nautical vehicle;
 - The vehicle cannot be submerged;
 - The vehicle must have its speed at zero or very close to it;
+
+...............
+
+## Ideas or fixes?
+<link soon>
+
+## Changelog
+
+**v1.0 - Mar, 2nd 2022**
+- Hello world.
