@@ -10,7 +10,7 @@ Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament statio
 - Define which service each station type (asset) will provide: repair, refuel or rearm or all of them;
 - Every object/asset on Eden Editor can be a station automatically, it's up to the mission-editor;
 - No code or triggers is needed on Eden Editor;
-- Just one file to set easely your mission needs;
+- Just one file to set easely your mission needs: _fn_VO_parameters.sqf_;
 - Once defined which assets/objets are stations and its type, on Eden you just drag and drop the asset you defined as station;
 - Script working fine on hosted and dedicated servers.
 
