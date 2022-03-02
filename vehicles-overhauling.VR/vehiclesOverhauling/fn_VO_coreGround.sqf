@@ -1,24 +1,45 @@
-//if (!isServer) exitWith {};
+private ["_arrayGrdFullAssets","_arrayGrdRepairAssets","_arrayGrdRefuelAssets","_arrayGrdRearmAssets","_arrayGrdFullAndRepairServ","_arrayGrdFullAndRefuelServ","_arrayGrdFullAndRearmServ","_minDamage","_minFuel",/* "_minAmmo", */"_groundVehicles","_serviceInProgress","_eachGrdVeh","_eachHumamPlayer"];
 
-// CORE / BE CAREFUL BELOW:
+if ( !groundVehiclesOverhauling ) exitWith {};
 
-private ["_arrayGroundStations","_groundVehicles","_serviceInProgress","_eachGroundStation",/*"_grdRepairNeeded","_grdRefuelNeeded","_grdRearmNeeded",*/"_eachHumamPlayer"];
+// GROUND SERVICES CORE / BE CAREFUL BELOW:
 
 [] spawn 
-{
+{ 
+	// arrays that will be populated only with the objects found out more below:
+	_arrayGrdFullAssets = [];
+	_arrayGrdRepairAssets = [];
+	_arrayGrdRefuelAssets = [];
+	_arrayGrdRearmAssets = [];
 
-	// arrays that will be populated only with the objects classnames listed by VO_grdStationAssets.
-	_arrayGroundStations = [];
-
-	// initial services condition
+	// initial services condition: no one is on any station.
 	_serviceInProgress = false; 
 
-	// if ground services is allowed... finding out only the objects of classnames listed in VO_grdStationAssets through the allMissionsObjects. 
-	if ( groundVehiclesOverhauling == true ) then {	{ _arrayGroundStations = _arrayGroundStations + allMissionObjects _x } forEach VO_grdStationAssets	};
-
-	// check whether or not run this while-looping / if some or all services are on, bota pra foder...
-	while { groundVehiclesOverhauling == true } do
+	// if the services are allowed, find out only the assets (classnames) listed through fn_VO_parameters.sqf file:
+	if ( VO_groundServFull ) then { { _arrayGrdFullAssets = _arrayGrdFullAssets + allMissionObjects _x } forEach VO_grdFullStationAssets	};	
+	if ( VO_groundServRepair ) then { { _arrayGrdRepairAssets = _arrayGrdRepairAssets + allMissionObjects _x } forEach VO_grdRepairStationAssets };	
+	if ( VO_groundServRefuel ) then { { _arrayGrdRefuelAssets = _arrayGrdRefuelAssets + allMissionObjects _x } forEach VO_grdRefuelStationAssets };	
+	if ( VO_groundServRearm ) then { { _arrayGrdRearmAssets = _arrayGrdRearmAssets + allMissionObjects _x } forEach VO_grdRearmStationAssets };
+	
+	// main ground assets arrays:
+	_arrayGrdFullAndRepairServ = _arrayGrdRepairAssets + _arrayGrdFullAssets;
+	_arrayGrdFullAndRefuelServ = _arrayGrdRefuelAssets + _arrayGrdFullAssets;
+	_arrayGrdFullAndRearmServ = _arrayGrdRearmAssets + _arrayGrdFullAssets;
+	
+	// minimal vehicle conditions for overhauling:
+	_minDamage = 0.1;
+	_minFuel = 0.8;
+	//_minAmmo = WIP;	
+	
+	// It removes repairing, refueling and rearming from A3 vanilla's vehicles got those cargo proprieties: 
+	{ _x setRepairCargo 0; _x setFuelCargo 0; _x setAmmoCargo 0; } forEach _arrayGrdFullAssets + _arrayGrdRepairAssets + _arrayGrdRefuelAssets + _arrayGrdRearmAssets;
+	
+	
+	while { VO_groundServFull OR VO_groundServRepair OR VO_groundServRefuel OR VO_groundServRearm } do
 	{
+		// debug:
+		if ( VO_debugMonitor ) then	{ call THY_fnc_VO_debugMonitor };
+		
 		// check who's human here:
 		call THY_fnc_VO_humanPlayersAlive;
 		
@@ -26,144 +47,160 @@ private ["_arrayGroundStations","_groundVehicles","_serviceInProgress","_eachGro
 		
 			_eachHumamPlayer = _x;
 			
-			if ( VO_debugMonitor == true ) then	{ call THY_fnc_VO_debugMonitor };
-			
 			// defining the ground veh of _eachHumamPlayer (_x) into XXm radius:
-			_groundVehicles = _x nearEntities [["Car", "Motorcycle", "Tank", "WheeledAPC", "TrackedAPC"], 10];
+			_groundVehicles = _x nearEntities [VO_grdVehicleTypes, 10];
 			
-			{ // forEach of _arrayGroundStations starts...  
-				
-				_eachGroundStation = _x;
+			{ // forEach of _groundVehicles starts...  
 			
-				{ // forEach of _groundVehicles starts...  
+				_eachGrdVeh = _x;
 				
-					if ( (_x distance _eachGroundStation) < VO_grdActRange ) then
+				// GROUND REPAIR
+				{ // forEach of _arrayGrdFullAndRepairServ starts...
+				
+					if ( ( VO_groundServRepair ) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) ) then 
 					{
-						sleep 3; // a breath before the any ground service.
-						
-						// GROUND REPAIR
-						if (VO_groundServRepair == true) then 
-						{
-							if ( (alive _x) AND (damage _x > 0.1) AND (isEngineOn _x == false) AND (speed _x < 2) AND (_serviceInProgress == false) ) then
-							{					
-								_serviceInProgress = true;
-								sleep 3;
-								
-								if (VO_feedbackMsgs == true) then 
-								{
-									systemChat "Checking the damages...";
-								};
-								
-								playSound3D ["a3\sounds_f\characters\cutscenes\dirt_acts_carfixingwheel.wss", _eachGroundStation];
-								sleep 3;               
-								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _x];
-								
-								// if player inside the vehicle:
-								if (!isNull objectParent _eachHumamPlayer) then               
-								{
-									addCamShake [1, 5, 5]; // [power, duration, frequency].
-								};
-								
-								_x setDammage 0;
-								
-								sleep 3;
-								if (VO_feedbackMsgs == true) then 
-								{
-									systemChat "Ground vehicle has been repaired!";
-									sleep 2;
-									
-									if  ( ( (VO_groundServRefuel == true) OR (VO_groundServRearm == true) ) AND ( (fuel _x < 0.8) OR ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _x)) > 0 ) ) ) then
-									{
-										systemChat "Preparing to the next service...";
-									};
-								};
-								
-								sleep VO_grdCooldown;
-								_serviceInProgress = false; // station is free for the next service!
-							};
-						};
-						
-						// GROUND REFUEL
-						if (VO_groundServRefuel == true) then 
-						{
-							if ( (alive _x) AND (fuel _x < 0.8) AND (isEngineOn _x == false) AND (speed _x < 2) AND (_serviceInProgress == false) ) then
-							{	
-								_serviceInProgress = true;
-								sleep 3;
-								
-								if (VO_feedbackMsgs == true) then 
-								{
-									systemChat "Checking the fuel...";
-								};
-													
-								playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _eachGroundStation];
-								sleep 3;
-								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _x];
-								
-								if (!isNull objectParent _eachHumamPlayer) then
-								{
-									addCamShake [0.3, 5, 2];
-								};
-								
-								_x setFuel 1;
-								
-								sleep 3;
-								if (VO_feedbackMsgs == true) then 
-								{
-									systemChat "Ground vehicle has been refueled!";
-									sleep 2;
-									
-									if  ( ( (VO_groundServRepair == true) OR (VO_groundServRearm == true) ) AND ( (damage _x > 0.1) OR ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _x)) > 0 ) ) ) then
-									{
-										systemChat "Preparing to the next service...";
-									};
-								};
-								
-								sleep VO_grdCooldown;
-								_serviceInProgress = false;
+						if ( (alive _eachGrdVeh) AND (damage _eachGrdVeh > _minDamage) AND (isEngineOn _eachGrdVeh == false) AND (speed _eachGrdVeh < 2) AND (_serviceInProgress == false) ) then
+						{					
+							_serviceInProgress = true;
+							sleep 3;
+							
+							if ( VO_feedbackMsgs ) then 
+							{
+								["Checking the vehicle damages..."] remoteExec ["systemChat", _eachGrdVeh];               // it shows the message only for who has the _eachGrdVeh locally.
 							};
 							
+							playSound3D ["a3\sounds_f\characters\cutscenes\dirt_acts_carfixingwheel.wss", _x];
+							sleep 3;               
+							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _eachGrdVeh];
+							
+							// if player inside the vehicle:
+							if (!isNull objectParent _eachHumamPlayer) then
+							{     
+								[[1, 5, 5]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
+							};
+							
+							_eachGrdVeh setDammage 0;               //setDammage is a global variable, it doesnt need remoteExec.
+							
+							sleep 3;
+							if ( VO_feedbackMsgs ) then 
+							{
+								["Ground vehicle has been repaired!"] remoteExec ["systemChat", _eachGrdVeh];
+								sleep 2;
+								
+								// checking the vehicle needs and if another service is available for that station:
+								if ( ( VO_groundServRefuel AND ( _x in _arrayGrdRefuelAssets ) AND ( fuel _eachGrdVeh < _minFuel ) ) OR ( VO_groundServRearm AND ( _x in _arrayGrdRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) ) ) then
+								{
+									["Preparing to the next service..."] remoteExec ["systemChat", _eachGrdVeh];
+								};
+							};
+							
+							sleep VO_grdCooldown;
+							_serviceInProgress = false;               // station is free for the next service!
+						};
+					};
+					
+				} forEach _arrayGrdFullAndRepairServ;
+				
+				// GROUND REFUEL
+				{ // forEach of _arrayGrdFullAndRefuelServ starts....
+				
+					if ( ( VO_groundServRefuel ) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) ) then 
+					{
+						if ( (alive _eachGrdVeh) AND (fuel _eachGrdVeh < _minFuel) AND (isEngineOn _eachGrdVeh == false) AND (speed _eachGrdVeh < 2) AND (_serviceInProgress == false) ) then
+						{	
+							_serviceInProgress = true;
+							sleep 3;
+							
+							if ( VO_feedbackMsgs ) then 
+							{
+								["Checking the fuel..."] remoteExec ["systemChat", _eachGrdVeh];
+							};
+												
+							playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
+							sleep 3;
+							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _eachGrdVeh];
+							
+							if (!isNull objectParent _eachHumamPlayer) then
+							{
+								[[0.3, 5, 2]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
+							};
+							
+							[_eachGrdVeh, 1] remoteExec ["setFuel", _eachGrdVeh];               //the same as "_eachGrdVeh setFuel 1;" but for multiplayer when the variable (setFuel) is not global variable.
+							
+							sleep 3;
+							if ( VO_feedbackMsgs ) then 
+							{
+								["Ground vehicle has been refueled!"] remoteExec ["systemChat", _eachGrdVeh];
+								sleep 2;
+								
+								// checking the vehicle needs and if another service is available for that station:
+								if ( ( VO_groundServRearm AND ( _x in _arrayGrdRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) ) OR ( VO_groundServRepair AND ( _x in _arrayGrdRepairAssets ) AND ( damage _eachGrdVeh > _minDamage ) ) ) then
+								{
+									["Preparing to the next service..."] remoteExec ["systemChat", _eachGrdVeh];
+								};
+							};
+							
+							sleep VO_grdCooldown;
+							_serviceInProgress = false;
+						};
+					};
+					
+				} forEach _arrayGrdFullAndRefuelServ;
+				
+				// GROUND REARM
+				{ // forEach of _arrayGrdFullAndRearmServ starts....
+				
+					if ( ( VO_groundServRearm ) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) ) then 
+					{
+						// checking the mobile stations are in good conditions to work:
+						if (  /* !(isTouchingGround _x) OR */ ( underwater _x ) OR ( speed _x > 0 ) ) exitWith              // <<---- !isTouchingGround is not working reliable!
+						{ 
+							// checking if the player is NOT in a vehicle-station:
+							if !(_eachHumamPlayer in _x) then
+							{
+								["The station doesn't meet the conditions to work! Try later..."] remoteExec ["systemChat", _eachHumamPlayer];
+							};
 						};
 						
-						// GROUND REARM
-						if (VO_groundServRearm == true) then 
+						if ( (alive _eachGrdVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) AND (speed _eachGrdVeh < 2) AND (_serviceInProgress == false) ) then 
 						{
-							if ( (alive _x) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _x)) > 0 ) AND (speed _x < 2) AND (_serviceInProgress == false) ) then 
+							if (true /* fix this condition: if some available mag is not full, then */) then 
 							{
 								_serviceInProgress = true; 
 								sleep 3;
 								
-								if (VO_feedbackMsgs == true) then 
+								if ( VO_feedbackMsgs ) then 
 								{
-									systemChat "Checking the ammunition...";
+									["Checking the vehicle ammunition..."] remoteExec ["systemChat", _eachGrdVeh];
 								};
 								
-								playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _eachGroundStation];									
+								playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];									
 								sleep 3;
-								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _x];
+								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _eachGrdVeh];
 								
 								if (!isNull objectParent _eachHumamPlayer) then
 								{
-									addCamShake [1, 5, 3];
+									[[1, 5, 3]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 								};
 								
-								_x setVehicleAmmo 1;
+								[_eachGrdVeh, 1] remoteExec ["setVehicleAmmo", _eachGrdVeh];    // the same as "_eachGrdVeh setVehicleAmmo 1" but for multiplayer, because "setVehicleAmmo" is not a global variable.
 								
 								sleep 3;
-								if (VO_feedbackMsgs == true) then 
+								if ( VO_feedbackMsgs ) then 
 								{
-									systemChat "Ground vehicle has been rearmed!";
+									["Ground vehicle has been rearmed!"] remoteExec ["systemChat", _eachGrdVeh];
 									sleep 2;
 									
-									if  ( ( (VO_groundServRepair == true) OR (VO_groundServRefuel == true) ) AND ( (damage _x > 0.1) OR (fuel _x < 0.8) ) ) then 
+									if ( ( VO_groundServRepair  AND ( _x in _arrayGrdFullAndRepairServ ) AND ( damage _eachGrdVeh > _minDamage ) ) OR ( VO_groundServRefuel AND ( _x in _arrayGrdFullAndRefuelServ ) AND ( fuel _eachGrdVeh < _minFuel ) ) ) then
 									{
-										if (isEngineOn _x == false) then
+										if (isEngineOn _eachGrdVeh == false) then
 										{
-											systemChat "Preparing to the next service...";
+											["Preparing to the next service..."] remoteExec ["systemChat", _eachGrdVeh];
 											
-										} else 
+										} 
+										else 
 										{
-											systemChat "For the next service, turn off the engine!";
+											["For the next service, turn off the engine!"] remoteExec ["systemChat", _eachGrdVeh];
 										};
 									};
 								};
@@ -173,14 +210,16 @@ private ["_arrayGroundStations","_groundVehicles","_serviceInProgress","_eachGro
 							};
 						};
 					};
+				
+				} forEach _arrayGrdFullAndRearmServ;
 
-				} forEach _groundVehicles;
-
-			} forEach _arrayGroundStations;	
+			} forEach _groundVehicles;
 			
 		} forEach VO_humanPlayersAlive;
 		
 		sleep 5;
-	};
+		if ( VO_debugMonitor ) then { VO_grdCyclesDone = (VO_grdCyclesDone + 1) };
+		
+	};  // while-looping ends.
 
-}; // spawn ends.
+};  // spawn ends.
