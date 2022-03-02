@@ -13,31 +13,26 @@ Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament statio
 
 ...............
 
-### EDITOR CAN EASILY CHANGE:
-
-- 
-- What services are available (repair, refuel, rearm);
-- Action radius of each type of station;
-- Waiting time between one service and another;
-- Defined which types of assets will automatically receive the attributes of a station;
-
 ### GLOBAL STATION RULES
 
-- The vehicle must be within the station's range of action;
-- At least one player must be close to the vehicle;
-- The vehicle must not be completely destroyed;
-- For a service to be performed, the station cannot be busy with another player.
+- The vehicle that need a service (named "target-vehicle") must be within the station's range of action;
+- At least one player must be close (or inside) to the target-vehicle;
+- The target-vehicle must not be moving;
+- The target-vehicle must not be completely destroyed;
+- To provide the service, the station must not be destroyed or under water or flying (supply containers) or even moving (supply vehicles); 
+- Each station can provide only the services that it allowed to; 
+CHECKING !!! - For a service to be performed, the station cannot be busy with another player.
 
 **To repair:**
-- Must have some damage;
-- The engine must be off;
+- The vehicle must have some damage;
+- Its engine must be off;
 
 **To refuel:**
-- Must have had some fuel consumption;
-- The engine must be off;
+- The vehicle must have had some fuel consumption;
+- Its engine must be off;
 
 **To rearm:**
-- Must have spent some ammunition in the vehicle;
+- The vehicle must have spent some ammunition;
 
 ### GROUND STATION RULES
 
