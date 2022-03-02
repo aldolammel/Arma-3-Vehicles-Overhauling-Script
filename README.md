@@ -1,20 +1,21 @@
-# Arma 3 > Vehicles Overhauling (v0.2)
+# Arma 3 > Vehicles Overhauling (v1.0)
 >*Dependencies: none.*
 
-xxxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxxxxxxxxx
-xxxxx xxx xxxxxxxx xxxxxxxxxxxx
+Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament stations for multiplayer missions that simultaneously require resources for ground, air, and nautical vehicles, with each doctrine or resource being easily turned off or on according to the editor's needs. No triggering or code via Eden is needed, or even opening multiple files for script settings. VO prioritizes simplicity of implementation and quick changes management that the mission editor might want. Developed mainly for dedicated servers. 
 
 **What to expect from this script**
 
-- xxxxxxxx
-- xxxxxxxxx
-- xxxxxxxxxxxxxx.
+- Define which vehicle type have automatically access to ground, air or nautic stations;
+- Define which service each station type (asset) will provide: repair, refuel or rearm or all of them;
+- No code or triggers is needed on Eden Editor;
+- Just one file to set easely your mission needs;
+- Once defined which assets/objets are stations and its type, on Eden you just drag and drop it.
 
 ...............
 
 ### EDITOR CAN EASILY CHANGE:
 
-- What types of vehicles have access to stations (land, air, nautical);
+- 
 - What services are available (repair, refuel, rearm);
 - Action radius of each type of station;
 - Waiting time between one service and another;
