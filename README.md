@@ -57,7 +57,7 @@ CHECKING !!! - For a service to be performed, the station cannot be busy with an
 ...............
 
 ## Ideas or fixes?
-<link soon>
+link soon
 
 ## Changelog
 
