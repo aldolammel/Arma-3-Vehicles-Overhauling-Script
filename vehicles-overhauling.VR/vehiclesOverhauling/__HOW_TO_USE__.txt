@@ -1,0 +1,10 @@
+
+In this same folder, all you need is to open this file...
+
+	fn_VO_parameters.sqf
+	
+...and make your customs. Enjoy!
+
+Thy.
+
+
