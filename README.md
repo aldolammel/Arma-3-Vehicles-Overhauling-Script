@@ -2,7 +2,7 @@
 >*Dependencies: none.*
 >*Compatible with ACE.*
 
-Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament stations for multiplayer missions that simultaneously require resources for ground, air, and nautical vehicles, with each doctrine or resource being easily turned off or on according to the editor's needs. No triggering or code via Eden is needed, or even opening multiple files for script settings. VO prioritizes simplicity of implementation and quick changes management that the mission editor might want. Developed mainly for dedicated servers. 
+Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament stations for multiplayer missions that simultaneously require resources for ground, air, and nautical vehicles, with each doctrine or resource being easily turned off or on according to the editor's needs. No triggering or code via Eden is needed, or even opening multiple files for script settings. VO prioritizes simplicity of implementation and quick changes management that the mission editor might want.  
 
 **What to expect from this script**
 
@@ -11,7 +11,8 @@ Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament statio
 - Every object/asset on Eden Editor can be a station automatically, it's up to the mission-editor;
 - No code or triggers is needed on Eden Editor;
 - Just one file to set easely your mission needs;
-- Once defined which assets/objets are stations and its type, on Eden you just drag and drop the asset you defined as station.
+- Once defined which assets/objets are stations and its type, on Eden you just drag and drop the asset you defined as station;
+- Script working fine on hosted and dedicated servers.
 
 ...............
 
