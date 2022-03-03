@@ -2,7 +2,7 @@
 >*Dependencies: none.*
 >*Compatible with ACE.*
 
-Vehicles Overhauling (VO) is a system of repair, resupply, and rearmament stations for multiplayer missions that simultaneously require resources for ground, air, and nautical vehicles, with each doctrine or resource being easily turned off or on according to the editor's needs. No triggering or code via Eden is needed, or even opening multiple files for script settings. VO prioritizes simplicity of implementation and quick changes management that the mission editor might want.  
+Vehicles Overhauling (VO) is a system of repair, refuel and rearm stations for multiplayer missions that simultaneously require resources by doctrine: ground, air and nautical vehicles. Each doctrine or services are easily turned Off or On, according to the editor's needs. Triggering or code via Eden is needless, even opening multiple files for script settings. VO prioritizes implementation simplicity and quick changes management that the mission editor might want.  
 
 **What to expect from this script**
 
@@ -61,5 +61,5 @@ link soon
 
 ## Changelog
 
-**v1.0 - Mar, 2nd 2022**
+**v1.0 - Mar, 4th 2022**
 - Hello world.
