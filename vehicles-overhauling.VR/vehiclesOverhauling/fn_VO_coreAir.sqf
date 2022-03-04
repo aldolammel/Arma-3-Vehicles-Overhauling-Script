@@ -41,7 +41,7 @@ if ( !airVehiclesOverhauling ) exitWith {};
 		if ( VO_debugMonitor ) then	{ call THY_fnc_VO_debugMonitor };
 		
 		// check who's human here:
-		call THY_fnc_VO_humanPlayersAlive;
+		[] call THY_fnc_VO_humanPlayersAlive;
 		
 		{ // VO_humanPlayersAlive forEach starts...
 			
@@ -57,9 +57,11 @@ if ( !airVehiclesOverhauling ) exitWith {};
 				// AIR REPAIR
 				{ // forEach of _arrayAirFullAndRepairServ starts...
 				
-					if ( ( VO_airServRepair ) AND ( (_eachAirVeh distance _x) < VO_airActRange ) ) then 
+					// checking the station: if the service is available, the station is alive, the player's veh is close enought, and the station is NOT serving itself, then...
+					if ( (VO_airServRepair) AND (alive _x) AND ( (_eachAirVeh distance _x) < VO_airActRange ) AND (_eachAirVeh != _x) ) then 
 					{
-						if ( (alive _eachAirVeh) AND (damage _eachAirVeh > _minDamage) AND (isEngineOn _eachAirVeh == false) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1) AND (_serviceInProgress == false) ) then
+						// checking the player veh:
+						if ( (alive _eachAirVeh) AND (damage _eachAirVeh > _minDamage) AND (isEngineOn _eachAirVeh == false) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1 AND speed _eachAirVeh > -1) AND (_serviceInProgress == false) ) then
 						{					
 							_serviceInProgress = true; 
 							sleep 3;
@@ -73,8 +75,8 @@ if ( !airVehiclesOverhauling ) exitWith {};
 							sleep 3;               
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _eachAirVeh];
 							
-							// if player inside the vehicle:
-							if (!isNull objectParent _eachHumamPlayer) then 
+							// if player inside the vehicle in service:
+							if (_eachHumamPlayer in _eachAirVeh) then 
 							{
 								[[1, 5, 5]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 							};
@@ -88,10 +90,7 @@ if ( !airVehiclesOverhauling ) exitWith {};
 								sleep 2;
 								
 								// checking the vehicle needs and if another service is available for that station:
-								if ( ( VO_airServRefuel AND ( _x in _arrayAirRefuelAssets ) AND ( fuel _eachAirVeh < _minFuel ) ) OR ( VO_airServRearm AND ( _x in _arrayAirRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachAirVeh)) > 0 ) ) ) then
-								{
-									["Preparing to the next service..."] remoteExec ["systemChat", _eachAirVeh];
-								};
+								[VO_airServRefuel, _x, _arrayAirFullAndRefuelServ, _eachAirVeh, VO_airServRearm, _arrayAirFullAndRearmServ, VO_airCooldown] call THY_fnc_VO_checkNextServiceRefuelOrRearm;
 							};
 							
 							sleep VO_airCooldown;
@@ -104,9 +103,9 @@ if ( !airVehiclesOverhauling ) exitWith {};
 				// AIR REFUEL
 				{ // forEach of _arrayAirFullAndRefuelServ starts....
 				
-					if ( ( VO_airServRefuel ) AND ( (_eachAirVeh distance _x) < VO_airActRange ) ) then  
+					if ( (VO_airServRefuel) AND (alive _x) AND ( (_eachAirVeh distance _x) < VO_airActRange ) AND (_eachAirVeh != _x) ) then  
 					{
-						if ( (alive _eachAirVeh) AND (fuel _eachAirVeh < _minFuel) AND (isEngineOn _eachAirVeh == false) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1) AND (_serviceInProgress == false) ) then
+						if ( (alive _eachAirVeh) AND (fuel _eachAirVeh < _minFuel) AND (isEngineOn _eachAirVeh == false) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1 AND speed _eachAirVeh > -1) AND (_serviceInProgress == false) ) then
 						{	
 							_serviceInProgress = true; 
 							sleep 3;
@@ -120,7 +119,7 @@ if ( !airVehiclesOverhauling ) exitWith {};
 							sleep 3;
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _eachAirVeh]; 
 							
-							if (!isNull objectParent _eachHumamPlayer) then 
+							if (_eachHumamPlayer in _eachAirVeh) then 
 							{
 								[[0.3, 5, 2]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 							};
@@ -134,10 +133,7 @@ if ( !airVehiclesOverhauling ) exitWith {};
 								sleep 2;
 								
 								// checking the vehicle needs and if another service is available for that station:
-								if ( ( VO_airServRearm AND ( _x in _arrayAirRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachAirVeh)) > 0 ) ) OR ( VO_airServRepair AND ( _x in _arrayAirRepairAssets ) AND ( damage _eachAirVeh > _minDamage ) ) ) then
-								{
-									["Preparing to the next service..."] remoteExec ["systemChat", _eachAirVeh];
-								};
+								[VO_airServRearm, _x, _arrayAirFullAndRearmServ, _eachAirVeh, VO_airServRepair, _arrayAirFullAndRepairServ, VO_airCooldown] call THY_fnc_VO_checkNextServiceRearmOrRepair;
 							};
 							
 							sleep VO_airCooldown;
@@ -150,19 +146,12 @@ if ( !airVehiclesOverhauling ) exitWith {};
 				// AIR REARM
 				{ // forEach of _arrayAirFullAndRearmServ starts....
 				
-					if ( ( VO_airServRearm ) AND ( (_eachAirVeh distance _x) < VO_airActRange ) ) then  
+					if ( (VO_airServRearm) AND (alive _x) AND ( (_eachAirVeh distance _x) < VO_airActRange ) AND (_eachAirVeh != _x) ) then  
 					{
-						// checking the mobile stations are in good conditions to work:
-						if (  /* !(isTouchingGround _x) OR */ ( underwater _x ) OR ( speed _x > 0 ) ) exitWith              // <<---- !isTouchingGround is not working reliable!
-						{ 
-							// checking if the player is NOT in a vehicle-station:
-							if !(_eachHumamPlayer in _x) then
-							{
-								["The station doesn't meet the conditions to work! Try later..."] remoteExec ["systemChat", _eachHumamPlayer];
-							};
-						};
+						// checking advanced condition of station:
+						[_x, _eachHumamPlayer] call THY_fnc_VO_stationAdvCondition;
 						
-						if ( (alive _eachAirVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachAirVeh)) > 0 ) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1) AND (_serviceInProgress == false) ) then 
+						if ( (alive _eachAirVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachAirVeh)) > 0 ) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1 AND speed _eachAirVeh > -1) AND (_serviceInProgress == false) ) then 
 						{
 							if (true /* fix this condition: if some available mag is not full, then */) then 
 							{
@@ -178,7 +167,7 @@ if ( !airVehiclesOverhauling ) exitWith {};
 								sleep 3;
 								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _eachAirVeh];
 								
-								if (!isNull objectParent _eachHumamPlayer) then
+								if (_eachHumamPlayer in _eachAirVeh) then
 								{
 									[[1, 5, 3]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency]. 
 								};
@@ -191,18 +180,8 @@ if ( !airVehiclesOverhauling ) exitWith {};
 									["Air vehicle has been rearmed!"] remoteExec ["systemChat", _eachAirVeh];
 									sleep 2;
 									
-									if ( ( VO_airServRepair AND ( _x in _arrayAirFullAndRepairServ ) AND ( damage _eachAirVeh > _minDamage ) ) OR ( VO_airServRefuel AND ( _x in _arrayAirFullAndRefuelServ ) AND ( fuel _eachAirVeh < _minFuel ) ) ) then
-									{
-										if (isEngineOn _eachAirVeh == false) then
-										{
-											["Preparing to the next service..."] remoteExec ["systemChat", _eachAirVeh];
-											
-										} 
-										else 
-										{
-											["For the next service, turn off the engine!"] remoteExec ["systemChat", _eachAirVeh];
-										};
-									};
+									// checking the vehicle needs and if another service is available for that station:
+									[VO_airServRepair, _x, _arrayAirFullAndRepairServ, _eachAirVeh, VO_airServRefuel, _arrayAirFullAndRefuelServ, VO_airCooldown] call THY_fnc_VO_checkNextServiceRepairOrRefuel;
 								};
 								
 								sleep VO_airCooldown;

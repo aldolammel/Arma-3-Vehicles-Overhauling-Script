@@ -15,7 +15,7 @@ if (!isServer) exitWith {};
 		VO_groundServRefuel = true;          // true = refuel stations for ground veh are available / false = not available.
 		VO_groundServRearm = true;          // true = rearm stations for ground veh are available / false = not available.
 		VO_grdActRange = 10;          // in meters, the area around the station that identifies the ground vehicle to be serviced. Default 10.
-		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default 10.
+		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default 30.
 		
 		// Define which assets (classnames) are ground full (repair, refuel, rearm) stations:
 		VO_grdFullStationAssets =          
@@ -43,6 +43,7 @@ if (!isServer) exitWith {};
 			"O_Truck_03_repair_F",
 			"B_Truck_01_Repair_F",
 			"B_T_Truck_01_Repair_F",
+			"B_APC_Tracked_01_CRV_F",          // APC CRV Bobcat
 			"Land_Pod_Heli_Transport_04_repair_F",          // Taru repair pod
 			"B_Slingload_01_Repair_F"          // Huron repair container
 		];
@@ -99,7 +100,7 @@ if (!isServer) exitWith {};
 		VO_airServRefuel = true;          // true = refuel stations for air veh are available / false = not available.
 		VO_airServRearm = true;          // true = rearm stations for air veh are available / false = not available.
 		VO_airActRange = 20;          // in meters, the area around the station that identifies the air vehicle to be serviced. Default 20.
-		VO_airCooldown = 10;          // in seconds, time among each available air services. Default 10.
+		VO_airCooldown = 30;          // in seconds, time among each available air services. Default 30.
 		
 		// Define which assets (classnames) are air full (repair, refuel, rearm) stations:
 		VO_airFullStationAssets =          
@@ -172,7 +173,7 @@ if (!isServer) exitWith {};
 		VO_nauticServRefuel = true;          // true = refuel stations for nautic veh are available / false = not available.
 		VO_nauticServRearm = true;          // true = rearm stations for nautic veh are available / false = not available.
 		VO_nauActRange = 15;          // in meters, the area around the station that identifies the nautic vehicle to be serviced. Default 15.
-		VO_nauCooldown = 10;          // in seconds, time among each available nautic services. Default 10.
+		VO_nauCooldown = 30;          // in seconds, time among each available nautic services. Default 30.
 		
 		// Define which assets (classnames) are nautic full (repair, refuel, rearm) stations:
 		VO_nauFullStationAssets =          

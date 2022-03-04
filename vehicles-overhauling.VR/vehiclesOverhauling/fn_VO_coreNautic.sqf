@@ -41,7 +41,7 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 		if ( VO_debugMonitor ) then	{ call THY_fnc_VO_debugMonitor };
 		
 		// check who's human here:
-		call THY_fnc_VO_humanPlayersAlive; 
+		[] call THY_fnc_VO_humanPlayersAlive; 
 		
 		{ // VO_humanPlayersAlive forEach starts...
 			
@@ -57,9 +57,11 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 				// NAUTIC REPAIR
 				{ // forEach of _arrayNauFullAndRepairServ starts...
 				
-					if ( ( VO_nauticServRepair ) AND ( (_eachNauVeh distance _x) < VO_nauActRange ) ) then 
+					// checking the station: if the service is available, the station is alive, the player's veh is close enought, and the station is NOT serving itself, then...
+					if ( (VO_nauticServRepair) AND (alive _x) AND ( (_eachNauVeh distance _x) < VO_nauActRange ) AND (_eachNauVeh != _x) ) then 
 					{
-						if ( (alive _eachNauVeh) AND (damage _eachNauVeh > _minDamage) AND (isEngineOn _eachNauVeh == false) AND (!underwater _eachNauVeh) AND (speed _eachNauVeh < 2) AND (_serviceInProgress == false) ) then
+						// checking the player veh:
+						if ( (alive _eachNauVeh) AND (damage _eachNauVeh > _minDamage) AND (isEngineOn _eachNauVeh == false) AND (!underwater _eachNauVeh) AND (speed _eachNauVeh < 5 AND speed _eachNauVeh > -5) AND (_serviceInProgress == false) ) then
 						{					
 							_serviceInProgress = true;
 							sleep 3;
@@ -73,8 +75,8 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 							sleep 3;               
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _eachNauVeh];
 							
-							// if player inside the vehicle:
-							if (!isNull objectParent _eachHumamPlayer) then
+							// if player inside the vehicle in service:
+							if (_eachHumamPlayer in _eachNauVeh) then
 							{
 								[[1, 5, 5]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 							};
@@ -88,10 +90,7 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 								sleep 2;
 								
 								// checking the vehicle needs and if another service is available for that station:
-								if ( ( VO_nauticServRefuel AND ( _x in _arrayNauRefuelAssets ) AND ( fuel _eachNauVeh < _minFuel ) ) OR ( VO_nauticServRearm AND ( _x in _arrayNauRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachNauVeh)) > 0 ) ) ) then
-								{
-									["Preparing to the next service..."] remoteExec ["systemChat", _eachNauVeh];
-								};
+								[VO_nauticServRefuel, _x, _arrayNauFullAndRefuelServ, _eachNauVeh, VO_nauticServRearm, _arrayNauFullAndRearmServ, VO_nauCooldown] call THY_fnc_VO_checkNextServiceRefuelOrRearm;
 							};
 							
 							sleep VO_nauCooldown;
@@ -104,9 +103,9 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 				// NAUTIC REFUEL
 				{ // forEach of _arrayNauFullAndRefuelServ starts....
 				
-					if ( ( VO_nauticServRefuel ) AND ( (_eachNauVeh distance _x) < VO_nauActRange ) ) then 
+					if ( (VO_nauticServRefuel) AND (alive _x) AND ( (_eachNauVeh distance _x) < VO_nauActRange ) AND (_eachNauVeh != _x) ) then 
 					{
-						if ( (alive _eachNauVeh) AND (fuel _eachNauVeh < _minFuel) AND (isEngineOn _eachNauVeh == false) AND (!underwater _eachNauVeh) AND (speed _eachNauVeh < 2) AND (_serviceInProgress == false) ) then
+						if ( (alive _eachNauVeh) AND (fuel _eachNauVeh < _minFuel) AND (isEngineOn _eachNauVeh == false) AND (!underwater _eachNauVeh) AND (speed _eachNauVeh < 5 AND speed _eachNauVeh > -5) AND (_serviceInProgress == false) ) then
 						{	
 							_serviceInProgress = true;  
 							sleep 3;
@@ -120,7 +119,7 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 							sleep 3;
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _eachNauVeh];
 							
-							if (!isNull objectParent _eachHumamPlayer) then  
+							if (_eachHumamPlayer in _eachNauVeh) then  
 							{
 								[[0.3, 5, 2]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 							};
@@ -134,10 +133,7 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 								sleep 2;
 								
 								// checking the vehicle needs and if another service is available for that station:
-								if ( ( VO_nauticServRearm AND ( _x in _arrayNauRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachNauVeh)) > 0 ) ) OR ( VO_nauticServRepair AND ( _x in _arrayNauRepairAssets ) AND ( damage _eachNauVeh > _minDamage ) ) ) then
-								{
-									["Preparing to the next service..."] remoteExec ["systemChat", _eachNauVeh];
-								};
+								[VO_nauticServRearm, _x, _arrayNauFullAndRearmServ, _eachNauVeh, VO_nauticServRepair, _arrayNauFullAndRepairServ, VO_nauCooldown] call THY_fnc_VO_checkNextServiceRearmOrRepair;
 							};
 							
 							sleep VO_nauCooldown;
@@ -150,19 +146,12 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 				// NAUTIC REARM
 				{ // forEach of _arrayNauFullAndRearmServ starts....
 					
-					if ( ( VO_nauticServRearm ) AND ( (_eachNauVeh distance _x) < VO_nauActRange ) ) then  
+					if ( (VO_nauticServRearm) AND (alive _x) AND ( (_eachNauVeh distance _x) < VO_nauActRange ) AND (_eachNauVeh != _x) ) then  
 					{
-						// checking the mobile stations are in good conditions to work:
-						if (  /* !(isTouchingGround _x) OR */ ( underwater _x ) OR ( speed _x > 0 ) ) exitWith              // <<---- !isTouchingGround is not working reliable!
-						{ 
-							// checking if the player is NOT in a vehicle-station:
-							if !(_eachHumamPlayer in _x) then
-							{
-								["The station doesn't meet the conditions to work! Try later..."] remoteExec ["systemChat", _eachHumamPlayer];
-							};
-						};
+						// checking advanced condition of station:
+						[_x, _eachHumamPlayer] call THY_fnc_VO_stationAdvCondition;
 						
-						if ( (alive _eachNauVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachNauVeh)) > 0 ) AND (!underwater _eachNauVeh) AND (speed _eachNauVeh < 2) AND (_serviceInProgress == false) ) then 
+						if ( (alive _eachNauVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachNauVeh)) > 0 ) AND (!underwater _eachNauVeh) AND (speed _eachNauVeh < 5 AND speed _eachNauVeh > -5) AND (_serviceInProgress == false) ) then 
 						{
 							if (true /* fix this condition: if some available mag is not full, then */) then 
 							{
@@ -178,7 +167,7 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 								sleep 3;
 								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _eachNauVeh];
 								
-								if (!isNull objectParent _eachHumamPlayer) then 
+								if (_eachHumamPlayer in _eachNauVeh) then 
 								{
 									[[1, 5, 3]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 								};
@@ -191,18 +180,8 @@ if ( !nauticVehiclesOverhauling ) exitWith {};
 									["Nautic vehicle has been rearmed!"] remoteExec ["systemChat", _eachNauVeh];
 									sleep 2;
 									
-									if ( ( VO_nauticServRepair AND ( _x in _arrayNauFullAndRepairServ ) AND ( damage _eachNauVeh > _minDamage ) ) OR ( VO_nauticServRefuel AND ( _x in _arrayNauFullAndRefuelServ ) AND ( fuel _eachNauVeh < _minFuel ) ) ) then 
-									{
-										if (isEngineOn _eachNauVeh == false) then
-										{
-											["Preparing to the next service..."] remoteExec ["systemChat", _eachNauVeh];
-											
-										} 
-										else 
-										{
-											["For the next service, turn off the engine!"] remoteExec ["systemChat", _eachNauVeh];
-										};
-									};
+									// checking the vehicle needs and if another service is available for that station:
+									[VO_nauticServRepair, _x, _arrayNauFullAndRepairServ, _eachNauVeh, VO_nauticServRefuel, _arrayNauFullAndRefuelServ, VO_nauCooldown] call THY_fnc_VO_checkNextServiceRepairOrRefuel;
 								};
 							
 								sleep VO_nauCooldown;

@@ -41,13 +41,13 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 		if ( VO_debugMonitor ) then	{ call THY_fnc_VO_debugMonitor };
 		
 		// check who's human here:
-		call THY_fnc_VO_humanPlayersAlive;
+		[] call THY_fnc_VO_humanPlayersAlive;
 		
 		{ // VO_humanPlayersAlive forEach starts...
 		
 			_eachHumamPlayer = _x;
 			
-			// defining the ground veh of _eachHumamPlayer (_x) into XXm radius:
+			// defining the ground veh of _eachHumamPlayer into XXm radius:
 			_groundVehicles = _x nearEntities [VO_grdVehicleTypes, 10];
 			
 			{ // forEach of _groundVehicles starts...  
@@ -57,9 +57,11 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 				// GROUND REPAIR
 				{ // forEach of _arrayGrdFullAndRepairServ starts...
 				
-					if ( ( VO_groundServRepair ) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) ) then 
+					// checking the station: if the service is available, the station is alive, the player's veh is close enought, and the station is NOT serving itself, then...
+					if ( (VO_groundServRepair) AND (alive _x) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) AND (_eachGrdVeh != _x) ) then 
 					{
-						if ( (alive _eachGrdVeh) AND (damage _eachGrdVeh > _minDamage) AND (isEngineOn _eachGrdVeh == false) AND (speed _eachGrdVeh < 2) AND (_serviceInProgress == false) ) then
+						// checking the player veh: 
+						if ( (alive _eachGrdVeh) AND (damage _eachGrdVeh > _minDamage) AND (isEngineOn _eachGrdVeh == false) AND (speed _eachGrdVeh < 2 AND speed _eachGrdVeh > -2) AND (_serviceInProgress == false) ) then
 						{					
 							_serviceInProgress = true;
 							sleep 3;
@@ -73,8 +75,8 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 							sleep 3;               
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _eachGrdVeh];
 							
-							// if player inside the vehicle:
-							if (!isNull objectParent _eachHumamPlayer) then
+							// if player inside the vehicle in service:
+							if (_eachHumamPlayer in _eachGrdVeh) then
 							{     
 								[[1, 5, 5]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 							};
@@ -88,10 +90,7 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 								sleep 2;
 								
 								// checking the vehicle needs and if another service is available for that station:
-								if ( ( VO_groundServRefuel AND ( _x in _arrayGrdRefuelAssets ) AND ( fuel _eachGrdVeh < _minFuel ) ) OR ( VO_groundServRearm AND ( _x in _arrayGrdRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) ) ) then
-								{
-									["Preparing to the next service..."] remoteExec ["systemChat", _eachGrdVeh];
-								};
+								[VO_groundServRefuel, _x, _arrayGrdFullAndRefuelServ, _eachGrdVeh, VO_groundServRearm, _arrayGrdFullAndRearmServ, VO_grdCooldown] call THY_fnc_VO_checkNextServiceRefuelOrRearm;
 							};
 							
 							sleep VO_grdCooldown;
@@ -104,9 +103,9 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 				// GROUND REFUEL
 				{ // forEach of _arrayGrdFullAndRefuelServ starts....
 				
-					if ( ( VO_groundServRefuel ) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) ) then 
+					if ( (VO_groundServRefuel) AND (alive _x) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) AND (_eachGrdVeh != _x) ) then 
 					{
-						if ( (alive _eachGrdVeh) AND (fuel _eachGrdVeh < _minFuel) AND (isEngineOn _eachGrdVeh == false) AND (speed _eachGrdVeh < 2) AND (_serviceInProgress == false) ) then
+						if ( (alive _eachGrdVeh) AND (fuel _eachGrdVeh < _minFuel) AND (isEngineOn _eachGrdVeh == false) AND (speed _eachGrdVeh < 2 AND speed _eachGrdVeh > -2) AND (_serviceInProgress == false) ) then
 						{	
 							_serviceInProgress = true;
 							sleep 3;
@@ -120,7 +119,7 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 							sleep 3;
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _eachGrdVeh];
 							
-							if (!isNull objectParent _eachHumamPlayer) then
+							if (_eachHumamPlayer in _eachGrdVeh) then
 							{
 								[[0.3, 5, 2]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 							};
@@ -134,10 +133,7 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 								sleep 2;
 								
 								// checking the vehicle needs and if another service is available for that station:
-								if ( ( VO_groundServRearm AND ( _x in _arrayGrdRearmAssets ) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) ) OR ( VO_groundServRepair AND ( _x in _arrayGrdRepairAssets ) AND ( damage _eachGrdVeh > _minDamage ) ) ) then
-								{
-									["Preparing to the next service..."] remoteExec ["systemChat", _eachGrdVeh];
-								};
+								[VO_groundServRearm, _x, _arrayGrdFullAndRearmServ, _eachGrdVeh, VO_groundServRepair, _arrayGrdFullAndRepairServ, VO_grdCooldown] call THY_fnc_VO_checkNextServiceRearmOrRepair;
 							};
 							
 							sleep VO_grdCooldown;
@@ -150,19 +146,12 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 				// GROUND REARM
 				{ // forEach of _arrayGrdFullAndRearmServ starts....
 				
-					if ( ( VO_groundServRearm ) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) ) then 
+					if ( (VO_groundServRearm) AND (alive _x) AND ( (_eachGrdVeh distance _x) < VO_grdActRange ) AND (_eachGrdVeh != _x) ) then 
 					{
-						// checking the mobile stations are in good conditions to work:
-						if (  /* !(isTouchingGround _x) OR */ ( underwater _x ) OR ( speed _x > 0 ) ) exitWith              // <<---- !isTouchingGround is not working reliable!
-						{ 
-							// checking if the player is NOT in a vehicle-station:
-							if !(_eachHumamPlayer in _x) then
-							{
-								["The station doesn't meet the conditions to work! Try later..."] remoteExec ["systemChat", _eachHumamPlayer];
-							};
-						};
+						// checking advanced condition of station:
+						[_x, _eachHumamPlayer] call THY_fnc_VO_stationAdvCondition;
 						
-						if ( (alive _eachGrdVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) AND (speed _eachGrdVeh < 2) AND (_serviceInProgress == false) ) then 
+						if ( (alive _eachGrdVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachGrdVeh)) > 0 ) AND (speed _eachGrdVeh < 2 AND speed _eachGrdVeh > -2) AND (_serviceInProgress == false) ) then 
 						{
 							if (true /* fix this condition: if some available mag is not full, then */) then 
 							{
@@ -178,7 +167,7 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 								sleep 3;
 								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _eachGrdVeh];
 								
-								if (!isNull objectParent _eachHumamPlayer) then
+								if (_eachHumamPlayer in _eachGrdVeh) then
 								{
 									[[1, 5, 3]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
 								};
@@ -191,23 +180,13 @@ if ( !groundVehiclesOverhauling ) exitWith {};
 									["Ground vehicle has been rearmed!"] remoteExec ["systemChat", _eachGrdVeh];
 									sleep 2;
 									
-									if ( ( VO_groundServRepair  AND ( _x in _arrayGrdFullAndRepairServ ) AND ( damage _eachGrdVeh > _minDamage ) ) OR ( VO_groundServRefuel AND ( _x in _arrayGrdFullAndRefuelServ ) AND ( fuel _eachGrdVeh < _minFuel ) ) ) then
-									{
-										if (isEngineOn _eachGrdVeh == false) then
-										{
-											["Preparing to the next service..."] remoteExec ["systemChat", _eachGrdVeh];
-											
-										} 
-										else 
-										{
-											["For the next service, turn off the engine!"] remoteExec ["systemChat", _eachGrdVeh];
-										};
-									};
+									// checking the vehicle needs and if another service is available for that station:
+									[VO_groundServRepair, _x, _arrayGrdFullAndRepairServ, _eachGrdVeh, VO_groundServRefuel, _arrayGrdFullAndRefuelServ, VO_grdCooldown] call THY_fnc_VO_checkNextServiceRepairOrRefuel;
 								};
 								
 								sleep VO_grdCooldown;
 								_serviceInProgress = false;
-							};
+							}; 
 						};
 					};
 				
