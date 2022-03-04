@@ -10,7 +10,7 @@ class Header
 	onLoadName 			= "VEHICLES OVERHAULING";
 	author 				= "thy"; 						
 	overviewPicture 	= "images\thumb.jpg"; 			
-	onLoadMission 		= "A script of repair, resupply, and rearmament stations for multiplayer missions that simultaneously require resources for ground, air, and nautical vehicles."; 
+	onLoadMission 		= "A script of repair, refuel and rearm stations for multiplayer missions that simultaneously require resources by doctrine: ground, air and nautical vehicles."; 
 
 	// Gameplay
 	joinUnassigned 		= 0;
