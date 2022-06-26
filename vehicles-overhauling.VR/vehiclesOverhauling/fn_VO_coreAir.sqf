@@ -1,200 +1,94 @@
-private ["_arrayAirFullAssets","_arrayAirRepairAssets","_arrayAirRefuelAssets","_arrayAirRearmAssets","_arrayAirFullAndRepairServ","_arrayAirFullAndRefuelServ","_arrayAirFullAndRearmServ","_minDamage","_minFuel",/* "_minAmmo", */"_airVehicles","_serviceInProgress","_eachAirStation","_eachAirVeh","_eachHumamPlayer"];
+// File: your_mission\vehiclesOverhauling\fn_VO_coreAir.sqf
+// by thy (@aldolammel)
 
-if ( !airVehiclesOverhauling ) exitWith {};
+private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_parkingHelperAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_airVehicles","_connected","_servProgrs","_eachPlayer","_eachVeh"];
+
+// Only on the server, you dont want all players checking all players:
+if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 
 // AIR SERVICES CORE / BE CAREFUL BELOW:
 
 [] spawn 
 {
 	// arrays that will be populated only with the objects found out more below:
-	_arrayAirFullAssets = [];
-	_arrayAirRepairAssets = [];
-	_arrayAirRefuelAssets = [];
-	_arrayAirRearmAssets = [];
-	
-	// initial services condition:
-	_serviceInProgress = false; 
+	_fullAssets = [];
+	_repAssets = [];
+	_refAssets = [];
+	_reaAssets = [];
+	_parkingHelperAssets = [];
 	
 	// if the services are allowed, find out only the assets (classnames) listed through fn_VO_parameters.sqf file:
-	if ( VO_airServFull ) then { { _arrayAirFullAssets = _arrayAirFullAssets + allMissionObjects _x } forEach VO_airFullStationAssets	};	
-	if ( VO_airServRepair ) then { { _arrayAirRepairAssets = _arrayAirRepairAssets + allMissionObjects _x } forEach VO_airRepairStationAssets };	
-	if ( VO_airServRefuel ) then { { _arrayAirRefuelAssets = _arrayAirRefuelAssets + allMissionObjects _x } forEach VO_airRefuelStationAssets };	
-	if ( VO_airServRearm ) then { { _arrayAirRearmAssets = _arrayAirRearmAssets + allMissionObjects _x } forEach VO_airRearmStationAssets };
+	if ( VO_airServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_airFullAssets };	
+	if ( VO_airServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_airRepairAssets };	
+	if ( VO_airServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_airRefuelAssets };	
+	if ( VO_airServRearm ) then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_airRearmAssets };
 	
-	// main air assets arrays:
-	_arrayAirFullAndRepairServ = _arrayAirRepairAssets + _arrayAirFullAssets;
-	_arrayAirFullAndRefuelServ = _arrayAirRefuelAssets + _arrayAirFullAssets;
-	_arrayAirFullAndRearmServ = _arrayAirRearmAssets + _arrayAirFullAssets;
+	// List of assets with a parking system to help plane to maneuver:
+	{ _parkingHelperAssets = _parkingHelperAssets + allMissionObjects _x } forEach VO_airParkingHelperAssets;
 	
-	// minimal vehicle conditions for overhauling:
-	_minDamage = 0.1;
-	_minFuel = 0.8;
-	//_minAmmo = WIP;	
+	// loading the main station's assets:
+	_fullAndRepAssets = _repAssets + _fullAssets;
+	_fullAndRefAssets = _refAssets + _fullAssets;
+	_fullAndReaAssets = _reaAssets + _fullAssets;
 	
-	// It removes repairing, refueling and rearming from A3 vanilla's vehicles got those cargo proprieties: 
-	{ _x setRepairCargo 0; _x setFuelCargo 0; _x setAmmoCargo 0; } forEach _arrayAirFullAssets + _arrayAirRepairAssets + _arrayAirRefuelAssets + _arrayAirRearmAssets;
-
-
-	while { VO_airServFull OR VO_airServRepair OR VO_airServRefuel OR VO_airServRearm } do
+	// Removes repairing, refueling and rearming from A3 vanilla's assets: 
+	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_A3CargoOff;
+	
+	// ACE Compatibility:
+	if ( ACE_isOn ) then 
+	{
+		// WIP
+	};
+	
+	// Initial services condition:
+	_servProgrs = false;
+	
+	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
+	while { isStationsOkay AND isServicesOkay } do
 	{
 		// debug:
-		if ( VO_debugMonitor ) then	{ call THY_fnc_VO_debugMonitor };
+		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor };
 		
-		// check who's human here:
-		[] call THY_fnc_VO_humanPlayersAlive;
+		_playersAlive = (allPlayers - (entities "HeadlessClient_F")) select {alive _x};
 		
-		{ // VO_humanPlayersAlive forEach starts...
+		{ // _playersAlive forEach starts...
 			
-			_eachHumamPlayer = _x;
+			_eachPlayer = _x;
 			
-			// defining the air veh of _eachHumamPlayer (_x) into XXm radius:
+			// searching the player's regular vehicles into XXm radius:
 			_airVehicles = _x nearEntities [VO_airVehicleTypes, 20];
+			// searching the player's connected air drones: 
+			if ( !VO_dronesNeedHuman ) then 
+			{
+				_connected =  getConnectedUAV _x;
+				if ( _connected isKindOf "Helicopter" OR _connected isKindOf "Plane" ) then        // WIP: Future improvement > make it search the connected veh type directly in VO_airVehicleTypes array, and so make it as function.
+				{
+					_airVehicles append [_connected];
+				};
+			};
+			
+			if ( VO_debugMonitor ) then { {systemChat str _x} forEach _airVehicles };
 			
 			{ // forEach of _airVehicles starts... 
 				
-				_eachAirVeh = _x;
-						
-				// AIR REPAIR
-				{ // forEach of _arrayAirFullAndRepairServ starts...
-				
-					// checking the station: if the service is available, the station is alive, the player's veh is close enought, and the station is NOT serving itself, then...
-					if ( (VO_airServRepair) AND (alive _x) AND ( (_eachAirVeh distance _x) < VO_airActRange ) AND (_eachAirVeh != _x) ) then 
-					{
-						// checking the player veh:
-						if ( (alive _eachAirVeh) AND (damage _eachAirVeh > _minDamage) AND (isEngineOn _eachAirVeh == false) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1 AND speed _eachAirVeh > -1) AND (_serviceInProgress == false) ) then
-						{					
-							_serviceInProgress = true; 
-							sleep 3;
-							
-							if ( VO_feedbackMsgs ) then 
-							{
-								["Checking the vehicle damages..."] remoteExec ["systemChat", _eachAirVeh];               // it shows the message only for who has the _eachAirVeh locally.
-							};
-							
-							playSound3D ["a3\sounds_f\characters\cutscenes\dirt_acts_carfixingwheel.wss", _x];
-							sleep 3;               
-							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _eachAirVeh];
-							
-							// if player inside the vehicle in service:
-							if (_eachHumamPlayer in _eachAirVeh) then 
-							{
-								[[1, 5, 5]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
-							};
-							
-							_eachAirVeh setDammage 0;               //setDammage is a global variable, it doesnt need remoteExec.
-							
-							sleep 3;
-							if ( VO_feedbackMsgs ) then 
-							{
-								["Air vehicle has been repaired!"] remoteExec ["systemChat", _eachAirVeh];
-								sleep 2;
-								
-								// checking the vehicle needs and if another service is available for that station:
-								[VO_airServRefuel, _x, _arrayAirFullAndRefuelServ, _eachAirVeh, VO_airServRearm, _arrayAirFullAndRearmServ, VO_airCooldown] call THY_fnc_VO_checkNextServiceRefuelOrRearm;
-							};
-							
-							sleep VO_airCooldown;
-							_serviceInProgress = false;               // station is free for the next service!
-						};
-					};
-					
-				} forEach _arrayAirFullAndRepairServ;
-						
-				// AIR REFUEL
-				{ // forEach of _arrayAirFullAndRefuelServ starts....
-				
-					if ( (VO_airServRefuel) AND (alive _x) AND ( (_eachAirVeh distance _x) < VO_airActRange ) AND (_eachAirVeh != _x) ) then  
-					{
-						if ( (alive _eachAirVeh) AND (fuel _eachAirVeh < _minFuel) AND (isEngineOn _eachAirVeh == false) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1 AND speed _eachAirVeh > -1) AND (_serviceInProgress == false) ) then
-						{	
-							_serviceInProgress = true; 
-							sleep 3;
-							
-							if ( VO_feedbackMsgs ) then 
-							{
-								["Checking the fuel..."] remoteExec ["systemChat", _eachAirVeh];
-							};
-												
-							playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
-							sleep 3;
-							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _eachAirVeh]; 
-							
-							if (_eachHumamPlayer in _eachAirVeh) then 
-							{
-								[[0.3, 5, 2]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency].
-							};
-							
-							[_eachAirVeh, 1] remoteExec ["setFuel", _eachAirVeh];               //the same as "_eachAirVeh setFuel 1;" but for multiplayer when the variable (setFuel) is not global variable.
-							
-							sleep 3;
-							if ( VO_feedbackMsgs ) then 
-							{
-								["Air vehicle has been refueled!"] remoteExec ["systemChat", _eachAirVeh];
-								sleep 2;
-								
-								// checking the vehicle needs and if another service is available for that station:
-								[VO_airServRearm, _x, _arrayAirFullAndRearmServ, _eachAirVeh, VO_airServRepair, _arrayAirFullAndRepairServ, VO_airCooldown] call THY_fnc_VO_checkNextServiceRearmOrRepair;
-							};
-							
-							sleep VO_airCooldown;
-							_serviceInProgress = false;
-						};
-					};
-						
-				} forEach _arrayAirFullAndRefuelServ;
-						
-				// AIR REARM
-				{ // forEach of _arrayAirFullAndRearmServ starts....
-				
-					if ( (VO_airServRearm) AND (alive _x) AND ( (_eachAirVeh distance _x) < VO_airActRange ) AND (_eachAirVeh != _x) ) then  
-					{
-						// checking advanced condition of station:
-						[_x, _eachHumamPlayer] call THY_fnc_VO_stationAdvCondition;
-						
-						if ( (alive _eachAirVeh) AND ( ({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _eachAirVeh)) > 0 ) AND (isTouchingGround _eachAirVeh) AND (speed _eachAirVeh < 1 AND speed _eachAirVeh > -1) AND (_serviceInProgress == false) ) then 
-						{
-							if (true /* fix this condition: if some available mag is not full, then */) then 
-							{
-								_serviceInProgress = true;
-								sleep 3;
-								
-								if ( VO_feedbackMsgs ) then 
-								{
-									["Checking the vehicle ammunition..."] remoteExec ["systemChat", _eachAirVeh];
-								};
-								
-								playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];									
-								sleep 3;
-								playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _eachAirVeh];
-								
-								if (_eachHumamPlayer in _eachAirVeh) then
-								{
-									[[1, 5, 3]] remoteExec ["addCamShake", _eachHumamPlayer];               // [power, duration, frequency]. 
-								};
-								
-								[_eachAirVeh, 1] remoteExec ["setVehicleAmmo", _eachAirVeh];       // the same as "_eachAirVeh setVehicleAmmo 1" but for multiplayer, because "setVehicleAmmo" is not a global variable.
-								
-								sleep 3;
-								if ( VO_feedbackMsgs ) then 
-								{
-									["Air vehicle has been rearmed!"] remoteExec ["systemChat", _eachAirVeh];
-									sleep 2;
-									
-									// checking the vehicle needs and if another service is available for that station:
-									[VO_airServRepair, _x, _arrayAirFullAndRepairServ, _eachAirVeh, VO_airServRefuel, _arrayAirFullAndRefuelServ, VO_airCooldown] call THY_fnc_VO_checkNextServiceRepairOrRefuel;
-								};
-								
-								sleep VO_airCooldown;
-								_serviceInProgress = false; 
-							};
-						};
-					};
+				_eachVeh = _x; 
 
-				} forEach _arrayAirFullAndRearmServ;
+				// AIR REPAIR
+				[VO_airServRepair, _eachVeh, VO_airServiceRange, _servProgrs, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airCooldown] call THY_fnc_VO_servRepair;
+				
+				// AIR REFUEL
+				[VO_airServRefuel, _eachVeh, VO_airServiceRange, _servProgrs, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airCooldown] call THY_fnc_VO_servRefuel;
+	
+				// AIR REARM
+				[VO_airServRearm, _eachVeh, VO_airServiceRange, _eachPlayer, _servProgrs, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airCooldown] call THY_fnc_VO_servRearm;
+				
+				// Parking plane helper:
+				[_eachVeh, _parkingHelperAssets] call THY_fnc_VO_parkingHelper;
+				
 
 			} forEach _airVehicles;
 		
-		} forEach VO_humanPlayersAlive;
+		} forEach _playersAlive;
 		
 		sleep 5;
 		if ( VO_debugMonitor ) then { VO_airCyclesDone = (VO_airCyclesDone + 1) };
