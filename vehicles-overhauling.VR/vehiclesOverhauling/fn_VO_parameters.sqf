@@ -8,7 +8,7 @@ if (!isServer) exitWith {};
 	VO_debugMonitor = false;          // true = turn on the editor hints / false = turn it off.
 	VO_feedbackMsgs = true;          // true = the station shows service messages in-game for the player (highly recommended) / false = turn it off.
 	VO_dronesNeedHuman = false;          // true = player presence is mandatory for the vehicle to get a service. / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. 
-	//ACE_isOn = false;          // true = your mission is using ACE MOD / false = not using ACE MOD. <-------------------------------- WIP
+	ACE_isOn = false;          // FOR NOW, LET'S ALWAYS FALSE. WORK IN PROGRESS! true = your mission is using ACE MOD / false = not using ACE MOD. <-------------------------------- WIP
 	
 	
 	// GROUND SERVICES
@@ -22,13 +22,12 @@ if (!isServer) exitWith {};
 		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default 30.
 		
 		// Define which assets (classnames) are ground full (repair, refuel, rearm) stations:
-		VO_grdFullAssets =          
+		VO_grdFullAssets = 
 		[
 			"Land_RepairDepot_01_green_F",
 			"Land_RepairDepot_01_tan_F",
 			//"Land_Carrier_01_base_F",          // aircraft carrier USS Freedom / it doesnt work well because the asset is too big.
 			"Land_RepairDepot_01_civ_F"
-			
 		];
 		
 		// Define which assets (classnames) are ground repair stations:

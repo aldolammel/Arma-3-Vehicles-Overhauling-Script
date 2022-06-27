@@ -1,7 +1,7 @@
 // File: your_mission\vehiclesOverhauling\fn_VO_coreAir.sqf
 // by thy (@aldolammel)
 
-private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_parkingHelperAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_airVehicles","_connected","_servProgrs","_eachPlayer","_eachVeh"];
+private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_parkingHelperAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_airVehicles","_connected","_isServProgrs","_eachPlayer","_eachVeh"];
 
 // Only on the server, you dont want all players checking all players:
 if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
@@ -41,7 +41,7 @@ if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 	};
 	
 	// Initial services condition:
-	_servProgrs = false;
+	_isServProgrs = false;
 	
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
 	while { isStationsOkay AND isServicesOkay } do
@@ -74,13 +74,13 @@ if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 				_eachVeh = _x; 
 
 				// AIR REPAIR
-				[VO_airServRepair, _eachVeh, VO_airServiceRange, _servProgrs, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airCooldown] call THY_fnc_VO_servRepair;
+				[VO_airServRepair, _eachVeh, VO_airServiceRange, _isServProgrs, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airCooldown] call THY_fnc_VO_servRepair;
 				
 				// AIR REFUEL
-				[VO_airServRefuel, _eachVeh, VO_airServiceRange, _servProgrs, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airCooldown] call THY_fnc_VO_servRefuel;
+				[VO_airServRefuel, _eachVeh, VO_airServiceRange, _isServProgrs, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airCooldown] call THY_fnc_VO_servRefuel;
 	
 				// AIR REARM
-				[VO_airServRearm, _eachVeh, VO_airServiceRange, _eachPlayer, _servProgrs, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airCooldown] call THY_fnc_VO_servRearm;
+				[VO_airServRearm, _eachVeh, VO_airServiceRange, _eachPlayer, _isServProgrs, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airCooldown] call THY_fnc_VO_servRearm;
 				
 				// Parking plane helper:
 				[_eachVeh, _parkingHelperAssets] call THY_fnc_VO_parkingHelper;

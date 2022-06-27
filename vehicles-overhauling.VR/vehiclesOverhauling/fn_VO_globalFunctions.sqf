@@ -30,8 +30,7 @@ THY_fnc_VO_servRepair =
 {
 	// This function: provides the repairing functionality for the vehicles parked at station.
 	
-	params ["_serv", "_veh", "_servRng", "_servProgrs", "_fullAndRepAssets", "_servRefuel", "_fullAndRefAssets", "_servRearm", "_fullAndReaAssets", "_cooldown", ["_nautic", false]];
-	private ["_crewVeh"];
+	params ["_serv", "_veh", "_servRng", "_isServProgrs", "_fullAndRepAssets", "_servRefuel", "_fullAndRefAssets", "_servRearm", "_fullAndReaAssets", "_cooldown", ["_isNautic", false]];
 
 	{ // forEach of _fullAndRepAssets starts...
 					
@@ -41,7 +40,7 @@ THY_fnc_VO_servRepair =
 		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) ) then 
 		{
 			// checking the player veh: 
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_servProgrs) AND (!isEngineOn _veh) AND (damage _veh > VO_minRepairService) ) then
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (damage _veh > VO_minRepairService) ) then
 			{					
 				if ( VO_feedbackMsgs ) then 
 				{				
@@ -49,43 +48,24 @@ THY_fnc_VO_servRepair =
 				};
 				sleep _cooldown;
 				
-				_servProgrs = true;
+				_isServProgrs = true;
 				
 				if ( VO_feedbackMsgs ) then 
 				{
 					["Checking the vehicle damages..."] remoteExec ["systemChat", _veh];               // it shows the message only for who has the _veh locally.
 				};
 				
-				if (!_nautic) then               // check if the vehicle is nautic to adapt the sound effect.
+				if (!_isNautic) then               // check if the vehicle is nautic to adapt the sound effect.
 				{
 					playSound3D ["a3\sounds_f\characters\cutscenes\dirt_acts_carfixingwheel.wss", _x];
 				} else {
 					playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_carfixingwheel.wss", _x]; 
 				}; 
 				
-				// before repair it, last check if the player's vehicle still on conditions:
-				if ( ( (_veh distance _x) < _servRng ) AND (!isEngineOn _veh) ) then 
-				{
-					sleep 3;               
-					playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _veh];
+				// before repairing, last check if the player's vehicle and station still on conditions:
+				[_x, _veh, _servRng, _isNautic, "rep", "repaired", "Repairing"] call THY_fnc_VO_stillOnCondition;	
 				
-					_crewVeh = crew _veh;
-					[[1, 5, 5]] remoteExec ["addCamShake", _crewVeh];               // [power, duration, frequency].
-					
-					_veh setDammage 0;               // setDammage is a global variable, it doesnt need remoteExec.
-					
-					sleep 3;
-					if ( VO_feedbackMsgs ) then 
-					{
-						["Vehicle has been repaired!"] remoteExec ["systemChat", _veh];
-					};
-					sleep 2;
-				} else {
-					format ["The repairing has been canceled!"] remoteExec ["systemChat", _veh];
-					sleep 5;
-				};
-				
-				_servProgrs = false;               // station is free for the next service!
+				_isServProgrs = false;               // station is free for the next service!
 			};
 		};
 		
@@ -100,8 +80,7 @@ THY_fnc_VO_servRefuel =
 {
 	// This function: provides the refueling functionality for the vehicles parked at station.
 	
-	params ["_serv", "_veh", "_servRng", "_servProgrs", "_fullAndRefAssets", "_servRearm", "_fullAndReaAssets", "_servRepair", "_fullAndRepAssets", "_cooldown", ["_nautic", false]];
-	private ["_crewVeh"];
+	params ["_serv", "_veh", "_servRng", "_isServProgrs", "_fullAndRefAssets", "_servRearm", "_fullAndReaAssets", "_servRepair", "_fullAndRepAssets", "_cooldown", ["_isNautic", false]];
 	
 	{ // forEach of _fullAndRefAssets starts....
 				
@@ -110,7 +89,7 @@ THY_fnc_VO_servRefuel =
 		// checking the basic station (_x) conditions:
 		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) ) then 
 		{
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_servProgrs) AND (!isEngineOn _veh) AND (fuel _veh < VO_minRefuelService) ) then 
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (fuel _veh < VO_minRefuelService) ) then 
 			{	
 				if ( VO_feedbackMsgs ) then 
 				{				
@@ -118,43 +97,24 @@ THY_fnc_VO_servRefuel =
 				};
 				sleep _cooldown;
 				
-				_servProgrs = true;
+				_isServProgrs = true;
 				
 				if ( VO_feedbackMsgs ) then 
 				{
 					["Checking the fuel..."] remoteExec ["systemChat", _veh];
 				};
 									
-				if (!_nautic) then               // check if the vehicle is nautic to adapt the sound effect.
+				if (!_isNautic) then               // check if the vehicle is nautic to adapt the sound effect.
 				{
 					playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
 				} else {
 					playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_walkingchecking.wss", _x]; 
 				}; 
 				
-				// before refuel it, last check if the player's vehicle still on conditions:
-				if ( ( (_veh distance _x) < _servRng ) AND (!isEngineOn _veh) ) then 
-				{
-					sleep 3;               
-					playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _veh];
-
-					_crewVeh = crew _veh;
-					[[0.3, 5, 2]] remoteExec ["addCamShake", _crewVeh];               // [power, duration, frequency].
-					
-					[_veh, 1] remoteExec ["setFuel", _veh];               //the same as "_veh setFuel 1;" but for multiplayer when the variable (setFuel) is not global variable.
-					
-					sleep 3;
-					if ( VO_feedbackMsgs ) then 
-					{
-						["Vehicle has been refueled!"] remoteExec ["systemChat", _veh];
-					};
-					sleep 2;
-				} else {
-					format ["The refueling has been canceled!"] remoteExec ["systemChat", _veh];
-					sleep 5;
-				};
+				// before refueling, last check if the player's vehicle and station still on conditions:
+				[_x, _veh, _servRng, _isNautic, "ref", "refueled", "Refueling"] call THY_fnc_VO_stillOnCondition;	
 				
-				_servProgrs = false;
+				_isServProgrs = false;
 			};
 		};
 		
@@ -169,29 +129,31 @@ THY_fnc_VO_servRearm =
 {
 	// This function: provides the rearming functionality for the armed vehicles parked at station.
 	
-	params ["_serv", "_veh", "_servRng", "_player", "_servProgrs", "_fullAndReaAssets", "_servRepair", "_fullAndRepAssets", "_servRefuel", "_fullAndRefAssets", "_cooldown", ["_nautic", false]];
-	private ["_crewVeh"];
+	params ["_serv", "_veh", "_servRng", "_player", "_isServProgrs", "_fullAndReaAssets", "_servRepair", "_fullAndRepAssets", "_servRefuel", "_fullAndRefAssets", "_cooldown", ["_isNautic", false]];
 	
 	{ // forEach of _fullAndReaAssets starts....
 				
 		if ( !_serv ) exitWith {};
 	
-		// checking the basic station (_x) conditions + if the vehicle has weaponry:
-		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) ) then 
+		// checking the basic station (_x) conditions:
+		if ( (alive _x) AND ((_veh distance _x) < _servRng) AND (_veh != _x) ) then 
 		{
-			// checking the advanced station conditions (for mobile-stations):
-			if ( (underwater _x) OR !((getPos _x) select 2 < 0.1) OR (speed _x > 0) ) exitWith              // <<---- "!(isTouchingGround)" is not working reliable!
-			{ 
-				// checking the player's vehicle:
-				if ( !(_player in _x) AND !(vehicle _player isKindOf "Helicopter") AND (count weapons _veh > 0) ) then   // if the player ISN'T in a mobile-station and NOT in a helicopter-transporting-a-rearm-container when the VO_airServiceRange is too large and vehicle has weaponry.
-				{
-					["The station doesn't meet the conditions to work properly. Try later..."] remoteExec ["systemChat", _player];
-					sleep(2);
+			if (!_isNautic) then 
+			{
+				// checking the advanced stations (_x) conditions (to prevent madness with mobile-stations):
+				if ( (underwater _x) OR !((getPos _x) select 2 < 0.1) OR (speed _x > 0) ) exitWith              // Important: "!(isTouchingGround)" is not working reliable!
+				{ 
+					// checking the player's vehicle:
+					if ( !(_player in _x) AND !(vehicle _player isKindOf "Helicopter") AND (count weapons _veh > 0) ) then   // if the player ISN'T in a mobile-station and NOT in a helicopter-transporting-a-rearm-container when the VO_airServiceRange is too large and vehicle has weaponry.
+					{
+						sleep(2);
+						["The station doesn't meet the conditions to work properly. Try later..."] remoteExec ["systemChat", _player];
+						sleep(1);
+					};
 				};
 			};
-			
 			// checking the player's vehicle conditions:
-			if ( (alive _veh) AND (count weapons _veh > 0) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_servProgrs) AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _veh)) > 0) ) then
+			if ( (alive _veh) AND (count weapons _veh > 0) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_isServProgrs) AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _veh)) > 0) ) then
 			{
 				if ( VO_feedbackMsgs ) then 
 				{				
@@ -199,7 +161,7 @@ THY_fnc_VO_servRearm =
 				};
 				sleep _cooldown;
 				
-				_servProgrs = true; 
+				_isServProgrs = true; 
 				
 				if ( VO_feedbackMsgs ) then 
 				{
@@ -207,35 +169,17 @@ THY_fnc_VO_servRearm =
 				};
 				
 				// check if the vehicle is nautic to adapt the sound effect:
-				if (!_nautic) then
+				if (!_isNautic) then
 				{
 					playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
 				} else {
 					playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_carfixingwheel.wss", _x]; 
 				}; 
 				
-				if ( (_veh distance _x) < _servRng ) then 
-				{
-					sleep 3;               
-					playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _veh];
-					
-					_crewVeh = crew _veh;
-					[[1, 5, 3]] remoteExec ["addCamShake", _crewVeh];               // [power, duration, frequency].
-					
-					[_veh, 1] remoteExec ["setVehicleAmmo", _veh];    // the same as "_veh setVehicleAmmo 1" but for multiplayer, because "setVehicleAmmo" is not a global variable.
+				// before rearming, last check if the player's vehicle and station still on conditions:
+				[_x, _veh, _servRng, _isNautic, "rea", "rearmed", "Rearming"] call THY_fnc_VO_stillOnCondition;
 				
-					sleep 3;
-					if ( VO_feedbackMsgs ) then 
-					{
-						["Vehicle has been rearmed!"] remoteExec ["systemChat", _veh];
-					};
-					sleep 2;
-				} else {
-					format ["The rearming has been canceled!"] remoteExec ["systemChat", _veh];
-					sleep 5;
-				};
-				
-				_servProgrs = false;
+				_isServProgrs = false;
 			};
 		};
 	
@@ -268,3 +212,97 @@ THY_fnc_VO_parkingHelper =
 		} forEach _assetsToHelp;
 	};
 };
+
+
+// ---------------------------------------------------------------
+
+
+THY_fnc_VO_stillOnCondition = 
+{
+	// This function: before the service execution, it makes a last check if the player's vehicle and station still on conditions to get the service.
+	
+	params ["_stat", "_veh", "_servRng", "_isNautic", "_soundFx", ["_msg1", "fixed"], ["_msg2", "The service"]];
+	private ["_crewVeh", "_isReady", "_noTouching"];
+	
+	_crewVeh = crew _veh;
+	_isReady = false;
+	_noTouching = false;
+	
+	if ( (alive _stat) AND (alive _veh) AND !(underwater _stat) AND !(underwater _veh) AND (speed _stat < 1) AND (speed _veh < 1) AND ((_veh distance _stat) < _servRng) ) then 
+	{
+		sleep 3;
+		
+		// REPAIRING
+		if (_soundFx == "rep") then
+		{ 
+			if (isEngineOn _veh) exitWith 
+			{ 
+				format ["%1 canceled! Keep the engine OFF at station.", str(_msg2)] remoteExec ["systemChat", _veh];
+			};
+			if ( !_isNautic ) then                // Ground and air services need vehicles and the station itself are touching the ground.
+			{
+				if ( !((getPos _stat) select 2 < 0.1) AND !((getPos _veh) select 2 < 0.1) ) then
+				{
+					format ["%1 canceled! Keep the vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
+					_noTouching = true;
+				};
+			};
+			if (_noTouching) exitWith {};                // if true, it will stop the scope right here, prevent to run the scope lines below.
+			playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_repair.wss", _veh];
+			[[1, 5, 5]] remoteExec ["addCamShake", _crewVeh];                // [power, duration, frequency].
+			_veh setDammage 0;                // setDammage is a global variable, it doesnt need remoteExec.
+			_isReady = true;
+		};
+		
+		// REFUELING
+		if (_soundFx == "ref") then
+		{ 
+			if (isEngineOn _veh) exitWith
+			{
+				format ["%1 canceled! Keep the engine OFF at station.", str(_msg2)] remoteExec ["systemChat", _veh];
+			}; 
+			if ( !_isNautic ) then                // Ground and air services need vehicles and the station itself are touching the ground.
+			{
+				if ( !((getPos _stat) select 2 < 0.1) AND !((getPos _veh) select 2 < 0.1) ) then
+				{
+					format ["%1 canceled! Keep the vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
+					_noTouching = true;
+				};
+			};
+			if (_noTouching) exitWith {};                // if true, it will stop the scope right here, prevent to run the scope lines below.
+			playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_refuel.wss", _veh];
+			[[0.3, 5, 2]] remoteExec ["addCamShake", _crewVeh];
+			[_veh, 1] remoteExec ["setFuel", _veh];               //the same as "_veh setFuel 1;" but for multiplayer when the variable (setFuel) is not global variable.
+			_isReady = true;
+		};
+		
+		// REARMING
+		if (_soundFx == "rea") then
+		{ 
+			if ( !_isNautic ) then                // Ground and air services need vehicles and the station itself are touching the ground.
+			{
+				if ( !((getPos _stat) select 2 < 0.1) AND !((getPos _veh) select 2 < 0.1) ) then
+				{
+					format ["%1 canceled! Keep the vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
+					_noTouching = true;
+				};
+			};
+			if (_noTouching) exitWith {};                // if true, it will stop the scope right here, prevent to run the scope lines below.
+			playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _veh]; 
+			[[1, 5, 3]] remoteExec ["addCamShake", _crewVeh];
+			[_veh, 1] remoteExec ["setVehicleAmmo", _veh];               // the same as "_veh setVehicleAmmo 1" but for multiplayer, because "setVehicleAmmo" is not a global variable.
+			_isReady = true;
+		};
+	
+		sleep 3;
+		if ( VO_feedbackMsgs AND _isReady ) then 
+		{
+			format ["Vehicle has been %1!", str(_msg1)] remoteExec ["systemChat", _veh];
+		};
+		sleep 2;
+	} else {
+		format ["%1 has been canceled!", str(_msg2)] remoteExec ["systemChat", _veh];
+		sleep 5;
+	};
+};
+

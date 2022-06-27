@@ -1,7 +1,7 @@
 // File: your_mission\vehiclesOverhauling\fn_VO_coreGrd.sqf
 // by thy (@aldolammel)
 
-private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_grdVehicles","_connected","_servProgrs","_eachPlayer","_eachVeh"];
+private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_grdVehicles","_connected","_isServProgrs","_eachPlayer","_eachVeh"];
 
 // Only on the server, you dont want all players checking all players:
 if ( !groundVehiclesOverhauling OR !isServer ) exitWith {};
@@ -37,7 +37,7 @@ if ( !groundVehiclesOverhauling OR !isServer ) exitWith {};
 	};
 	
 	// Initial services condition:
-	_servProgrs = false; 
+	_isServProgrs = false; 
 	
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
 	while { isStationsOkay AND isServicesOkay } do
@@ -70,13 +70,13 @@ if ( !groundVehiclesOverhauling OR !isServer ) exitWith {};
 				_eachVeh = _x;
 				
 				// GROUND REPAIR
-				[VO_grdServRepair, _eachVeh, VO_grdServiceRange, _servProgrs, _fullAndRepAssets, VO_grdServRefuel, _fullAndRefAssets, VO_grdServRearm, _fullAndReaAssets, VO_grdCooldown] call THY_fnc_VO_servRepair;
+				[VO_grdServRepair, _eachVeh, VO_grdServiceRange, _isServProgrs, _fullAndRepAssets, VO_grdServRefuel, _fullAndRefAssets, VO_grdServRearm, _fullAndReaAssets, VO_grdCooldown] call THY_fnc_VO_servRepair;
 				
 				// GROUND REFUEL
-				[VO_grdServRefuel, _eachVeh, VO_grdServiceRange, _servProgrs, _fullAndRefAssets, VO_grdServRearm, _fullAndReaAssets, VO_grdServRepair, _fullAndRepAssets, VO_grdCooldown] call THY_fnc_VO_servRefuel;
+				[VO_grdServRefuel, _eachVeh, VO_grdServiceRange, _isServProgrs, _fullAndRefAssets, VO_grdServRearm, _fullAndReaAssets, VO_grdServRepair, _fullAndRepAssets, VO_grdCooldown] call THY_fnc_VO_servRefuel;
 				
 				// GROUND REARM
-				[VO_grdServRearm, _eachVeh, VO_grdServiceRange, _eachPlayer, _servProgrs, _fullAndReaAssets, VO_grdServRepair, _fullAndRepAssets, VO_grdServRefuel, _fullAndRefAssets, VO_grdCooldown] call THY_fnc_VO_servRearm;
+				[VO_grdServRearm, _eachVeh, VO_grdServiceRange, _eachPlayer, _isServProgrs, _fullAndReaAssets, VO_grdServRepair, _fullAndRepAssets, VO_grdServRefuel, _fullAndRefAssets, VO_grdCooldown] call THY_fnc_VO_servRearm;
 
 			} forEach _grdVehicles;
 			

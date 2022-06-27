@@ -1,7 +1,7 @@
 // File: your_mission\vehiclesOverhauling\fn_VO_coreNau.sqf
 // by thy (@aldolammel)
 
-private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_nauVehicles","_connected","_servProgrs","_eachPlayer","_eachVeh"];
+private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_nauVehicles","_connected","_isServProgrs","_eachPlayer","_eachVeh"];
 
 // Only on the server, you dont want all players checking all players:
 if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
@@ -37,7 +37,7 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 	};
 	
 	// initial services condition:
-	_servProgrs = false; 
+	_isServProgrs = false; 
 	
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
 	while { isStationsOkay AND isServicesOkay } do
@@ -70,13 +70,13 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 				_eachVeh = _x;
 			
 				// NAUTIC REPAIR
-				[VO_nauServRepair, _eachVeh, VO_nauServiceRange, _servProgrs, _fullAndRepAssets, VO_nauServRefuel, _fullAndRefAssets, VO_nauServRearm, _fullAndReaAssets, VO_nauCooldown, true] call THY_fnc_VO_servRepair;
+				[VO_nauServRepair, _eachVeh, VO_nauServiceRange, _isServProgrs, _fullAndRepAssets, VO_nauServRefuel, _fullAndRefAssets, VO_nauServRearm, _fullAndReaAssets, VO_nauCooldown, true] call THY_fnc_VO_servRepair;
 				
 				// NAUTIC REFUEL
-				[VO_nauServRefuel, _eachVeh, VO_nauServiceRange, _servProgrs, _fullAndRefAssets, VO_nauServRearm, _fullAndReaAssets, VO_nauServRepair, _fullAndRepAssets, VO_nauCooldown, true] call THY_fnc_VO_servRefuel;
+				[VO_nauServRefuel, _eachVeh, VO_nauServiceRange, _isServProgrs, _fullAndRefAssets, VO_nauServRearm, _fullAndReaAssets, VO_nauServRepair, _fullAndRepAssets, VO_nauCooldown, true] call THY_fnc_VO_servRefuel;
 				
 				// NAUTIC REARM
-				[VO_nauServRearm, _eachVeh, VO_nauServiceRange, _eachPlayer, _servProgrs, _fullAndReaAssets, VO_nauServRepair, _fullAndRepAssets, VO_nauServRefuel, _fullAndRefAssets, VO_nauCooldown, true] call THY_fnc_VO_servRearm;
+				[VO_nauServRearm, _eachVeh, VO_nauServiceRange, _eachPlayer, _isServProgrs, _fullAndReaAssets, VO_nauServRepair, _fullAndRepAssets, VO_nauServRefuel, _fullAndRefAssets, VO_nauCooldown, true] call THY_fnc_VO_servRearm;
 
 			} forEach _nauVehicles;
 		
