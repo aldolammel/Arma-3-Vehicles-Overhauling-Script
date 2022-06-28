@@ -4,6 +4,9 @@
 
 Vehicles Overhauling (VO) is a system of repair, refuel and rearm stations for multiplayer missions that simultaneously require resources by doctrine: ground, air and nautical vehicles. Each doctrine or service is easily turned Off or On, according to the editor's needs. Triggering or code via Eden is needless, even opening multiple files for script settings. VO prioritizes implementation simplicity and quick change management that the mission editor might want.  
 
+**Full documentation**
+https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
+
 **What to expect from this script**
 
 - Define which vehicle type have automatically access to ground, air or nautic services;
