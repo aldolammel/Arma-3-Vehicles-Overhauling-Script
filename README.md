@@ -4,9 +4,6 @@
 
 Vehicles Overhauling (VO) is a system of repair, refuel and rearm stations for multiplayer missions that simultaneously require resources by doctrine: ground, air and nautical vehicles. Each doctrine or service is easily turned Off or On, according to the editor's needs. Triggering or code via Eden is needless, even opening multiple files for script settings. VO prioritizes implementation simplicity and quick change management that the mission editor might want.  
 
-**Full documentation**
-https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
-
 **What to expect from this script**
 
 - Define which vehicle type have automatically access to ground, air or nautic services;
@@ -17,7 +14,10 @@ https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/
 - Once defined which assets/objets are stations and its type, on Eden you just drag and drop the asset you defined as station;
 - Script working as gold on hosted and dedicated servers.
 
-...............
+**Full documentation**
+
+https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
+
 
 ### GLOBAL STATION RULES
 
@@ -57,7 +57,6 @@ https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/
 - The target-vehicle cannot be submerged, even submarines;
 - The target-vehicle must have its speed at zero or very close to it;
 
-...............
 
 ## Ideas or fixes?
 link soon
