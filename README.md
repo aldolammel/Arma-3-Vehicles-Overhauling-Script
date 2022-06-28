@@ -14,7 +14,7 @@ Vehicles Overhauling (VO) is a system of repair, refuel and rearm stations for m
 - Once defined which assets/objets are stations and its type, on Eden you just drag and drop the asset you defined as station;
 - Script working as gold on hosted and dedicated servers.
 
-**Full documentation**
+**How to install / Full documentation**
 
 https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 
