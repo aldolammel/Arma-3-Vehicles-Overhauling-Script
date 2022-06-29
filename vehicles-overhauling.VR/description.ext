@@ -3,14 +3,14 @@ class Header
 {
 	gameType 			= Sandbox; 	
 	minPlayers			= 1;		
-	maxPlayers			= 1;
+	maxPlayers			= 3;
 };
 
 	// About
 	onLoadName 			= "VEHICLES OVERHAULING";
 	author 				= "thy"; 						
 	overviewPicture 	= "images\thumb.jpg"; 			
-	onLoadMission 		= "A script of repair, refuel and rearm stations for multiplayer missions that simultaneously require resources by doctrine: ground, air and nautical vehicles."; 
+	onLoadMission 		= "VO is a script that provides a system of repairing, refueling, and rearming vehicles by proximity. The services are divided by doctrine: Ground, Air, and Nautical."; 
 
 	// Gameplay
 	joinUnassigned 		= 0;
