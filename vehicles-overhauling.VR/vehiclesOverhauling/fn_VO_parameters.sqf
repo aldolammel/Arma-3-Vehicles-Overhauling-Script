@@ -1,25 +1,26 @@
 // File: your_mission\vehiclesOverhauling\fn_VO_parameters.sqf
+// Documentation: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 // by thy (@aldolammel)
 
 if (!isServer) exitWith {};
 
 // EDITOR'S OPTIONS:
 
-	VO_debugMonitor = false;          // true = turn on the editor hints / false = turn it off.
-	VO_feedbackMsgs = true;          // true = the station shows service messages in-game for the player (highly recommended) / false = turn it off.
-	VO_dronesNeedHuman = false;          // true = player presence is mandatory for the vehicle to get a service. / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. 
-	ACE_isOn = false;          // FOR NOW, LET'S ALWAYS FALSE. WORK IN PROGRESS! true = your mission is using ACE MOD / false = not using ACE MOD. <-------------------------------- WIP
+	VO_debugMonitor = false;          // true = turn on the editor hints / false = turn it off. Default: false.
+	VO_feedbackMsgs = true;          // true = the station shows service messages in-game for the player (highly recommended) / false = turn it off. Default: true.
+	VO_dronesNeedHuman = false;          // true = player presence is mandatory for the vehicle to get a service / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. Default: false. 
+	ACE_isLoaded = false;          // true = ACE mod is loaded in the mission / false = not loaded in mission.
 	
 	
 	// GROUND SERVICES
 	groundVehiclesOverhauling = true;          // true = the mission needs ground stations / false = doesn't need.
  
-		VO_grdServRepair = true;          // true = repair stations for ground veh are available / false = not available / highly recommended turn it on if you want also to refueling.
+		VO_grdServRepair = true;          // true = repair stations for ground veh are available / false = not available.
 		VO_grdServRefuel = true;          // true = refuel stations for ground veh are available / false = not available.
 		VO_grdServRearm = true;          // true = rearm stations for ground veh are available / false = not available.
 		VO_grdServFull = true;          // true = chosen assets will bring all available ground services in one place / false = no full service.
-		VO_grdServiceRange = 20;          // in meters, the area around the station that identifies the ground vehicle to be serviced. Default 20.
-		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default 30.
+		VO_grdServiceRange = 20;          // in meters, the area around the station that identifies the ground vehicle to be serviced. Default: 20.
+		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default: 30.
 		
 		// Define which assets (classnames) are ground full (repair, refuel, rearm) stations:
 		VO_grdFullAssets = 
@@ -98,12 +99,12 @@ if (!isServer) exitWith {};
 	// AIR SERVICES
 	airVehiclesOverhauling = true;          // true = the mission needs air stations / false = doesn't need.
 
-		VO_airServRepair = true;          // true = repair stations for air veh are available / false = not available / highly recommended turn it on if you want also to refueling.
+		VO_airServRepair = true;          // true = repair stations for air veh are available / false = not available.
 		VO_airServRefuel = true;          // true = refuel stations for air veh are available / false = not available.
 		VO_airServRearm = true;          // true = rearm stations for air veh are available / false = not available.
 		VO_airServFull = true;          // true = chosen assets will bring all available air services in one place / false = no full service. 
-		VO_airServiceRange = 20;          // in meters, the area around the station that identifies the air vehicle to be serviced. Default 20.
-		VO_airCooldown = 10;          // in seconds, time among each available air services. Default 30.
+		VO_airServiceRange = 20;          // in meters, the area around the station that identifies the air vehicle to be serviced. Default: 20.
+		VO_airCooldown = 10;          // in seconds, time among each available air services. Default: 30.
 		
 		// Define which assets (classnames) are air full (repair, refuel, rearm) stations:
 		VO_airFullAssets =          
@@ -191,12 +192,12 @@ if (!isServer) exitWith {};
 	// NAUTIC SERVICES
 	nauticVehiclesOverhauling = true;          // true = the mission needs nautic stations / false = doesn't need.
 
-		VO_nauServRepair = true;          // true = repair stations for nautic veh are available / false = not available / highly recommended turn it on if you want also to refueling.
+		VO_nauServRepair = true;          // true = repair stations for nautic veh are available / false = not available.
 		VO_nauServRefuel = true;          // true = refuel stations for nautic veh are available / false = not available.
 		VO_nauServRearm = true;          // true = rearm stations for nautic veh are available / false = not available.
 		VO_nauServFull = true;          // true = chosen assets will bring all available nautic services in one place / false = no full service. 
-		VO_nauServiceRange = 20;          // in meters, the area around the station that identifies the nautic vehicle to be serviced. Default 20.
-		VO_nauCooldown = 10;          // in seconds, time among each available nautic services. Default 30.
+		VO_nauServiceRange = 20;          // in meters, the area around the station that identifies the nautic vehicle to be serviced. Default: 20.
+		VO_nauCooldown = 10;          // in seconds, time among each available nautic services. Default: 30.
 		
 		// Define which assets (classnames) are nautic full (repair, refuel, rearm) stations:
 		VO_nauFullAssets =          
@@ -264,7 +265,7 @@ if (!isServer) exitWith {};
 		VO_nauVehicleTypes = [ "Ship","Submarine" ];
 		
 		// minimal vehicle conditions for overhauling:
-		VO_minRepairService = 0.1; VO_minRefuelService = 0.8; //VO_minRearmService = WIP;	
+		VO_minRepairService = 0.1; VO_minRefuelService = 0.8;	
 		
 		// Debug initial counting of while-cycles:
 		VO_grdCyclesDone = 0; VO_airCyclesDone = 0; VO_nauCyclesDone = 0; 
@@ -274,9 +275,9 @@ if (!isServer) exitWith {};
 		isServicesOkay = false;
 		if (groundVehiclesOverhauling OR airVehiclesOverhauling OR nauticVehiclesOverhauling) then { 
 			isStationsOkay = true;
-			if ( groundVehiclesOverhauling ) then {	if ( VO_grdServRepair OR VO_grdServRefuel OR VO_grdServRearm ) then {	isServicesOkay = true; } else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > No ground services working!"; }; };
-			if ( airVehiclesOverhauling ) then { if ( VO_airServRepair OR VO_airServRefuel OR VO_airServRearm ) then { isServicesOkay = true; } else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > No air services working!"; }; };
-			if ( nauticVehiclesOverhauling ) then { if ( VO_nauServRepair OR VO_nauServRefuel OR VO_nauServRearm ) then { isServicesOkay = true; } else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > No nautic services working!";};};
+			if ( groundVehiclesOverhauling ) then {	if ( VO_grdServRepair OR VO_grdServRefuel OR VO_grdServRearm ) then {	isServicesOkay = true; } else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > No GROUND services set as TRUE!"; }; };
+			if ( airVehiclesOverhauling ) then { if ( VO_airServRepair OR VO_airServRefuel OR VO_airServRearm ) then { isServicesOkay = true; } else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > No AIR services set as TRUE!"; }; };
+			if ( nauticVehiclesOverhauling ) then { if ( VO_nauServRepair OR VO_nauServRefuel OR VO_nauServRearm ) then { isServicesOkay = true; } else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > No NAUTIC services set as TRUE!";};};
 		} else { systemChat "VEHICLES OVERHAULING > fn_VO_parameters.sqf > The script is NOT running!"; };
 
 	true

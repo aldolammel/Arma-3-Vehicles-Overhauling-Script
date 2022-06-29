@@ -17,7 +17,7 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 	_reaAssets = [];
 
 	// if the services are allowed, find out only the assets (classnames) listed through fn_VO_parameters.sqf file:
-	if ( VO_nauServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_nauFullAssets	};	
+	if ( VO_nauServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_nauFullAssets };	
 	if ( VO_nauServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_nauRepairAssets };	
 	if ( VO_nauServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_nauRefuelAssets };	
 	if ( VO_nauServRearm ) then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_nauRearmAssets };
@@ -27,14 +27,8 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 	_fullAndRefAssets = _refAssets + _fullAssets;
 	_fullAndReaAssets = _reaAssets + _fullAssets;
 	
-	// Removes repairing, refueling and rearming from A3 vanilla's assets: 
-	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_A3CargoOff;
-
-	// ACE Compatibility:
-	if ( ACE_isOn ) then 
-	{
-		// WIP
-	};
+	// Compatibility checking: 
+	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_compatibility;
 	
 	// initial services condition:
 	_isServProgrs = false; 
@@ -42,9 +36,6 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
 	while { isStationsOkay AND isServicesOkay } do
 	{
-		// debug:
-		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor };
-		
 		_playersAlive = (allPlayers - (entities "HeadlessClient_F")) select {alive _x};
 		
 		{ // _playersAlive forEach starts...
@@ -62,8 +53,6 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 					_nauVehicles append [_connected];
 				};
 			};
-			
-			if ( VO_debugMonitor ) then { {systemChat str _x} forEach _nauVehicles };
 			
 			{ // forEach of _nauVehicles starts...
 				
@@ -83,7 +72,9 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 		} forEach _playersAlive;
 		
 		sleep 5;
-		if ( VO_debugMonitor ) then { VO_nauCyclesDone = (VO_nauCyclesDone + 1) };
+		
+		// debug:
+		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor; VO_nauCyclesDone = (VO_nauCyclesDone + 1) };
 		
 	};  // while-looping ends.
 

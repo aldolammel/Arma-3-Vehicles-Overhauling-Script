@@ -2,28 +2,52 @@
 // by thy (@aldolammel)
 
 
-THY_fnc_VO_debugMonitor =   // <!----------------------------------------------------------------------- WIP
+THY_fnc_VO_debugMonitor =
 {
 	// This function: helps the editor to find errors and needed adjustments. 
 	
-	hint format ["\n\nDEBUG MONITOR\n\n- - - THE VEHICLE - - -\nType = %1.\n\n- - - GROUND - - -\nIs there the service = %2.\nAction range= %3m.\nIs there repairing = %4.\nIs there refueling = %5.\nIs there rearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\nIs there the service = %7.\nAction range = %8m.\nIs there repairing = %9.\nIs there refueling = %10.\nIs there rearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\nIs there the service = %12.\nAction range = %13m.\nIs there repairing = %14.\nIs there refueling = %15.\nIs there rearming = %16.\nNautic while-cycles done: %19x.\n\n", [vehicle player] call BIS_fnc_objectType, groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone];
+	format ["\n\nDEBUG MONITOR\n\nThe mission expect ACE loaded = %20.\n\n- - - CURRENT VEHICLE - - -\n%1.\n\n- - - CURRENT STATION - - -\n%21.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, ACE_isLoaded, str("Soon/WIP")] remoteExec ["hintSilent", player];
 };
 
 
-// ---------------------------------------------------------------
+// ----------------------------
 
 
-THY_fnc_VO_A3CargoOff = 
+THY_fnc_VO_compatibility = 
 {
-	// This function: removes repairing, refueling and rearming attributes from A3 vanilla's assets.
+	// This function: compatibility checking with Arma 3 vanilla assets and ACE services.
 	
 	params ["_fullAssets", "_repAssets", "_refAssets", "_reaAssets"];
 	
-	{ _x setRepairCargo 0; _x setFuelCargo 0; _x setAmmoCargo 0; } forEach _fullAssets + _repAssets + _refAssets + _reaAssets;
+	// Stations conformity:
+	{
+		_x setRepairCargo 0;
+		_x setFuelCargo 0;
+		_x setAmmoCargo 0; 
+		
+		if ( ACE_isLoaded ) then
+		{
+			_x setVariable ["ACE_isRepairFacility", 0];               // 0 = disable
+			[_x, 0] call ace_refuel_fnc_setFuel;
+			[_x] call ace_rearm_fnc_disable;
+		};
+
+	} forEach _fullAssets + _repAssets + _refAssets + _reaAssets; 
+	
+	// Vehicles (mainly mobile-stations) conformity:
+	{
+		if ( ACE_isLoaded ) then
+		{
+			_x setVariable ["ACE_isRepairVehicle", 0];               // 0 = disable
+			[_x, 0] call ace_refuel_fnc_setFuel;
+			[_x] call ace_rearm_fnc_disable;
+		};
+		
+	} forEach allMissionObjects "Tank" + allMissionObjects "Truck";               // https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_CfgVehicles
 };
 
 
-// ---------------------------------------------------------------
+// ----------------------------
 
 
 THY_fnc_VO_servRepair = 
@@ -37,14 +61,15 @@ THY_fnc_VO_servRepair =
 		if ( !_serv ) exitWith {};
 	
 		// checking the basic station (_x) conditions:
-		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) ) then 
+		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) AND (abs speed _x < 1) ) then 
 		{
-			// checking the player veh: 
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (damage _veh > VO_minRepairService) ) then
+			// checking the player vehicle: 
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (damage _veh > VO_minRepairService) ) then
 			{					
+				sleep(2);
 				if ( VO_feedbackMsgs ) then 
 				{				
-					format ["Preparing a service... Wait %1 seconds...", _cooldown] remoteExec ["systemChat", _veh];
+					format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
 				};
 				sleep _cooldown;
 				
@@ -73,7 +98,7 @@ THY_fnc_VO_servRepair =
 };
 
 
-// ---------------------------------------------------------------
+// ----------------------------
 
 
 THY_fnc_VO_servRefuel = 
@@ -87,13 +112,14 @@ THY_fnc_VO_servRefuel =
 		if ( !_serv ) exitWith {};
 		
 		// checking the basic station (_x) conditions:
-		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) ) then 
+		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) AND (abs speed _x < 1) ) then 
 		{
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (fuel _veh < VO_minRefuelService) ) then 
+			// checking the player vehicle:
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (fuel _veh < VO_minRefuelService) ) then 
 			{	
 				if ( VO_feedbackMsgs ) then 
 				{				
-					format ["Preparing a service... Wait %1 seconds...", _cooldown] remoteExec ["systemChat", _veh];
+					format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
 				};
 				sleep _cooldown;
 				
@@ -122,7 +148,7 @@ THY_fnc_VO_servRefuel =
 };
 
 
-// ---------------------------------------------------------------
+// ----------------------------
 
 
 THY_fnc_VO_servRearm = 
@@ -141,13 +167,13 @@ THY_fnc_VO_servRearm =
 			if (!_isNautic) then 
 			{
 				// checking the advanced stations (_x) conditions (to prevent madness with mobile-stations):
-				if ( (underwater _x) OR !((getPos _x) select 2 < 0.1) OR (speed _x > 0) ) exitWith              // Important: "!(isTouchingGround)" is not working reliable!
+				if ( (underwater _x) OR ((getPos _x) select 2 > 0.1) OR (speed _x > 0) ) exitWith              // Important: "!(isTouchingGround)" is not working reliable!
 				{ 
-					// checking the player's vehicle:
+					// checking the player vehicle:
 					if ( !(_player in _x) AND !(vehicle _player isKindOf "Helicopter") AND (count weapons _veh > 0) ) then   // if the player ISN'T in a mobile-station and NOT in a helicopter-transporting-a-rearm-container when the VO_airServiceRange is too large and vehicle has weaponry.
 					{
 						sleep(2);
-						["The station doesn't meet the conditions to work properly. Try later..."] remoteExec ["systemChat", _player];
+						["The station doesn't meet the conditions to rearm yet..."] remoteExec ["systemChat", _player];
 						sleep(1);
 					};
 				};
@@ -157,7 +183,7 @@ THY_fnc_VO_servRearm =
 			{
 				if ( VO_feedbackMsgs ) then 
 				{				
-					format ["Preparing a service... Wait %1 seconds...", _cooldown] remoteExec ["systemChat", _veh];
+					format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
 				};
 				sleep _cooldown;
 				
@@ -187,7 +213,7 @@ THY_fnc_VO_servRearm =
 };
 
 
-// ---------------------------------------------------------------
+// ----------------------------
 
 
 THY_fnc_VO_parkingHelper = 
@@ -214,7 +240,7 @@ THY_fnc_VO_parkingHelper =
 };
 
 
-// ---------------------------------------------------------------
+// ----------------------------
 
 
 THY_fnc_VO_stillOnCondition = 
@@ -241,9 +267,9 @@ THY_fnc_VO_stillOnCondition =
 			};
 			if ( !_isNautic ) then                // Ground and air services need vehicles and the station itself are touching the ground.
 			{
-				if ( !((getPos _stat) select 2 < 0.1) AND !((getPos _veh) select 2 < 0.1) ) then
+				if ( ((getPos _stat) select 2 > 1) ) then
 				{
-					format ["%1 canceled! Keep the vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
+					format ["%1 canceled! The station needs to be closer to the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
 					_noTouching = true;
 				};
 			};
@@ -263,9 +289,9 @@ THY_fnc_VO_stillOnCondition =
 			}; 
 			if ( !_isNautic ) then                // Ground and air services need vehicles and the station itself are touching the ground.
 			{
-				if ( !((getPos _stat) select 2 < 0.1) AND !((getPos _veh) select 2 < 0.1) ) then
+				if ( ((getPos _stat) select 2 > 1) ) then
 				{
-					format ["%1 canceled! Keep the vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
+					format ["%1 canceled! The station needs to be closer to the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
 					_noTouching = true;
 				};
 			};
@@ -281,9 +307,9 @@ THY_fnc_VO_stillOnCondition =
 		{ 
 			if ( !_isNautic ) then                // Ground and air services need vehicles and the station itself are touching the ground.
 			{
-				if ( !((getPos _stat) select 2 < 0.1) AND !((getPos _veh) select 2 < 0.1) ) then
+				if ( ((getPos _stat) select 2 > 0.1) AND ((getPos _veh) select 2 > 0.1) ) then
 				{
-					format ["%1 canceled! Keep the vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
+					format ["%1 canceled! Keep your vehicle and the station on the ground.", str(_msg2)] remoteExec ["systemChat", _veh];
 					_noTouching = true;
 				};
 			};

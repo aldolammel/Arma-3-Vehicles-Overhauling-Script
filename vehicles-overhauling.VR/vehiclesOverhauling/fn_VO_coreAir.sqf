@@ -31,14 +31,8 @@ if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 	_fullAndRefAssets = _refAssets + _fullAssets;
 	_fullAndReaAssets = _reaAssets + _fullAssets;
 	
-	// Removes repairing, refueling and rearming from A3 vanilla's assets: 
-	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_A3CargoOff;
-	
-	// ACE Compatibility:
-	if ( ACE_isOn ) then 
-	{
-		// WIP
-	};
+	// Compatibility checking: 
+	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_compatibility;
 	
 	// Initial services condition:
 	_isServProgrs = false;
@@ -46,9 +40,6 @@ if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
 	while { isStationsOkay AND isServicesOkay } do
 	{
-		// debug:
-		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor };
-		
 		_playersAlive = (allPlayers - (entities "HeadlessClient_F")) select {alive _x};
 		
 		{ // _playersAlive forEach starts...
@@ -66,8 +57,6 @@ if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 					_airVehicles append [_connected];
 				};
 			};
-			
-			if ( VO_debugMonitor ) then { {systemChat str _x} forEach _airVehicles };
 			
 			{ // forEach of _airVehicles starts... 
 				
@@ -91,7 +80,9 @@ if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
 		} forEach _playersAlive;
 		
 		sleep 5;
-		if ( VO_debugMonitor ) then { VO_airCyclesDone = (VO_airCyclesDone + 1) };
+		
+		// debug:
+		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor; VO_airCyclesDone = (VO_airCyclesDone + 1) };
 		
 	};  // while-looping ends.
 
