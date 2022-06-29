@@ -14,11 +14,11 @@ Vehicles Overhauling (VO) is a system of repair, refuel and rearm stations for m
 - Once defined which assets are stations, on Eden you just drag and drop the asset and the script will track them;
 - Script working as gold on hosted and dedicated servers.
 
-**How to install / Full documentation**
+**How to install / Documentation**
 
 https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 
-
+_
 
 ### GLOBAL STATION RULES
 
@@ -59,11 +59,12 @@ https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/
 - The target-vehicle cannot be submerged, even submarines;
 - The target-vehicle must have its speed at zero or very close to it.
 
-
+_
 
 ## Ideas or fixes?
 link soon
 
+_
 
 ## Changelog
 
