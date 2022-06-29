@@ -19,6 +19,7 @@ Vehicles Overhauling (VO) is a system of repair, refuel and rearm stations for m
 https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 
 
+
 ### GLOBAL STATION RULES
 
 - Every object/asset on Eden can be a station;
@@ -59,8 +60,10 @@ https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/
 - The target-vehicle must have its speed at zero or very close to it.
 
 
+
 ## Ideas or fixes?
 link soon
+
 
 ## Changelog
 
