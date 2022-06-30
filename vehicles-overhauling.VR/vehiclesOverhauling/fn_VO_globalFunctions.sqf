@@ -19,31 +19,37 @@ THY_fnc_VO_compatibility =
 	
 	params ["_fullAssets", "_repAssets", "_refAssets", "_reaAssets"];
 	
-	// Stations conformity:
+	if ( !ACE_isLoaded ) then 
 	{
-		_x setRepairCargo 0;
-		_x setFuelCargo 0;
-		_x setAmmoCargo 0; 
+		// Stations conformity with NO ACE:
+		{
+			_x setRepairCargo 0;
+			_x setFuelCargo 0;
+			_x setAmmoCargo 0;
+			
+		} forEach _fullAssets + _repAssets + _refAssets + _reaAssets;
 		
-		if ( ACE_isLoaded ) then
+		// Vehicles conformity with NO ACE:
+		// not needed.
+	
+	} else {
+		
+		// Stations conformity with ACE:
 		{
 			_x setVariable ["ACE_isRepairFacility", 0];               // 0 = disable
 			[_x, 0] call ace_refuel_fnc_setFuel;
 			[_x] call ace_rearm_fnc_disable;
-		};
-
-	} forEach _fullAssets + _repAssets + _refAssets + _reaAssets; 
-	
-	// Vehicles (mainly mobile-stations) conformity:
-	{
-		if ( ACE_isLoaded ) then
+		
+		} forEach _fullAssets + _repAssets + _refAssets + _reaAssets;
+		
+		// Vehicles conformity with ACE:
 		{
 			_x setVariable ["ACE_isRepairVehicle", 0];               // 0 = disable
 			[_x, 0] call ace_refuel_fnc_setFuel;
 			[_x] call ace_rearm_fnc_disable;
-		};
-		
-	} forEach allMissionObjects "Tank" + allMissionObjects "Truck";               // https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_CfgVehicles
+			
+		} forEach allMissionObjects "Tank" + allMissionObjects "Truck";               // https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_CfgVehicles
+	};
 };
 
 
