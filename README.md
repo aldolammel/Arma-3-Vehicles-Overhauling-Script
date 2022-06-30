@@ -12,7 +12,8 @@ Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repa
 - No code or triggers is needed on Eden Editor;
 - Just one file to set easely your mission needs: _fn_VO_parameters.sqf_;
 - Once defined which assets are stations, on Eden you just drag and drop the asset and the script will track them;
-- Script working as gold on hosted and dedicated servers.
+- Script working as gold on hosted and dedicated servers;
+- 100% compatible with CBA+ACE.
 
 **How to install / Documentation**
 
