@@ -6,7 +6,7 @@ THY_fnc_VO_debugMonitor =
 {
 	// This function: helps the editor to find errors and needed adjustments. 
 	
-	format ["\n\nDEBUG MONITOR\n\nThe mission expect ACE loaded = %20.\n\n- - - CURRENT VEHICLE - - -\n%1.\n\n- - - CURRENT STATION - - -\n%21.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, ACE_isLoaded, str("Soon/WIP")] remoteExec ["hintSilent", player];
+	format ["\n\nDEBUG MONITOR\n\n%21.\n\n- - - CURRENT VEHICLE - - -\n%1.\n\n- - - CURRENT STATION - - -\n%20.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, str("Soon/WIP"), VO_isACErun] remoteExec ["hintSilent", player];
 };
 
 
@@ -19,21 +19,8 @@ THY_fnc_VO_compatibility =
 	
 	params ["_fullAssets", "_repAssets", "_refAssets", "_reaAssets"];
 	
-	if ( !ACE_isLoaded ) then 
+	if ( isClass(configfile >> "CfgPatches" >> "ace_medical") ) then               // detecting basic ACE components to check if ACE is running in server.
 	{
-		// Stations conformity with NO ACE:
-		{
-			_x setRepairCargo 0;
-			_x setFuelCargo 0;
-			_x setAmmoCargo 0;
-			
-		} forEach _fullAssets + _repAssets + _refAssets + _reaAssets;
-		
-		// Vehicles conformity with NO ACE:
-		// not needed.
-	
-	} else {
-		
 		// Stations conformity with ACE:
 		{
 			_x setVariable ["ACE_isRepairFacility", 0];               // 0 = disable
@@ -49,6 +36,23 @@ THY_fnc_VO_compatibility =
 			[_x] call ace_rearm_fnc_disable;
 			
 		} forEach allMissionObjects "Tank" + allMissionObjects "Truck";               // https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_CfgVehicles
+		
+		VO_isACErun = "ACE ON";
+	
+	} else {
+	
+		// Stations conformity with NO ACE:
+		{
+			_x setRepairCargo 0;
+			_x setFuelCargo 0;
+			_x setAmmoCargo 0;
+			
+		} forEach _fullAssets + _repAssets + _refAssets + _reaAssets;
+		
+		// Vehicles conformity with NO ACE:
+		// not needed.
+		
+		VO_isACErun = "ACE OFF";
 	};
 };
 

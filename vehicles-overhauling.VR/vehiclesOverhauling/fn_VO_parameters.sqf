@@ -6,11 +6,9 @@ if (!isServer) exitWith {};
 
 // EDITOR'S OPTIONS:
 
-	VO_debugMonitor = false;          // true = turn on the editor hints / false = turn it off. Default: false.
+	VO_debugMonitor = true;          // true = turn on the editor hints / false = turn it off. Default: false.
 	VO_feedbackMsgs = true;          // true = the station shows service messages in-game for the player (highly recommended) / false = turn it off. Default: true.
 	VO_dronesNeedHuman = false;          // true = player presence is mandatory for the vehicle to get a service / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. Default: false. 
-	ACE_isLoaded = false;          // true = ACE mod is loaded in the mission / false = not loaded in mission.
-	
 	
 	// GROUND SERVICES
 	groundVehiclesOverhauling = true;          // true = the mission needs ground stations / false = doesn't need.
