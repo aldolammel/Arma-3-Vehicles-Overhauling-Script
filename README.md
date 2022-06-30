@@ -69,7 +69,8 @@ _
 
 ## Changelog
 
-**v1.5 - Jun, 29th 2022**
+**v1.5 - Jun, 30th 2022**
+- ACE auto-detect;
 - Bug fixes and lot of function improvements. 
 - Documentation included.
 
