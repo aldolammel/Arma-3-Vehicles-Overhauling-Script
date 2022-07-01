@@ -24,14 +24,16 @@ if (!isServer) exitWith {};
 		VO_grdFullAssets = 
 		[
 			"Land_RepairDepot_01_green_F",
-			"Land_RepairDepot_01_tan_F",
-			//"Land_Carrier_01_base_F",          // aircraft carrier USS Freedom / it doesnt work well because the asset is too big.
-			"Land_RepairDepot_01_civ_F"
+			"Land_RepairDepot_01_tan_F"
+			//"Land_RepairDepot_01_civ_F",          // should be a full station 'coz it's a civilian station (with no ammunition).
+			//"Land_Carrier_01_base_F"          // aircraft carrier USS Freedom / it doesnt work well because the asset is too big.
+			
 		];
 		
 		// Define which assets (classnames) are ground repair stations:
 		VO_grdRepairAssets =          
 		[
+			"Land_RepairDepot_01_civ_F",
 			"Land_FuelStation_02_workshop_F",
 			"I_G_Offroad_01_repair_F",
 			"O_G_Offroad_01_repair_F",
@@ -46,8 +48,16 @@ if (!isServer) exitWith {};
 			"B_Truck_01_Repair_F",
 			"B_T_Truck_01_Repair_F",
 			"B_APC_Tracked_01_CRV_F",          // APC CRV Bobcat
+			"O_Heli_Transport_04_repair_F",          // Helicopter Taru + repair container
 			"Land_Pod_Heli_Transport_04_repair_F",          // Taru repair pod
-			"B_Slingload_01_Repair_F"          // Huron repair container
+			"B_Slingload_01_Repair_F",          // Huron repair container
+			"rhsgref_cdf_b_ural_repair",
+			"rhsusf_M977A4_REPAIR_usarmy_d",
+			"rhsusf_M977A4_REPAIR_usarmy_wd",
+			"rhsusf_M977A4_REPAIR_BKIT_usarmy_d",
+			"rhsusf_M977A4_REPAIR_BKIT_usarmy_wd",
+			"rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_d",
+			"rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_wd"
 		];
 		
 		// Define which assets (classnames) are ground refuel stations:
@@ -72,9 +82,26 @@ if (!isServer) exitWith {};
 			"O_Truck_03_fuel_F",
 			"B_T_Truck_01_fuel_F", 
 			"B_Truck_01_fuel_F", 
+			"O_Heli_Transport_04_fuel_F",          // Helicopter Taru + fuel container.
 			"Land_FuelStation_02_workshop_F",
 			"Land_Pod_Heli_Transport_04_fuel_F",          // Taru fuel pod
-			"B_Slingload_01_Fuel_F"          // Huron fuel container
+			"B_Slingload_01_Fuel_F",          // Huron fuel container
+			"StorageBladder_01_fuel_forest_F", 
+			"StorageBladder_01_fuel_sand_F", 
+			//"FlexibleTank_01_forest_F",          // too small to refuel many times. Not recommended.
+			//"FlexibleTank_01_sand_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_Blue_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_Red_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_White_F",          // too small to refuel many times. Not recommended.
+			"RHS_Ural_Fuel_VDV_01",
+			"RHS_Ural_Fuel_MSV_01",
+			"RHS_Ural_Fuel_VV_01",
+			"rhsgref_cdf_b_ural_fuel",
+			"rhsgref_nat_van_fuel",
+			"rhsgref_cdf_ural_fuel",
+			"rhssaf_army_o_ural_fuel",
+			"rhssaf_army_ural_fuel"
 		];
 		
 		// Define which assets (classnames) are ground rearm stations:
@@ -89,8 +116,31 @@ if (!isServer) exitWith {};
 			"O_Truck_03_ammo_F", 
 			"B_T_Truck_01_ammo_F",
 			"B_Truck_01_ammo_F",
+			"O_Heli_Transport_04_ammo_F",          // Helicopter Taru + ammo container
 			"Land_Pod_Heli_Transport_04_ammo_F",          // Taru ammo pod
-			"B_Slingload_01_Ammo_F"          // Huron ammo container
+			"B_Slingload_01_Ammo_F",          // Huron ammo container
+			"rhsgref_cdf_b_gaz66_ammo",
+			"rhsgref_cdf_gaz66_ammo",
+			"rhsgref_ins_g_gaz66_ammo",
+			"rhs_gaz66_ammo_vv",
+			"rhs_gaz66_ammo_vdv",
+			"rhs_gaz66_ammo_vmf",
+			"rhs_gaz66_ammo_msv",
+			"rhs_kamaz5350_ammo_vv",
+			"rhs_kamaz5350_ammo_msv",
+			"rhs_kamaz5350_ammo_vmf",
+			"rhs_kamaz5350_ammo_vdv",
+			"RHS_Ural_Ammo_VDV_01",
+			"RHS_Ural_Ammo_VMF_01",
+			"RHS_Ural_Ammo_VV_01",
+			//"rhsusf_m113_usarmy_supply",          // not recommended to use to resupply vehicle 'coz it's used by infantry only.
+			//"rhsusf_m113d_usarmy_supply",          // not recommended to use to resupply vehicle 'coz it's used by infantry only.
+			"rhsusf_M977A4_AMMO_usarmy_d",
+			"rhsusf_M977A4_AMMO_usarmy_wd",
+			"rhsusf_M977A4_AMMO_BKIT_usarmy_d",
+			"rhsusf_M977A4_AMMO_BKIT_usarmy_wd",
+			"rhsusf_M977A4_AMMO_BKIT_M2_usarmy_d",
+			"rhsusf_M977A4_AMMO_BKIT_M2_usarmy_wd"
 		];
 
 
@@ -133,7 +183,13 @@ if (!isServer) exitWith {};
 			"B_Truck_01_Repair_F",
 			"B_T_Truck_01_Repair_F",
 			"Land_Pod_Heli_Transport_04_repair_F",          // Taru repair pod
-			"B_Slingload_01_Repair_F"          // Huron repair container
+			"B_Slingload_01_Repair_F",          // Huron repair container
+			"rhsusf_M977A4_REPAIR_usarmy_d",
+			"rhsusf_M977A4_REPAIR_usarmy_wd",
+			"rhsusf_M977A4_REPAIR_BKIT_usarmy_d",
+			"rhsusf_M977A4_REPAIR_BKIT_usarmy_wd",
+			"rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_d",
+			"rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_wd"
 		];
 		
 		// Define which assets (classnames) are air refuel stations:
@@ -153,9 +209,26 @@ if (!isServer) exitWith {};
 			"O_Truck_03_fuel_F",
 			"B_T_Truck_01_fuel_F", 
 			"B_Truck_01_fuel_F", 
+			"O_Heli_Transport_04_fuel_F",          // Helicopter Taru + fuel container.
 			"Land_FuelStation_02_workshop_F",
 			"Land_Pod_Heli_Transport_04_fuel_F",          // Taru fuel pod
-			"B_Slingload_01_Fuel_F"          // Huron fuel container
+			"B_Slingload_01_Fuel_F",          // Huron fuel container
+			"StorageBladder_01_fuel_forest_F", 
+			"StorageBladder_01_fuel_sand_F", 
+			//"FlexibleTank_01_forest_F",          // too small to refuel many times. Not recommended.
+			//"FlexibleTank_01_sand_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_Blue_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_Red_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_White_F",          // too small to refuel many times. Not recommended.
+			"RHS_Ural_Fuel_VDV_01",
+			"RHS_Ural_Fuel_MSV_01",
+			"RHS_Ural_Fuel_VV_01",
+			"rhsgref_cdf_b_ural_fuel",
+			"rhsgref_nat_van_fuel",
+			"rhsgref_cdf_ural_fuel",
+			"rhssaf_army_o_ural_fuel",
+			"rhssaf_army_ural_fuel"
 		];
 		
 		// Define which assets (classnames) are air rearm stations:
@@ -169,7 +242,20 @@ if (!isServer) exitWith {};
 			"B_T_Truck_01_ammo_F",
 			"B_Truck_01_ammo_F",
 			"Land_Pod_Heli_Transport_04_ammo_F",          // Taru ammo pod
-			"B_Slingload_01_Ammo_F"          // Huron ammo container
+			"B_Slingload_01_Ammo_F",          // Huron ammo container
+			"rhs_kamaz5350_ammo_vv",
+			"rhs_kamaz5350_ammo_msv",
+			"rhs_kamaz5350_ammo_vmf",
+			"rhs_kamaz5350_ammo_vdv",
+			"RHS_Ural_Ammo_VDV_01",
+			"RHS_Ural_Ammo_VMF_01",
+			"RHS_Ural_Ammo_VV_01",
+			"rhsusf_M977A4_AMMO_usarmy_d",
+			"rhsusf_M977A4_AMMO_usarmy_wd",
+			"rhsusf_M977A4_AMMO_BKIT_usarmy_d",
+			"rhsusf_M977A4_AMMO_BKIT_usarmy_wd",
+			"rhsusf_M977A4_AMMO_BKIT_M2_usarmy_d",
+			"rhsusf_M977A4_AMMO_BKIT_M2_usarmy_wd"
 		];
 		
 		// Define which assets (classnames) are allowed to automatically turn parked planes backwards:
@@ -212,8 +298,16 @@ if (!isServer) exitWith {};
 			"O_Truck_03_repair_F",
 			"B_Truck_01_Repair_F",
 			"B_T_Truck_01_Repair_F",
+			"O_Heli_Transport_04_ammo_F",          // Helicopter Taru + ammo container
 			"Land_Pod_Heli_Transport_04_repair_F",          // Taru repair pod
-			"B_Slingload_01_Repair_F"          // Huron repair container
+			"B_Slingload_01_Repair_F",          // Huron repair container
+			"rhsgref_cdf_b_ural_repair",
+			"rhsusf_M977A4_REPAIR_usarmy_d",
+			"rhsusf_M977A4_REPAIR_usarmy_wd",
+			"rhsusf_M977A4_REPAIR_BKIT_usarmy_d",
+			"rhsusf_M977A4_REPAIR_BKIT_usarmy_wd",
+			"rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_d",
+			"rhsusf_M977A4_REPAIR_BKIT_M2_usarmy_wd"
 		];
 		
 		// Define which assets (classnames) are nautic refuel stations:
@@ -238,9 +332,26 @@ if (!isServer) exitWith {};
 			"O_Truck_03_fuel_F",
 			"B_T_Truck_01_fuel_F", 
 			"B_Truck_01_fuel_F", 
+			"O_Heli_Transport_04_fuel_F",          // Helicopter Taru + fuel container.
 			"Land_FuelStation_02_workshop_F",
 			"Land_Pod_Heli_Transport_04_fuel_F",          // Taru fuel pod
-			"B_Slingload_01_Fuel_F"          // Huron fuel container
+			"B_Slingload_01_Fuel_F",          // Huron fuel container
+			"StorageBladder_01_fuel_forest_F", 
+			"StorageBladder_01_fuel_sand_F", 
+			//"FlexibleTank_01_forest_F",          // too small to refuel many times. Not recommended.
+			//"FlexibleTank_01_sand_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_Blue_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_Red_F",          // too small to refuel many times. Not recommended.
+			//"Land_CanisterFuel_White_F",          // too small to refuel many times. Not recommended.
+			"RHS_Ural_Fuel_VDV_01",
+			"RHS_Ural_Fuel_MSV_01",
+			"RHS_Ural_Fuel_VV_01",
+			"rhsgref_cdf_b_ural_fuel",
+			"rhsgref_nat_van_fuel",
+			"rhsgref_cdf_ural_fuel",
+			"rhssaf_army_o_ural_fuel",
+			"rhssaf_army_ural_fuel"
 		];
 		
 		// Define which assets (classnames) are nautic rearm stations:
@@ -251,7 +362,20 @@ if (!isServer) exitWith {};
 			"B_T_Truck_01_ammo_F",
 			"B_Truck_01_ammo_F",
 			"Land_Pod_Heli_Transport_04_ammo_F",          // Taru ammo pod
-			"B_Slingload_01_Ammo_F"          // Huron ammo container
+			"B_Slingload_01_Ammo_F",          // Huron ammo container
+			"rhs_kamaz5350_ammo_vv",
+			"rhs_kamaz5350_ammo_msv",
+			"rhs_kamaz5350_ammo_vmf",
+			"rhs_kamaz5350_ammo_vdv",
+			"RHS_Ural_Ammo_VDV_01",
+			"RHS_Ural_Ammo_VMF_01",
+			"RHS_Ural_Ammo_VV_01",
+			"rhsusf_M977A4_AMMO_usarmy_d",
+			"rhsusf_M977A4_AMMO_usarmy_wd",
+			"rhsusf_M977A4_AMMO_BKIT_usarmy_d",
+			"rhsusf_M977A4_AMMO_BKIT_usarmy_wd",
+			"rhsusf_M977A4_AMMO_BKIT_M2_usarmy_d",
+			"rhsusf_M977A4_AMMO_BKIT_M2_usarmy_wd"
 		];
 		
 		
