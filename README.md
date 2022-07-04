@@ -1,6 +1,6 @@
 # Arma 3 > Vehicles Overhauling (v1.5)
 >*Dependencies: none.*
->*Compatible with ACE.*
+>*Compatible with ACE, RHS, CUP.*
 
 Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repairing, refueling, and rearming vehicles by proximity and with any asset of your choice. Also, the services are divided by doctrine: Ground, Air, and Nautical. Each doctrine and even service is easily turned Off or On, according to the editor's needs. If needed, the editor can allow repairing just for ground vehicles while unavailable for air ones, for example. Triggering or code via Eden Editor is needless. VO is configured through only one file, prioritizing implementation simplicity and quick change management that the mission editor might want.  
 
