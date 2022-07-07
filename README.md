@@ -20,6 +20,7 @@ Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repa
 **How to install / Documentation**
 
 Demo: https://www.youtube.com/watch?v=9wAF2JSfV14
+
 Doc: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 
 _
