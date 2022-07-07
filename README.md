@@ -40,15 +40,15 @@ _
 - The service will be provide just for one player at a time;
 - AI won't be able to replace a human player to start one or more services.
 
-**To repair:**
+**Repairing service rules:**
 - The target-vehicle must have some damage;
 - The target-vehicle engine must be off.
 
-**To refuel:**
+**Refueling service rules:**
 - The target-vehicle must have had some fuel consumption;
 - The target-vehicle engine must be off.
 
-**To rearm:**
+**Rearming service rules:**
 - The target-vehicle must have onboarded weaponry;
 - The target-vehicle must have spent some ammunition.
 
