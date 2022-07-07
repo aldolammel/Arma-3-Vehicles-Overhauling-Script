@@ -85,5 +85,7 @@ _
 - Some bug fixes and performance improvements; 
 - Documentation included.
 
+Known issues: forum link soon!
+
 **v1.0 - Mar, 4th 2022**
 - Hello world.
