@@ -74,7 +74,7 @@ _
 
 ## Ideas or fixes?
 
-https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
+Known issues: https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
 
 _
 
@@ -85,8 +85,6 @@ _
 - RHS and CUP assets tracked by default;
 - Some bug fixes and performance improvements; 
 - Documentation included.
-
-Known issues: https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
 
 **v1.0 - Mar, 4th 2022**
 - Hello world.
