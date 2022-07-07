@@ -85,7 +85,7 @@ _
 - Some bug fixes and performance improvements; 
 - Documentation included.
 
-Known issues: forum link soon!
+Known issues: https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
 
 **v1.0 - Mar, 4th 2022**
 - Hello world.
