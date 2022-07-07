@@ -6,8 +6,8 @@ if (!isServer) exitWith {};
 
 // EDITOR'S OPTIONS:
 
-	VO_debugMonitor = true;          // true = turn on the editor hints / false = turn it off. Default: false.
-	VO_feedbackMsgs = true;          // true = the station shows service messages in-game for the player (highly recommended) / false = turn it off. Default: true.
+	VO_debugMonitor = false;          // true = turn on to test the script config / false = turn it off. Default: false.
+	VO_feedbackMsgs = true;          // true = the station shows all service messages of feedback for the driver (recommended) / false = turns off the most feedbacks messages, keeping the critical ones. Default: true.
 	VO_dronesNeedHuman = false;          // true = player presence is mandatory for the vehicle to get a service / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. Default: false. 
 	
 	// GROUND SERVICES
@@ -18,7 +18,7 @@ if (!isServer) exitWith {};
 		VO_grdServRearm = true;          // true = rearm stations for ground veh are available / false = not available.
 		VO_grdServFull = true;          // true = chosen assets will bring all available ground services in one place / false = no full service.
 		VO_grdServiceRange = 20;          // in meters, the area around the station that identifies the ground vehicle to be serviced. Default: 20.
-		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default: 30.
+		VO_grdCooldown = 10;          // in seconds, time among each available ground services. Default: 10.
 		
 		// Define which assets (classnames) are ground full (repair, refuel, rearm) stations:
 		VO_grdFullAssets = 
@@ -264,7 +264,7 @@ if (!isServer) exitWith {};
 		VO_airServRearm = true;          // true = rearm stations for air veh are available / false = not available.
 		VO_airServFull = true;          // true = chosen assets will bring all available air services in one place / false = no full service. 
 		VO_airServiceRange = 20;          // in meters, the area around the station that identifies the air vehicle to be serviced. Default: 20.
-		VO_airCooldown = 10;          // in seconds, time among each available air services. Default: 30.
+		VO_airCooldown = 10;          // in seconds, time among each available air services. Default: 10.
 		
 		// Define which assets (classnames) are air full (repair, refuel, rearm) stations:
 		VO_airFullAssets =          
@@ -446,7 +446,7 @@ if (!isServer) exitWith {};
 		VO_nauServRearm = true;          // true = rearm stations for nautic veh are available / false = not available.
 		VO_nauServFull = true;          // true = chosen assets will bring all available nautic services in one place / false = no full service. 
 		VO_nauServiceRange = 20;          // in meters, the area around the station that identifies the nautic vehicle to be serviced. Default: 20.
-		VO_nauCooldown = 10;          // in seconds, time among each available nautic services. Default: 30.
+		VO_nauCooldown = 10;          // in seconds, time among each available nautic services. Default: 10.
 		
 		// Define which assets (classnames) are nautic full (repair, refuel, rearm) stations:
 		VO_nauFullAssets =          

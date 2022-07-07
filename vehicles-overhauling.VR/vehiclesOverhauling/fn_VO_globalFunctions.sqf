@@ -6,7 +6,7 @@ THY_fnc_VO_debugMonitor =
 {
 	// This function: helps the editor to find errors and needed adjustments. 
 	
-	format ["\n\nDEBUG MONITOR\n\n%21.\n\n- - - CURRENT VEHICLE - - -\n%1.\n\n- - - CURRENT STATION - - -\n%20.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, str("Soon/WIP"), VO_isACErun] remoteExec ["hintSilent", player];
+	format ["\n\nDEBUG MONITOR\n\n%21.\n\n- - - YOUR CURRENT VEH - - -\n%1.\n\n- - - YOUR CURRENT STATION - - -\n%20.\nBusy with: %22.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, str("Soon/WIP"), VO_isACErun, str("Soon/WIP")] remoteExec ["hintSilent", player];
 };
 
 
@@ -74,33 +74,41 @@ THY_fnc_VO_servRepair =
 		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) AND (abs speed _x < 1) ) then 
 		{
 			// checking the player vehicle: 
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (damage _veh > VO_minRepairService) ) then
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (!isEngineOn _veh) AND (damage _veh > VO_minRepairService) ) then
 			{					
-				sleep(2);
-				if ( VO_feedbackMsgs ) then 
-				{				
-					format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
-				};
-				sleep _cooldown;
-				
-				_isServProgrs = true;
-				
-				if ( VO_feedbackMsgs ) then 
+				// checking if the station is NOT busy:
+				if (!_isServProgrs) then 
 				{
-					["Checking the vehicle damages..."] remoteExec ["systemChat", _veh];               // it shows the message only for who has the _veh locally.
-				};
+					sleep(2);
+					if ( VO_feedbackMsgs ) then 
+					{				
+						format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
+					};
+					sleep _cooldown;
+					
+					_isServProgrs = true;
+					
+					if ( VO_feedbackMsgs ) then 
+					{
+						["Checking the vehicle damages..."] remoteExec ["systemChat", _veh];               // it shows the message only for who has the _veh locally.
+					};
+					
+					if (!_isNautic) then               // check if the vehicle is nautic to adapt the sound effect.
+					{
+						playSound3D ["a3\sounds_f\characters\cutscenes\dirt_acts_carfixingwheel.wss", _x];
+					} else {
+						playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_carfixingwheel.wss", _x]; 
+					}; 
+					
+					// before repairing, last check if the player's vehicle and station still on conditions:
+					[_x, _veh, _servRng, _isNautic, "rep", "repaired", "Repairing"] call THY_fnc_VO_stillOnCondition;	
+					
+					_isServProgrs = false;               // station is free for the next service!
 				
-				if (!_isNautic) then               // check if the vehicle is nautic to adapt the sound effect.
-				{
-					playSound3D ["a3\sounds_f\characters\cutscenes\dirt_acts_carfixingwheel.wss", _x];
 				} else {
-					playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_carfixingwheel.wss", _x]; 
-				}; 
-				
-				// before repairing, last check if the player's vehicle and station still on conditions:
-				[_x, _veh, _servRng, _isNautic, "rep", "repaired", "Repairing"] call THY_fnc_VO_stillOnCondition;	
-				
-				_isServProgrs = false;               // station is free for the next service!
+					sleep(2);
+					["Someone is using the service here. Hold..."] remoteExec ["systemChat", _veh];
+				};
 			};
 		};
 		
@@ -125,32 +133,41 @@ THY_fnc_VO_servRefuel =
 		if ( (alive _x) AND ( (_veh distance _x) < _servRng ) AND (_veh != _x) AND (abs speed _x < 1) ) then 
 		{
 			// checking the player vehicle:
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (!_isServProgrs) AND (!isEngineOn _veh) AND (fuel _veh < VO_minRefuelService) ) then 
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (!isEngineOn _veh) AND (fuel _veh < VO_minRefuelService) ) then 
 			{	
-				if ( VO_feedbackMsgs ) then 
-				{				
-					format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
-				};
-				sleep _cooldown;
-				
-				_isServProgrs = true;
-				
-				if ( VO_feedbackMsgs ) then 
+				// checking if the station is NOT busy:
+				if (!_isServProgrs) then 
 				{
-					["Checking the fuel..."] remoteExec ["systemChat", _veh];
-				};
-									
-				if (!_isNautic) then               // check if the vehicle is nautic to adapt the sound effect.
-				{
-					playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
+					sleep(2);
+					if ( VO_feedbackMsgs ) then 
+					{				
+						format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
+					};
+					sleep _cooldown;
+					
+					_isServProgrs = true;
+					
+					if ( VO_feedbackMsgs ) then 
+					{
+						["Checking the fuel..."] remoteExec ["systemChat", _veh];
+					};
+										
+					if (!_isNautic) then               // check if the vehicle is nautic to adapt the sound effect.
+					{
+						playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
+					} else {
+						playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_walkingchecking.wss", _x]; 
+					}; 
+					
+					// before refueling, last check if the player's vehicle and station still on conditions:
+					[_x, _veh, _servRng, _isNautic, "ref", "refueled", "Refueling"] call THY_fnc_VO_stillOnCondition;	
+					
+					_isServProgrs = false;
+					
 				} else {
-					playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_walkingchecking.wss", _x]; 
-				}; 
-				
-				// before refueling, last check if the player's vehicle and station still on conditions:
-				[_x, _veh, _servRng, _isNautic, "ref", "refueled", "Refueling"] call THY_fnc_VO_stillOnCondition;	
-				
-				_isServProgrs = false;
+					sleep(2);
+					["Someone is using the service here. Hold..."] remoteExec ["systemChat", _veh];
+				};
 			};
 		};
 		
@@ -189,33 +206,42 @@ THY_fnc_VO_servRearm =
 				};
 			};
 			// checking the player's vehicle conditions:
-			if ( (alive _veh) AND (count weapons _veh > 0) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (!_isServProgrs) AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _veh)) > 0) ) then
+			if ( (alive _veh) AND (count weapons _veh > 0) AND (abs speed _veh < 2) AND (!underwater _veh) AND ((getPos _veh) select 2 < 0.1) AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") != _x select 1} count (magazinesAmmo _veh)) > 0) ) then
 			{
-				if ( VO_feedbackMsgs ) then 
-				{				
-					format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
-				};
-				sleep _cooldown;
-				
-				_isServProgrs = true; 
-				
-				if ( VO_feedbackMsgs ) then 
+				// checking if the station is NOT busy:
+				if (!_isServProgrs) then 
 				{
-					["Checking the vehicle ammunition..."] remoteExec ["systemChat", _veh];
-				};
-				
-				// check if the vehicle is nautic to adapt the sound effect:
-				if (!_isNautic) then
-				{
-					playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
+					sleep(2);
+					if ( VO_feedbackMsgs ) then 
+					{				
+						format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
+					};
+					sleep _cooldown;
+					
+					_isServProgrs = true; 
+					
+					if ( VO_feedbackMsgs ) then 
+					{
+						["Checking the vehicle ammunition..."] remoteExec ["systemChat", _veh];
+					};
+					
+					// check if the vehicle is nautic to adapt the sound effect:
+					if (!_isNautic) then
+					{
+						playSound3D ["a3\sounds_f\characters\cutscenes\concrete_acts_walkingchecking.wss", _x];
+					} else {
+						playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_carfixingwheel.wss", _x]; 
+					}; 
+					
+					// before rearming, last check if the player's vehicle and station still on conditions:
+					[_x, _veh, _servRng, _isNautic, "rea", "rearmed", "Rearming"] call THY_fnc_VO_stillOnCondition;
+					
+					_isServProgrs = false;
+					
 				} else {
-					playSound3D ["a3\sounds_f\characters\cutscenes\water_acts_carfixingwheel.wss", _x]; 
-				}; 
-				
-				// before rearming, last check if the player's vehicle and station still on conditions:
-				[_x, _veh, _servRng, _isNautic, "rea", "rearmed", "Rearming"] call THY_fnc_VO_stillOnCondition;
-				
-				_isServProgrs = false;
+					sleep(2);
+					["Someone is using the service here. Hold..."] remoteExec ["systemChat", _veh];
+				};
 			};
 		};
 	
@@ -240,8 +266,15 @@ THY_fnc_VO_parkingHelper =
 			{
 				_veh setVelocity  [0,0,0];                //  set the vehicle velocity to zero.
 				_veh setPos (_x getRelPos [0,0]);               // set the vehicle position in same place of the asset/station (_x). | object getRelPos [distance from the station center, direction degrees]
-				//[getDir _x - 180] remoteExec ["setDir", _veh];				// set the vehicle direction to the same spot as the asset/station (_x). 
-				_veh setDir (getDir _x - 180);               // set the vehicle direction to the same spot as the asset/station (_x).
+				
+				// bugfix that for some reason the setDir + remoteExec doesn't work properly when a player is hosting, nor single player missions:
+				if (isDedicated) then 
+				{
+					[getDir _x - 180] remoteExec ["setDir", _veh];				// set the vehicle direction to the same spot as the asset/station (_x).
+				} else {
+					// maybe this won't work properly in missions hosted by player: <------------------------------------------------------------------------------ WIP
+					_veh setDir (getDir _x - 180);               // set the vehicle direction to the same spot as the asset/station (_x).
+				};
 				sleep(15)               // prevent the plane to re-position over and over again when a player around. 
 			};
 		
