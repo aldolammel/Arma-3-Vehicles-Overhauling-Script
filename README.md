@@ -17,7 +17,9 @@ Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repa
 - Just one file to set easely your mission needs: _fn_VO_parameters.sqf_;
 - Script working as gold on hosted and dedicated servers;
 
-**How to install / Documentation**
+_
+
+### HOW TO INSTALL / DOCUMENTATION
 
 Demo: https://www.youtube.com/watch?v=9wAF2JSfV14
 
@@ -25,14 +27,18 @@ Doc: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_
 
 _
 
-### SCRIPT GLOBAL RULES
+### SCRIPT DETAILS
 
-- Every object/asset on Eden can be a station;
+**Global rules**
+
+- Every object/asset on Eden can be a service provider (service station);
 - The vehicle that need a service ("target-vehicle" for better understanding here) must be within the station's range of action;
 - At least one player must be close (or inside) to the target-vehicle, except drones if the mission-editor authorized through _fn_VO_parameters.sqf_;
 - The target-vehicle must not be completely destroyed;
 - To provide the service, the station must not be destroyed or under water or flying (supply containers) or even moving (supply vehicles); 
-- Each station can provide only the services that it allowed to.
+- Each station can provide only the services that it allowed to;
+- The service will be provide just for one player at a time;
+- AI won't be able to replace a human player to start one or more services.
 
 **To repair:**
 - The target-vehicle must have some damage;
@@ -46,19 +52,19 @@ _
 - The target-vehicle must have onboarded weaponry;
 - The target-vehicle must have spent some ammunition.
 
-### SCRIPT GROUND RULES
+**Ground vehicles rules:**
 
 - To get a service, the target-vehicle must be a land vehicle, including drones;
 - The target-vehicle must have its speed at zero or very close to it.
 
-### SCRIPT AIR RULES
+**Air vehicles rules:**
 
 - To get a service, the target-vehicle must be an air vehicle, including drones;
 - The target-vehicle must be touching the ground;
 - The target-vehicle must be completely stopped;
 - If the target-vehicle is a plane, a parking helper will run automatically.
 
-### SCRIPT NAUTICAL RULES
+**Nautical vehicles rules:**
 
 - To get a service, the target-vehicle must be a nautical vehicle, including drones;
 - The target-vehicle cannot be submerged, even submarines;
