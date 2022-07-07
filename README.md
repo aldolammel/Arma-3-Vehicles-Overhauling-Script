@@ -73,7 +73,8 @@ _
 _
 
 ## Ideas or fixes?
-https://forums.bohemia.net/search/?q=Vehicles%20Overhauling%20Script
+
+https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
 
 _
 
