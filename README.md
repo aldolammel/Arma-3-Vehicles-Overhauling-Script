@@ -21,7 +21,7 @@ _
 
 ### HOW TO INSTALL / DOCUMENTATION
 
-Demo: https://www.youtube.com/watch?v=9wAF2JSfV14
+Video demo: https://www.youtube.com/watch?v=9wAF2JSfV14
 
 Doc: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 
