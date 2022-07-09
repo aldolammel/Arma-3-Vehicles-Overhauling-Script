@@ -1,4 +1,4 @@
-# Arma 3 > Vehicles Overhauling (v1.5)
+# Arma 3 / Vehicles Overhauling v1.5
 >*Dependencies: none.*
 >*Compatible with ACE, RHS, CUP.*
 
