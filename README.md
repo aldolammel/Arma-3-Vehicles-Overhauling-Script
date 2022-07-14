@@ -82,7 +82,7 @@ _
 
 **v1.7 - Jul, 14th 2022**
 - ACE auto-detect improvement (now VO knows if "ace_vehicle_damage_enabled" is running);
-- Fixed the ACE repairing bug on dedicated servers; 
+- Palliative adjustment for "ace_vehicle_damage_enabled" then it's ON; 
 - Documentation updated about "ace_vehicle_damage_enabled".
 
 **v1.5 - Jul, 7th 2022**
