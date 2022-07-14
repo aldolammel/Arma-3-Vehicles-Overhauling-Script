@@ -1,3 +1,4 @@
+// VO v1.7
 // File: your_mission\vehiclesOverhauling\fn_VO_parameters.sqf
 // Documentation: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 // by thy (@aldolammel)
@@ -6,7 +7,7 @@ if (!isServer) exitWith {};
 
 // EDITOR'S OPTIONS:
 
-	VO_debugMonitor = false;          // true = turn on to test the script config / false = turn it off. Default: false.
+	VO_debugMonitor = true;          // true = turn on to test the script config / false = turn it off. Default: false.
 	VO_feedbackMsgs = true;          // true = the station shows all service messages of feedback for the driver (recommended) / false = turns off the most feedbacks messages, keeping the critical ones. Default: true.
 	VO_dronesNeedHuman = false;          // true = player presence is mandatory for the vehicle to get a service / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. Default: false. 
 	
@@ -616,18 +617,19 @@ if (!isServer) exitWith {};
 		
 		
 	// BE CAREFUL, HIGHLY RECOMMENDED DO NOT CHANGE ANY BELOW: 
-	
 		// Vehicle types recognized by VO script:
 		VO_grdVehicleTypes = [ "Car","Motorcycle","Tank","WheeledAPC","TrackedAPC" ];
 		VO_airVehicleTypes = [ "Helicopter","Plane" ];
 		VO_nauVehicleTypes = [ "Ship","Submarine" ];
-		
-		// minimal vehicle conditions for overhauling:
-		VO_minRepairService = 0.1; VO_minRefuelService = 0.8;	
-		
+		// ACE detection for server:
+		if ( isClass(configfile >> "CfgPatches" >> "ace_medical") OR isClass(configfile >> "CfgPatches" >> "ace_repair") ) then { VO_isACErun = true } else { VO_isACErun = false };
+		// Minimal vehicle conditions for overhauling:
+		VO_minRefuelService = 0.8;
+		if ( VO_isACErun ) then	{
+			if ( ace_vehicle_damage_enabled ) then { ["ACE-Vehicle-Damage is ON on server. Highly recommended to turn it OFF."] remoteExec ["systemChat"]; VO_minRepairService = 0 } else { VO_minRepairService = 0.1 };
+		} else { VO_minRepairService = 0.1 };
 		// Debug initial counting of while-cycles:
 		VO_grdCyclesDone = 0; VO_airCyclesDone = 0; VO_nauCyclesDone = 0; 
-		
 		// checking if this file is properly configured:
 		isStationsOkay = false;
 		isServicesOkay = false;

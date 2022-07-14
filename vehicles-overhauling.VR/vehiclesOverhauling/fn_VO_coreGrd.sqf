@@ -1,3 +1,4 @@
+// VO v1.7
 // File: your_mission\vehiclesOverhauling\fn_VO_coreGrd.sqf
 // by thy (@aldolammel)
 

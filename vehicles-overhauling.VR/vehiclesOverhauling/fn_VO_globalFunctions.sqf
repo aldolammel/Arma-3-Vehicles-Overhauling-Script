@@ -1,3 +1,4 @@
+// VO v1.7
 // File: your_mission\vehiclesOverhauling\fn_VO_globalFunctions.sqf
 // by thy (@aldolammel)
 
@@ -6,7 +7,7 @@ THY_fnc_VO_debugMonitor =
 {
 	// This function: helps the editor to find errors and needed adjustments. 
 	
-	format ["\n\nDEBUG MONITOR\n\n%21.\n\n- - - YOUR CURRENT VEH - - -\n%1.\n\n- - - YOUR CURRENT STATION - - -\n%20.\nBusy with: %22.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, str("Soon/WIP"), VO_isACErun, str("Soon/WIP")] remoteExec ["hintSilent", player];
+	format ["\n\nDEBUG MONITOR\n\n%21.\n%22\n\n- - - YOUR CURRENT VEH - - -\n%1.\n\n- - - YOUR CURRENT STATION - - -\n%20.\nBusy with: %23.\n\n- - - GROUND - - -\n%2.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTIC - - -\n%12.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", str("Soon/WIP"), groundVehiclesOverhauling, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, airVehiclesOverhauling, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, nauticVehiclesOverhauling, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, str("Soon/WIP"), VO_debug_ACE, VO_debug_ACE_vehDamage, str("Soon/WIP")] remoteExec ["hintSilent"];
 };
 
 
@@ -19,8 +20,8 @@ THY_fnc_VO_compatibility =
 	
 	params ["_fullAssets", "_repAssets", "_refAssets", "_reaAssets"];
 	
-	if ( isClass(configfile >> "CfgPatches" >> "ace_medical") ) then               // detecting basic ACE components to check if ACE is running in server.
-	{
+	if ( VO_isACErun ) then               // detecting basic ACE components to check if ACE is running in server.
+	{		
 		// Stations conformity with ACE:
 		{
 			_x setVariable ["ACE_isRepairFacility", 0];               // 0 = disable
@@ -37,7 +38,8 @@ THY_fnc_VO_compatibility =
 			
 		} forEach allMissionObjects "Tank" + allMissionObjects "Truck";               // https://community.bistudio.com/wiki/ArmA:_Armed_Assault:_CfgVehicles
 		
-		VO_isACErun = "ACE ON";
+		VO_debug_ACE = "ACE ON";
+		if ( ace_vehicle_damage_enabled ) then { VO_debug_ACE_vehDamage = "ACE Veh Damage ON" } else { VO_debug_ACE_vehDamage = "ACE Veh Damage OFF" };
 	
 	} else {
 	
@@ -52,7 +54,8 @@ THY_fnc_VO_compatibility =
 		// Vehicles conformity with NO ACE:
 		// not needed.
 		
-		VO_isACErun = "ACE OFF";
+		VO_debug_ACE = "ACE OFF";
+		VO_debug_ACE_vehDamage = "ACE Veh Damage OFF";
 	};
 };
 
@@ -80,6 +83,10 @@ THY_fnc_VO_servRepair =
 				if (!_isServProgrs) then 
 				{
 					sleep(2);
+					
+					// ACE Compatibility:
+					//if ( VO_isACErun ) then { _veh setVariable ["ace_cookoff_enable", false, true]; if ( VO_debugMonitor ) then { ["ace_cookoff_enable = false"] remoteExec ["systemChat"] } };  // cook off disabled.
+					
 					if ( VO_feedbackMsgs ) then 
 					{				
 						format ["Preparing a service... Wait %1 secs...", _cooldown] remoteExec ["systemChat", _veh];
@@ -101,9 +108,12 @@ THY_fnc_VO_servRepair =
 					}; 
 					
 					// before repairing, last check if the player's vehicle and station still on conditions:
-					[_x, _veh, _servRng, _isNautic, "rep", "repaired", "Repairing"] call THY_fnc_VO_stillOnCondition;	
+					[_x, _veh, _servRng, _isNautic, "rep", "repaired", "Repairing"] call THY_fnc_VO_serviceExecution; 
 					
 					_isServProgrs = false;               // station is free for the next service!
+					
+					// ACE Compatibility:
+					//if ( VO_isACErun ) then { _veh setVariable ["ace_cookoff_enable", true, true]; if ( VO_debugMonitor ) then { ["ace_cookoff_enable = enable"] remoteExec ["systemChat"] } };  // cook off enable.
 				
 				} else {
 					sleep(2);
@@ -160,7 +170,7 @@ THY_fnc_VO_servRefuel =
 					}; 
 					
 					// before refueling, last check if the player's vehicle and station still on conditions:
-					[_x, _veh, _servRng, _isNautic, "ref", "refueled", "Refueling"] call THY_fnc_VO_stillOnCondition;	
+					[_x, _veh, _servRng, _isNautic, "ref", "refueled", "Refueling"] call THY_fnc_VO_serviceExecution;	
 					
 					_isServProgrs = false;
 					
@@ -234,7 +244,7 @@ THY_fnc_VO_servRearm =
 					}; 
 					
 					// before rearming, last check if the player's vehicle and station still on conditions:
-					[_x, _veh, _servRng, _isNautic, "rea", "rearmed", "Rearming"] call THY_fnc_VO_stillOnCondition;
+					[_x, _veh, _servRng, _isNautic, "rea", "rearmed", "Rearming"] call THY_fnc_VO_serviceExecution;
 					
 					_isServProgrs = false;
 					
@@ -286,7 +296,7 @@ THY_fnc_VO_parkingHelper =
 // ----------------------------
 
 
-THY_fnc_VO_stillOnCondition = 
+THY_fnc_VO_serviceExecution = 
 {
 	// This function: before the service execution, it makes a last check if the player's vehicle and station still on conditions to get the service.
 	
