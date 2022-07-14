@@ -41,5 +41,5 @@ cba_settings_hasSettingsFile = 0;
 class cfgFunctions 
 {
 	// VEHICLES OVERHAULING: REPAIR, REARM, REFUEL
-	#include "vehiclesOverhauling\THY_functions.hpp"
+	#include "vehiclesOverhauling\THY_VO_functions.hpp"
 };

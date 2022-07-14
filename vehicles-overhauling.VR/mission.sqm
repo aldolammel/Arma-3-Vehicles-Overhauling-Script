@@ -8,18 +8,18 @@ class EditorData
 	toggles=1537;
 	class ItemIDProvider
 	{
-		nextID=351;
+		nextID=362;
 	};
 	class LayerIndexProvider
 	{
-		nextID=152;
+		nextID=176;
 	};
 	class Camera
 	{
-		pos[]={7370.3193,283.93155,7450.7524};
-		dir[]={0.69487423,-0.71655881,0.060773589};
-		up[]={0.71383393,0.69752663,0.062431801};
-		aside[]={0.087127253,0,-0.99619728};
+		pos[]={7521.4077,32.38274,7626.6782};
+		dir[]={-0.84519708,-0.51435709,0.14527529};
+		up[]={-0.50693214,0.85756946,0.087132789};
+		aside[]={0.16940087,-2.7627902e-007,0.98556566};
 	};
 };
 binarizationWanted=0;
@@ -57,6 +57,7 @@ addons[]=
 	"A3_Soft_F_Gamma_Hatchback_01",
 	"A3_Air_F_Heli_Heli_Transport_04",
 	"A3_Drones_F_Air_F_Gamma_UAV_02",
+	"A3_Armor_F_Beta_APC_Wheeled_01",
 	"A3_Structures_F_Enoch_Military_Airfield",
 	"A3_Rocks_F_Argo_Limestone",
 	"A3_Boat_F_Jets_Carrier_01",
@@ -314,7 +315,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=46;
+		items=47;
 		class Item0
 		{
 			dataType="Group";
@@ -1034,7 +1035,7 @@ class Mission
 			state=1;
 			class Entities
 			{
-				items=18;
+				items=23;
 				class Item0
 				{
 					dataType="Object";
@@ -1355,8 +1356,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7643.0996,7.2335663,7704.332};
-						angles[]={0,2.1381721,0};
+						position[]={7643.1001,7.2335663,7704.3325};
+						angles[]={0,2.1381681,0};
 					};
 					side="Empty";
 					flags=4;
@@ -1723,9 +1724,205 @@ class Mission
 						nAttributes=1;
 					};
 				};
+				class Item18
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7382.6211,7.5393777,7626.8262};
+						angles[]={0,2.1838257,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=357;
+					type="B_APC_Wheeled_01_cannon_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item19
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7471.189,7.5393777,7638.7588};
+						angles[]={0,4.7038717,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						fuel=0;
+					};
+					id=358;
+					type="B_APC_Wheeled_01_cannon_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item20
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7383.1709,6.4501238,7612.2852};
+						angles[]={0,2.0408483,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=360;
+					type="C_Hatchback_01_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item21
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7384.0151,7.632719,7655.4189};
+						angles[]={0,2.1829705,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=356;
+					type="B_APC_Tracked_01_rcws_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item22
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7480.3359,6.6115026,7648.7036};
+						angles[]={0,4.6624026,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=359;
+					type="B_G_Offroad_01_repair_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
 			};
 			id=73;
-			atlOffset=-0.02378273;
+			atlOffset=-0.00074291229;
 		};
 		class Item6
 		{
@@ -1739,8 +1936,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7609.4878,5.0014391,7518.001};
-						angles[]={0,0.28189006,0};
+						position[]={7608.937,5.0014391,7519.3052};
+						angles[]={0,0.068027206,0};
 					};
 					side="West";
 					flags=7;
@@ -3304,8 +3501,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7589.875,5.0014391,7519.0498};
-						angles[]={0,6.2403722,0};
+						position[]={7482.4673,5.0014391,7633.479};
+						angles[]={0,5.0351458,0};
 					};
 					side="West";
 					flags=7;
@@ -3456,6 +3653,17 @@ class Mission
 			title="Ground, Air and Nautic mobile refuel stations ";
 			description="It can't refuel itself.";
 			id=350;
+		};
+		class Item46
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7479.4238,5,7638.731};
+			};
+			title="Provide damages with IFV [+]";
+			description="Use this IFV to hit those 3 vehicles ahead and try to fix them with the repair service car by side. This test is to make sure randomly and located damages can be fixed with ACE ON or OFF, avoiding weird behaviors when ACE ADVANCED VEHICLE DAMAGE is ON on server.";
+			id=361;
 		};
 	};
 };
