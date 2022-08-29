@@ -74,7 +74,7 @@ _
 
 ## Ideas or fixes?
 
-Known issues: https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
+Discussion and known issues: https://forums.bohemia.net/forums/topic/239319-release-vehicles-overhauling-script/
 
 _
 
