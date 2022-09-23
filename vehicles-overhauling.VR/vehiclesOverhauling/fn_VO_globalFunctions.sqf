@@ -4,10 +4,14 @@
 
 
 THY_fnc_VO_debugMonitor = {
-	// This function: helps the editor to find errors and needed adjustments. 
+	// This function: helps the mission's editor to find errors out and possible fixes.
 	// return nothing.
+
+	private ["_vehCategory"];
+
+	_vehCategory = [vehicle player] call BIS_fnc_objectType;
 	
-	format ["\n\n||||||||  VO DEBUG MONITOR  ||||||||\n\n%21.\n%22\n\n- - - YOU'RE BY - - -\n%1.\n%24\n\n- - - YOUR CURRENT STATION - - -\n%20.\nBusy with: %23.\n\n- - - GROUND - - -\n%2.\nAmount stations= %25.\nAction range= %3m.\nRepairing = %4.\nRefueling = %5.\nRearming = %6.\nGround while-cycles done: %17x.\n\n- - - AIR - - -\n%7.\nAmount stations= %26.\nAction range = %8m.\nRepairing = %9.\nRefueling = %10.\nRearming = %11.\nAir while-cycles done: %18x.\n\n- - - NAUTICAL - - -\n%12.\nAmount stations= %27.\nAction range = %13m.\nRepairing = %14.\nRefueling = %15.\nRearming = %16.\nNautic while-cycles done: %19x.\n\n", vehicle player call BIS_fnc_objectType, VO_groundDoctrine, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, VO_airDoctrine, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, VO_nauticDoctrine, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, "Soon/WIP", VO_debug_ACE, VO_debug_ACE_vehDamage, "Soon/WIP", if (VO_nauticDoctrine) then {format ["Is amphibious = %1.", [vehicle player] call THY_fnc_VO_isAmphibious]} else {""}, if (VO_groundDoctrine) then {VO_grdStationsAmount} else {"0"}, if (VO_airDoctrine) then {VO_airStationsAmount} else {"0"}, if (VO_nauticDoctrine) then {VO_nauStationsAmount} else {"0"}] remoteExec ["hintSilent"];
+	format ["\n\n||||||||  VO DEBUG MONITOR  ||||||||\n\n%21.\n%22\n\n- - - YOU'RE BY - - -\n%1\n%28\n%24\n\n- - - YOUR CURRENT STATION - - -\n%20\nBusy with: %23\n\n- - - GROUND - - -\n%2\nAmount stations= %25\nAction range= %3m\nRepairing = %4\nRefueling = %5\nRearming = %6\nGround while-cycles done: %17x\n\n- - - AIR - - -\n%7\nAmount stations= %26\nAction range = %8m\nRepairing = %9\nRefueling = %10\nRearming = %11\nAir while-cycles done: %18x\n\n- - - NAUTICAL - - -\n%12\nAmount stations= %27\nAction range = %13m\nRepairing = %14\nRefueling = %15\nRearming = %16\nNautic while-cycles done: %19x\n\n", _vehCategory, VO_groundDoctrine, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, VO_airDoctrine, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, VO_nauticDoctrine, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, "Soon/WIP", VO_debug_ACE, VO_debug_ACE_vehDamage, "Soon/WIP", if (VO_nauticDoctrine AND ((_vehCategory select 0) isNotEqualTo "Soldier") ) then {format ["Can it float on water? = %1", [vehicle player] call THY_fnc_VO_isAmphibious]} else {""}, if (VO_groundDoctrine) then {VO_grdStationsAmount} else {"0"}, if (VO_airDoctrine) then {VO_airStationsAmount} else {"0"}, if (VO_nauticDoctrine) then {VO_nauStationsAmount} else {"0"}, if ((_vehCategory select 0) isNotEqualTo "Soldier") then {typeOf (vehicle player)} else {"on foot"}] remoteExec ["hintSilent"];
 
 	true
 };
@@ -301,9 +305,13 @@ THY_fnc_VO_checkMobileStation = {
 	// checking the advanced stations conditions (to prevent madness with mobile-stations):
 	if ( (underwater _stat) OR (!_isOnGround) OR (speed _stat > 0.2) ) then	
 	{ 
-		[_player, _veh, _stat, "", 4] call THY_fnc_VO_serviceCanceled;
-		
 		_isBadAdvCond = True;
+		
+		// shows the message if the player ISN'T in a mobile-station, NOT in a helicopter-transporting-a-rearm-container, the player's vehicle has weaponry and the player IS almost stand still then...
+		if ( !(_player in _stat) AND !(_veh isKindOf "Helicopter") AND (count weapons _veh > 0) AND (abs speed _player < 10) ) then
+		{
+			[_player, _veh, _stat, "", 4] call THY_fnc_VO_serviceCanceled;
+		};
 	};
 
 	sleep 10;
@@ -332,15 +340,8 @@ THY_fnc_VO_serviceCanceled = {
 		case 1: {_msg = format [">> %1 Keep the %2 engine OFF at station.", _msgPrefix, typeOf _veh]};
 		case 2: {_msg = format [">> %1 The station needs to be closer to the ground.", _msgPrefix]};
 		case 3: {_msg = format [">> %1 Keep your %2 on the ground.", _msgPrefix, typeOf _veh]};
-		
-		case 4: 
-		{
-			// checking the player vehicle: if player ISN'T in a mobile-station and NOT in a helicopter-transporting-a-rearm-container when the VO_airServiceRange is too large and vehicle has weaponry, then...
-			if ( !(_player in _stat) AND !(_veh isKindOf "Helicopter") AND (count weapons _veh > 0) ) then
-			{
-				_msg = format [">> The station %1 doesn't meet the conditions to rearm the %2 yet!", typeOf _stat, typeOf _veh] remoteExec ["systemChat", _player];
-			};
-		};
+		case 4: {_msg = format [">> The station %1 doesn't meet the conditions to rearm the %2 yet!", typeOf _stat, typeOf _veh]};
+		//case 5: {_msg = format [">> To rearm, someone in control of a vehicle weapon is required (gunner or commander seat)."]};
 	};
 	// Finally it prints out feedback message:
 	format ["%1", _msg] remoteExec ["systemChat", _player];  // can't be crew _veh coz if the player out of vehicle, they wont see any feedback.
@@ -390,11 +391,19 @@ THY_fnc_VO_preparingService = {
 		{
 			_waitTxt = "";
 			if ( _servCoolDown >= 5 ) then { _waitTxt = format ["Wait %1 secs...", _servCoolDown] };
+
 			format [">> Preparing a service to %1 at station... %2", typeOf _veh, _waitTxt] remoteExec ["systemChat", _player];
 
 			sleep _servCoolDown;
 		};
 	};
+
+	// Checks if for rearming, the vehicle has a gunner or commander (mandatory):
+	/* if ( _isRearm AND isNull gunner _veh AND isNull commander _veh ) exitWith 
+	{
+		[_player, _veh, _stat, "Rearming", 5] call THY_fnc_VO_serviceCanceled;
+		_isServProgrs  // Returning.
+	}; */
 
 	// Checks if preparetion of repairing or refueling the player turns the vehicle's engine on:
 	if ( (!_isRearm AND isEngineOn _veh) OR !alive _player OR !alive _stat OR !alive _veh OR (!_isDroneConnected AND ((_player distance _stat) > _currentRng)) ) exitWith 
@@ -610,7 +619,7 @@ THY_fnc_VO_servRearm = {
 			if ( _isBadAdvCond ) exitWith {};
 
 			// checking the player's vehicle:
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (count weapons _veh > 0) AND (currentWeapon _veh != "") AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") == _x select 1} count magazinesAmmo _veh) == 0) ) then
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (count weapons _veh > 0) AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") == _x select 1} count magazinesAmmo _veh) == 0) ) then
 			{
 				// checking if the station is NOT busy:
 				if ( !_isServProgrs ) then 
@@ -738,7 +747,8 @@ THY_fnc_VO_serviceExecution = {
 				};
 				
 				case "rea":  // REARMING
-				{	
+				{
+					
 					if ( _veh isKindOf "Plane" OR _veh isKindOf "Helicopter" ) then 
 					{
 						// Specific solution for vehicles with pylons (air) to simplify the rearming as they work differently to turrets:
@@ -772,6 +782,9 @@ THY_fnc_VO_serviceExecution = {
 							sleep 3;
 
 						} forEach _magsRemoved;
+
+						// if something goes wrong with reloading, this will help to fix:
+						[_veh, 1] remoteExec ["setVehicleAmmo", _veh];
 					};
 
 					_isRearmed = true;
