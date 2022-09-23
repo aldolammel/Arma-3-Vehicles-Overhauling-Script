@@ -82,7 +82,15 @@ _
 ## Changelog
 
 **v2.0 - Sep, 23th 2022**
-- Soon;
+- NEW - Now Aircraft Carrier USS Freedom asset can provide all services exclusively for planes. Others vehicles from air and ground doctrine will need some specific assets on carrier's deck to access their available services;
+- NEW - Amphibious vehicles even from Air or Ground doctrine are allowed to get services at stations of Nautical doctrine;
+- NEW - When debug is true, the mission editor has now an expanded handling error messages and other alerts to help them to find out misconfiguration;
+- NEW - Now to rearm a vehicle weapon, the player must be in some vehicle's turret to start the rearming service (except for drone vehicles);
+- FIXED - fixed the rearming issues around vehicle with different amount of magazines and turrets;
+- FIXED - fixed the bug (remoteExec) in Dedicated Server with parking helper assets weren't doing correctly the plane manouver inside the hangars;
+- PERFORMANCE IMPROVED - more functions, less repeatable code lines;
+- PERFORMANCE IMPROVED - duplicated content inside asset arrays are automatically deleted; 
+- Documentation has been updated.
 
 **v1.7 - Jul, 14th 2022**
 - ACE auto-detect improvement (now VO knows if "ace_vehicle_damage_enabled" is running);
