@@ -5,32 +5,31 @@ class EditorData
 	angleGridStep=1.5707964;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=1537;
+	toggles=1541;
 	class ItemIDProvider
 	{
-		nextID=362;
+		nextID=433;
+	};
+	class MarkerIDProvider
+	{
+		nextID=1;
 	};
 	class LayerIndexProvider
 	{
-		nextID=176;
+		nextID=272;
 	};
 	class Camera
 	{
-		pos[]={7521.4077,32.38274,7626.6782};
-		dir[]={-0.84519708,-0.51435709,0.14527529};
-		up[]={-0.50693214,0.85756946,0.087132789};
-		aside[]={0.16940087,-2.7627902e-007,0.98556566};
+		pos[]={7705.3667,55.801651,7609.5952};
+		dir[]={-0.91036165,-0.36609042,-0.19292364};
+		up[]={-0.35813674,0.93057925,-0.075896263};
+		aside[]={-0.20731562,7.4505806e-009,0.97827411};
 	};
 };
 binarizationWanted=0;
 sourceName="vehicles-overhauling";
 addons[]=
 {
-	"A3_Characters_F",
-	"A3_Weapons_F_Machineguns_Zafir",
-	"A3_Weapons_F_Mark_Machineguns_Zafir",
-	"A3_Weapons_F",
-	"A3_Drones_F_Weapons_F_Gamma_Items",
 	"A3_Modules_F_Curator_Curator",
 	"A3_Characters_F_Common",
 	"A3_Structures_F_Mil_Helipads",
@@ -39,10 +38,10 @@ addons[]=
 	"A3_Structures_F_Exp_Commercial_FuelStation_02",
 	"A3_Soft_F_Gamma_Truck_02",
 	"A3_Props_F_Tank_Military",
-	"A3_Props_F_Jets_Military_Trolley",
 	"A3_Structures_F_Argo_Commercial_FuelStation_01",
 	"A3_Structures_F_Ind_AirPort",
 	"A3_Misc_F_Helpers",
+	"A3_Props_F_Jets_Military_Trolley",
 	"A3_Soft_F_Offroad_01",
 	"A3_Armor_F_Beta_APC_Tracked_01",
 	"A3_Boat_F_Gamma_Boat_Transport_01",
@@ -58,222 +57,252 @@ addons[]=
 	"A3_Air_F_Heli_Heli_Transport_04",
 	"A3_Drones_F_Air_F_Gamma_UAV_02",
 	"A3_Armor_F_Beta_APC_Wheeled_01",
+	"A3_Armor_F_Beta_APC_Wheeled_02",
+	"A3_Air_F_Jets_Plane_Fighter_01",
+	"A3_Characters_F",
+	"A3_Weapons_F_Machineguns_Zafir",
+	"A3_Weapons_F_Mark_Machineguns_Zafir",
+	"A3_Weapons_F",
+	"A3_Drones_F_Weapons_F_Gamma_Items",
 	"A3_Structures_F_Enoch_Military_Airfield",
 	"A3_Rocks_F_Argo_Limestone",
 	"A3_Boat_F_Jets_Carrier_01",
+	"A3_Boat_F_Destroyer_Destroyer_01",
 	"A3_Soft_F_Gamma_Van_01",
 	"A3_Soft_F_EPC_Truck_03",
 	"A3_Soft_F_Gamma_Truck_01",
 	"A3_Soft_F_Exp_Truck_01",
 	"A3_Supplies_F_Heli_Slingload",
 	"A3_Weapons_F_Explosives",
-	"A3_Weapons_F_Items"
+	"A3_Weapons_F_Items",
+	"A3_Ui_F"
 };
 class AddonsMetaData
 {
 	class List
 	{
-		items=29;
+		items=32;
 		class Item0
-		{
-			className="A3_Characters_F";
-			name="Arma 3 Alpha - Characters and Clothing";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item1
-		{
-			className="A3_Weapons_F";
-			name="Arma 3 Alpha - Weapons and Accessories";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item2
-		{
-			className="A3_Weapons_F_Mark";
-			name="Arma 3 Marksmen - Weapons and Accessories";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item3
-		{
-			className="A3_Drones_F";
-			name="Arma 3 Beta - Drones";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item4
 		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item5
+		class Item1
+		{
+			className="A3_Characters_F";
+			name="Arma 3 Alpha - Characters and Clothing";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item2
 		{
 			className="A3_Structures_F_Mil";
 			name="Arma 3 - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item6
+		class Item3
 		{
 			className="A3_Structures_F_Ind";
 			name="Arma 3 - Industrial Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item7
+		class Item4
 		{
 			className="A3_Structures_F_Tank";
 			name="Arma 3 Tank - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item8
+		class Item5
 		{
 			className="A3_Structures_F_Exp_Commercial";
 			name="Arma 3 Apex - Commercial Buildings";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item9
+		class Item6
 		{
 			className="A3_Soft_F_Gamma";
 			name="Arma 3 - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item10
+		class Item7
 		{
 			className="A3_Props_F_Tank";
 			name="Arma 3 Tank - Decorative and Mission Objects";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item11
-		{
-			className="A3_Props_F_Jets";
-			name="Arma 3 Jets - Decorative and Mission Objects";
-			author="Bohemia Interactive";
-			url="https://www.arma3.com";
-		};
-		class Item12
+		class Item8
 		{
 			className="A3_Structures_F_Argo";
 			name="Arma 3 Malden - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item13
+		class Item9
 		{
 			className="A3_Misc_F";
 			name="Arma 3 - 3D Aids and Helpers";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item14
+		class Item10
+		{
+			className="A3_Props_F_Jets";
+			name="Arma 3 Jets - Decorative and Mission Objects";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item11
 		{
 			className="A3_Soft_F";
 			name="Arma 3 Alpha - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item15
+		class Item12
 		{
 			className="A3_Armor_F_Beta";
 			name="Arma 3 Beta - Armored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item16
+		class Item13
 		{
 			className="A3_Boat_F_Gamma";
 			name="Arma 3 - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item17
+		class Item14
 		{
 			className="A3_Air_F";
 			name="Arma 3 Alpha - Aircraft";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item18
+		class Item15
 		{
 			className="A3_Air_F_EPC";
 			name="Arma 3 Win Episode - Aircraft";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item19
+		class Item16
 		{
 			className="A3_Boat_F";
 			name="Arma 3 Alpha - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item20
+		class Item17
 		{
 			className="A3_Boat_F_Beta";
 			name="Arma 3 Beta - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item21
+		class Item18
 		{
 			className="A3_Boat_F_Exp";
 			name="Arma 3 Apex - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item22
+		class Item19
+		{
+			className="A3_Drones_F";
+			name="Arma 3 Beta - Drones";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item20
 		{
 			className="A3_Air_F_Heli";
 			name="Arma 3 Helicopters - Aircraft";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
+		class Item21
+		{
+			className="A3_Air_F_Jets";
+			name="Arma 3 Jets - Aircraft";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item22
+		{
+			className="A3_Weapons_F";
+			name="Arma 3 Alpha - Weapons and Accessories";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
 		class Item23
+		{
+			className="A3_Weapons_F_Mark";
+			name="Arma 3 Marksmen - Weapons and Accessories";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item24
 		{
 			className="A3_Structures_F_Enoch_Military";
 			name="Arma 3 Contact Platform - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item24
+		class Item25
 		{
 			className="A3_Rocks_F_Argo";
 			name="Arma 3 Malden - Rocks and Stones";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item25
+		class Item26
 		{
 			className="A3_Boat_F_Jets";
 			name="Arma 3 Jets - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item26
+		class Item27
+		{
+			className="A3_Boat_F_Destroyer";
+			name="Arma 3 Jets - Boats and Submersibles";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item28
 		{
 			className="A3_Soft_F_EPC";
 			name="Arma 3 Win Episode - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item27
+		class Item29
 		{
 			className="A3_Soft_F_Exp";
 			name="Arma 3 Apex - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item28
+		class Item30
 		{
 			className="A3_Supplies_F_Heli";
 			name="Arma 3 Helicopters - Ammoboxes and Supplies";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item31
+		{
+			className="A3_Ui_F";
+			name="Arma 3 - User Interface";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
@@ -283,8 +312,8 @@ dlcs[]=
 {
 	"Tank",
 	"Expansion",
-	"Jets",
 	"Argo",
+	"Jets",
 	"Heli",
 	"Enoch"
 };
@@ -315,181 +344,15 @@ class Mission
 	};
 	class Entities
 	{
-		items=47;
+		items=52;
 		class Item0
-		{
-			dataType="Group";
-			side="West";
-			class Entities
-			{
-				items=1;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={7598.1436,5.0014391,7519.1553};
-						angles[]={0,2.6954284,0};
-					};
-					side="West";
-					flags=7;
-					class Attributes
-					{
-						rank="MAJOR";
-						description="Player 2@Vehicles Overhauling script";
-						isPlayable=1;
-						class Inventory
-						{
-							class primaryWeapon
-							{
-								name="LMG_Zafir_F";
-								class primaryMuzzleMag
-								{
-									name="150Rnd_762x54_Box";
-									ammoLeft=150;
-								};
-							};
-							class vest
-							{
-								typeName="V_BandollierB_rgr";
-								isBackpack=0;
-								class MagazineCargo
-								{
-									items=5;
-									class Item0
-									{
-										name="HandGrenade";
-										count=2;
-										ammoLeft=1;
-									};
-									class Item1
-									{
-										name="SmokeShell";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item2
-									{
-										name="SmokeShellGreen";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item3
-									{
-										name="Chemlight_green";
-										count=1;
-										ammoLeft=1;
-									};
-									class Item4
-									{
-										name="150Rnd_762x54_Box";
-										count=1;
-										ammoLeft=150;
-									};
-								};
-							};
-							compass="ItemCompass";
-							radio="ItemRadio";
-							gps="B_UavTerminal";
-						};
-					};
-					id=11;
-					type="B_crew_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="allowDamage";
-							expression="_this allowdamage _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						class Attribute1
-						{
-							property="speaker";
-							expression="_this setspeaker _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
-									value="Male08ENG";
-								};
-							};
-						};
-						class Attribute2
-						{
-							property="pitch";
-							expression="_this setpitch _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
-									value=0.94999999;
-								};
-							};
-						};
-						class Attribute3
-						{
-							property="enableStamina";
-							expression="_this enablestamina _value;";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=0;
-								};
-							};
-						};
-						nAttributes=4;
-					};
-				};
-			};
-			class Attributes
-			{
-				garbageCollect=1;
-			};
-			id=10;
-		};
-		class Item1
 		{
 			dataType="Logic";
 			class PositionInfo
 			{
-				position[]={8094.1729,5,8102.4194};
+				position[]={8094.1729,5,8102.4189};
 			};
+			init="{" \n "   _x addCuratorEditableObjects [allUnits, true]; " \n "   _x addCuratorEditableObjects [vehicles, true]; " \n "} forEach allCurators;";
 			id=32;
 			type="ModuleCurator_F";
 			class CustomAttributes
@@ -502,13 +365,7 @@ class Mission
 					{
 						class data
 						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
+							singleType="STRING";
 							value="#adminLogged";
 						};
 					};
@@ -521,13 +378,7 @@ class Mission
 					{
 						class data
 						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
+							singleType="SCALAR";
 							value=0;
 						};
 					};
@@ -540,13 +391,7 @@ class Mission
 					{
 						class data
 						{
-							class type
-							{
-								type[]=
-								{
-									"STRING"
-								};
-							};
+							singleType="STRING";
 							value="";
 						};
 					};
@@ -559,13 +404,7 @@ class Mission
 					{
 						class data
 						{
-							class type
-							{
-								type[]=
-								{
-									"SCALAR"
-								};
-							};
+							singleType="SCALAR";
 							value=2;
 						};
 					};
@@ -573,7 +412,7 @@ class Mission
 				nAttributes=4;
 			};
 		};
-		class Item2
+		class Item1
 		{
 			dataType="Group";
 			side="West";
@@ -649,7 +488,7 @@ class Mission
 			};
 			id=57;
 		};
-		class Item3
+		class Item2
 		{
 			dataType="Group";
 			side="West";
@@ -727,20 +566,20 @@ class Mission
 			};
 			id=61;
 		};
-		class Item4
+		class Item3
 		{
 			dataType="Layer";
-			name="STATIONS";
+			name="STATIONS NON-VEHICLES";
 			state=1;
 			class Entities
 			{
-				items=12;
+				items=11;
 				class Item0
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7633.1431,5,7250.9922};
+						position[]={7616.2573,5,7246.6147};
 						angles[]={0,2.6328256,0};
 					};
 					side="Empty";
@@ -777,13 +616,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
+									singleType="BOOL";
 									value=1;
 								};
 							};
@@ -816,13 +649,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
+									singleType="BOOL";
 									value=1;
 								};
 							};
@@ -869,54 +696,6 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7613.1563,29.261789,7052.7686};
-						angles[]={0,1.5938907,0};
-					};
-					side="Empty";
-					flags=4;
-					class Attributes
-					{
-					};
-					id=223;
-					type="Land_Missle_Trolley_02_F";
-				};
-				class Item6
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={7613.4233,29.261789,7016.8872};
-						angles[]={0,1.5938907,0};
-					};
-					side="Empty";
-					flags=4;
-					class Attributes
-					{
-					};
-					id=224;
-					type="Land_Missle_Trolley_02_F";
-				};
-				class Item7
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={7613.1528,29.271933,6966.1074};
-						angles[]={0,1.5938907,0};
-					};
-					side="Empty";
-					flags=4;
-					class Attributes
-					{
-					};
-					id=225;
-					type="Land_Missle_Trolley_02_F";
-				};
-				class Item8
-				{
-					dataType="Object";
-					class PositionInfo
-					{
 						position[]={7698.3936,5.3726006,7684.584};
 						angles[]={0,2.1313105,0};
 					};
@@ -937,13 +716,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
+									singleType="BOOL";
 									value=1;
 								};
 							};
@@ -951,7 +724,7 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item9
+				class Item6
 				{
 					dataType="Object";
 					class PositionInfo
@@ -967,7 +740,7 @@ class Mission
 					id=195;
 					type="Land_FuelStation_01_pump_malevil_F";
 				};
-				class Item10
+				class Item7
 				{
 					dataType="Object";
 					class PositionInfo
@@ -984,7 +757,7 @@ class Mission
 					type="Land_Hangar_F";
 					atlOffset=4.7683716e-007;
 				};
-				class Item11
+				class Item8
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1010,13 +783,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
+									singleType="BOOL";
 									value=1;
 								};
 							};
@@ -1024,32 +791,63 @@ class Mission
 						nAttributes=1;
 					};
 				};
+				class Item9
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7636.6914,29.262451,7032.5225};
+						angles[]={0,2.4927838,0};
+					};
+					side="Empty";
+					class Attributes
+					{
+					};
+					id=405;
+					type="Land_Bomb_Trolley_01_F";
+					atlOffset=23.528442;
+				};
+				class Item10
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7594.1528,14.494756,7108.8564};
+						angles[]={0,1.086292,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=410;
+					type="Land_Bomb_Trolley_01_F";
+				};
 			};
 			id=72;
-			atlOffset=1.3123589;
+			atlOffset=10.225644;
 		};
-		class Item5
+		class Item4
 		{
 			dataType="Layer";
 			name="VEHICLES";
 			state=1;
 			class Entities
 			{
-				items=23;
+				items=27;
 				class Item0
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7635.0645,7.2335663,7532.5825};
-						angles[]={0,6.2531834,0};
+						position[]={7608,7.2335663,7652.0425};
+						angles[]={0,0.78154385,0};
 					};
 					side="Empty";
 					flags=4;
 					class Attributes
 					{
 						health=0.60125613;
-						ammo=0.10606581;
 						fuel=0.14590524;
 					};
 					id=19;
@@ -1064,13 +862,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1083,15 +875,14 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7672.7144,7.9853611,7539.2998};
-						angles[]={0,6.2143846,0};
+						position[]={7604,7.9853611,7660};
+						angles[]={0,0.90595573,0};
 					};
 					side="Empty";
 					flags=4;
 					class Attributes
 					{
 						health=0.50006711;
-						ammo=0.11217557;
 						fuel=0.11217557;
 						reportRemoteTargets=1;
 						receiveRemoteTargets=1;
@@ -1108,13 +899,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1150,13 +935,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1192,13 +971,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1218,9 +991,9 @@ class Mission
 					flags=4;
 					class Attributes
 					{
-						health=0.5;
-						ammo=0.021348676;
-						fuel=0.09531074;
+						health=0.65249074;
+						ammo=0.03405622;
+						fuel=0.15266021;
 					};
 					id=66;
 					type="B_Plane_CAS_01_dynamicLoadout_F";
@@ -1253,13 +1026,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1295,13 +1062,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1337,13 +1098,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1379,13 +1134,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1421,13 +1170,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1463,13 +1206,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1526,13 +1263,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1564,13 +1295,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1605,13 +1330,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1646,13 +1365,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1710,13 +1423,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1749,13 +1456,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1789,13 +1490,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1828,13 +1523,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1867,13 +1556,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1906,13 +1589,133 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item23
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7553.9468,3.0435371,7499.8848};
+						angles[]={0,4.6995649,0.24497849};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						health=0.59742439;
+						ammo=0.021348676;
+						fuel=0.10182983;
+					};
+					id=366;
+					type="O_APC_Wheeled_02_rcws_v2_F";
+					atlOffset=-0.078688622;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item24
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7768.04,31.037159,7105.6265};
+						angles[]={0,3.9225929,0};
+					};
+					side="Empty";
+					class Attributes
+					{
+						health=0.55506617;
+						ammo=0.050999645;
+						fuel=0.30091506;
+					};
+					id=391;
+					type="B_Plane_Fighter_01_F";
+					atlOffset=23.542107;
+				};
+				class Item25
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7680,7.9853611,7656};
+						angles[]={0,5.4711633,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						ammo=0;
+						reportRemoteTargets=1;
+						receiveRemoteTargets=1;
+					};
+					id=425;
+					type="B_APC_Tracked_01_AA_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item26
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7676,7.2335663,7652.0425};
+						angles[]={0,5.4924288,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						ammo=0;
+					};
+					id=427;
+					type="B_G_Offroad_01_armed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -1922,9 +1725,9 @@ class Mission
 				};
 			};
 			id=73;
-			atlOffset=-0.00074291229;
+			atlOffset=2.6654067;
 		};
-		class Item6
+		class Item5
 		{
 			dataType="Group";
 			side="West";
@@ -1936,8 +1739,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7608.937,5.0014391,7519.3052};
-						angles[]={0,0.068027206,0};
+						position[]={7588,5.0014391,7524.0498};
+						angles[]={0,0.069173515,0};
 					};
 					side="West";
 					flags=7;
@@ -2013,13 +1816,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
+									singleType="BOOL";
 									value=0;
 								};
 							};
@@ -2032,13 +1829,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="Male08ENG";
 								};
 							};
@@ -2051,13 +1842,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
+									singleType="SCALAR";
 									value=0.94999999;
 								};
 							};
@@ -2070,13 +1855,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
+									singleType="BOOL";
 									value=0;
 								};
 							};
@@ -2090,7 +1869,7 @@ class Mission
 			};
 			id=209;
 		};
-		class Item7
+		class Item6
 		{
 			dataType="Group";
 			side="West";
@@ -2167,14 +1946,14 @@ class Mission
 			};
 			id=287;
 		};
-		class Item8
+		class Item7
 		{
 			dataType="Layer";
 			name="IGNORE";
 			state=1;
 			class Entities
 			{
-				items=8;
+				items=9;
 				class Item0
 				{
 					dataType="Object";
@@ -2277,6 +2056,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7640.7773,5,7000.9146};
+						angles[]={0,0.91906369,0};
 					};
 					side="Empty";
 					flags=4;
@@ -2293,31 +2073,48 @@ class Mission
 					class Attributes
 					{
 						text="Get awful condition for vehicles";
-						condition="this && (getConnectedUAV player in thisList || vehicle player in thisList);";
-						onActivation="vehicle player setDammage 0.5;" \n "vehicle player setFuel 0.2;" \n "vehicle player setVehicleAmmo 0.1;" \n "getConnectedUAV player setDammage 0.5;" \n "getConnectedUAV player setFuel 0.2;" \n "getConnectedUAV player setVehicleAmmo 0.1;" \n "[""\n\nNow you can try the station again.\n\n""] remoteExec [""hint"", player];";
+						condition="this || (getConnectedUAV player) inArea thisTrigger;";
+						onActivation="(vehicle player) setDamage 0.5;" \n "(vehicle player) setFuel 0.2;" \n "(vehicle player) setVehicleAmmo 0.1;" \n "(getConnectedUAV player) setDamage 0.5;" \n "(getConnectedUAV player) setFuel 0.2;" \n "(getConnectedUAV player) setVehicleAmmo 0.1;" \n "format [""%1, now you can try the stations again."", name player] remoteExec [""systemChat"", player];";
 						sizeA=89.817001;
 						sizeB=37.604;
 						sizeC=44.717999;
 						repeatable=1;
-						activationBy="ANY";
+						activationBy="ANYPLAYER";
 						isRectangle=1;
+						triggerInterval=0.2;
 					};
 					id=106;
 					type="EmptyDetectorAreaR50";
 					atlOffset=34.717999;
 				};
+				class Item8
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7525.2324,5,7075.521};
+						angles[]={0,1.0198677,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=408;
+					type="Land_Destroyer_01_base_F";
+				};
 			};
 			id=298;
-			atlOffset=17.358999;
+			atlOffset=8.6794996;
 		};
-		class Item9
+		class Item8
 		{
 			dataType="Layer";
 			name="MOBILE STATIONS";
 			state=1;
 			class Entities
 			{
-				items=25;
+				items=26;
 				class Item0
 				{
 					dataType="Object";
@@ -2346,13 +2143,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2388,13 +2179,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2430,13 +2215,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2472,13 +2251,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2514,13 +2287,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2556,13 +2323,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2598,13 +2359,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2640,13 +2395,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2682,13 +2431,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2701,7 +2444,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7817.814,7.3134775,7505.3916};
+						position[]={7817.814,7.3134775,7505.3921};
 						angles[]={0,4.7169094,0};
 					};
 					side="Empty";
@@ -2724,18 +2467,25 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
 						};
-						nAttributes=1;
+						class Attribute1
+						{
+							property="allowDamage";
+							expression="_this allowdamage _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="BOOL";
+									value=1;
+								};
+							};
+						};
+						nAttributes=2;
 					};
 				};
 				class Item10
@@ -2766,13 +2516,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2808,13 +2552,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2867,13 +2605,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2944,13 +2676,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
 								};
 							};
@@ -2982,7 +2708,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7509.3618,4.8445635,7557.7622};
-						angles[]={6.0382071,6.2740259,0};
+						angles[]={6.0382109,6.2740226,0};
 					};
 					side="Empty";
 					flags=4;
@@ -2992,14 +2718,31 @@ class Mission
 					id=255;
 					type="B_Slingload_01_Ammo_F";
 					atlOffset=-2.3841858e-007;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="allowDamage";
+							expression="_this allowdamage _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="BOOL";
+									value=1;
+								};
+							};
+						};
+						nAttributes=1;
+					};
 				};
 				class Item19
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7605.5649,29.890896,7053.0156};
-						angles[]={0,1.5289168,0};
+						position[]={7633.1479,29.890894,7039.6563};
+						angles[]={0,5.6383014,0};
 					};
 					side="Empty";
 					flags=4;
@@ -3014,34 +2757,18 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7605.0493,29.890894,7016.7109};
-						angles[]={0,1.5405747,0};
+						position[]={7630.5537,29.888958,7037.7461};
+						angles[]={0,5.6240191,0};
 					};
 					side="Empty";
-					flags=4;
-					class Attributes
-					{
-					};
-					id=229;
-					type="B_Slingload_01_Fuel_F";
-				};
-				class Item21
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={7604.6201,29.899178,6965.9736};
-						angles[]={0,1.5677153,0};
-					};
-					side="Empty";
-					flags=4;
 					class Attributes
 					{
 					};
 					id=231;
 					type="B_Slingload_01_Repair_F";
+					atlOffset=23.528442;
 				};
-				class Item22
+				class Item21
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3059,7 +2786,7 @@ class Mission
 					id=345;
 					type="O_Heli_Transport_04_ammo_F";
 				};
-				class Item23
+				class Item22
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3077,7 +2804,7 @@ class Mission
 					id=346;
 					type="O_Heli_Transport_04_fuel_F";
 				};
-				class Item24
+				class Item23
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3095,233 +2822,255 @@ class Mission
 					id=344;
 					type="O_Heli_Transport_04_repair_F";
 				};
+				class Item24
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7601.2231,15.123076,7110.9858};
+						angles[]={0,4.1732388,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=402;
+					type="B_Slingload_01_Repair_F";
+				};
+				class Item25
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7589.8945,15.121584,7103.6675};
+						angles[]={0,4.1568985,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+					};
+					id=403;
+					type="B_Slingload_01_Fuel_F";
+				};
 			};
 			id=299;
-			atlOffset=2.5625248;
+			atlOffset=7.1158867;
+		};
+		class Item9
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7596,5,7504};
+			};
+			title="Air drone (no weaponry)";
+			id=84;
 		};
 		class Item10
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7596.1465,5,7506.1885};
+				position[]={7720,5,7364};
 			};
-			title="Air drone (no weaponry) in bad condition";
-			id=84;
+			title="Air full station example with parking helper";
+			description="Full staions provide all services available, but only for its doctrine = air vehicles." \n "Hangars has a function that helps planes to parking.";
+			id=71;
 		};
 		class Item11
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7670.9126,5,7320.5117};
+				position[]={7732,5,7256};
 			};
-			title="Air full station examples";
-			description="Full staions provide all services available, but only for its doctrine = air vehicles." \n "Hangars has a function that helps planes to parking.";
-			id=71;
+			title="Adding a manually ""Parking helper"" for planes [+]";
+			description="All assets listed in ""VO_airParkingHelperAssets"" (fn_VO_parameters.sqf) have an automatic parking helper for planes, turning the planes 180 degrees after the station services run. BUT sometimes there are wierd buildings or non-editable ones that the VO Script cant calc the asset center/position to parking automacally the plane. To fix this, use the asset ""Sign_Arrow_Direction_F"" to position a fake station inside where you wanna build the plane station." \n "Look inside this big building and notice the RED ARROW and make sure you ALWAYS will use the arrow pointing to inside the building for a correct plane maneuver.";
+			id=83;
 		};
 		class Item12
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7700.4409,5,7292.062};
+				position[]={7616,5,7544};
 			};
-			title="Adding a manually ""Parking helper"" for planes";
-			description="All assets listed in ""VO_airParkingHelperAssets"" (fn_VO_parameters.sqf) have an automatic parking helper for planes, turning the planes 180 degrees after the station services run. BUT sometimes there are wierd buildings or non-editable ones that the VO Script cant calc the asset center/position to parking automacally the plane. To fix this, use the asset ""Sign_Arrow_Direction_F"" to position a fake station inside where you wanna build the plane station." \n "Look inside this big building and notice the RED ARROW and make sure you ALWAYS will use the arrow pointing to inside the building for a correct plane maneuver.";
-			id=83;
+			title="Bike (no weaponry)";
+			id=78;
 		};
 		class Item13
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7615.8301,5,7544.1333};
+				position[]={7556,1,7508};
+				angles[]={0,0,0.24497849};
 			};
-			title="Bike (no weaponry) in bad condition";
-			id=78;
+			title="Boat (no weaponry)";
+			id=85;
 		};
 		class Item14
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7554.438,0.61000001,7507.8828};
+				position[]={7612,5,7504};
 			};
-			title="Boat (no weaponry) in bad condition";
-			id=85;
-			atlOffset=0.00050294399;
+			title="Chopper";
+			id=82;
 		};
 		class Item15
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7612,5,7508};
+				position[]={7597.1011,5,7528.6138};
 			};
-			title="Chopper in bad condition";
-			id=82;
+			title="Civilian car (no weaponry)";
+			id=77;
 		};
 		class Item16
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7597.1011,5,7528.6143};
+				position[]={7580,5,7544};
 			};
-			title="Civilian car (no weaponry) in bad condition";
-			id=77;
+			title="Civilian car (no weaponry) in flawless state";
+			id=76;
 		};
 		class Item17
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7580.0981,5,7543.0854};
+				position[]={7556,1,7520};
+				angles[]={0,0,0.24497849};
 			};
-			title="Civilian car (no weaponry) in flawless state";
-			id=76;
+			title="Combat boat";
+			id=86;
 		};
 		class Item18
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7553.7998,0,7518.2959};
+				position[]={7536,5,7676};
 			};
-			title="Combat boat in bad condition";
-			id=86;
-			atlOffset=-0.44995117;
+			title="Ground & Nautic refuel station example";
+			id=200;
 		};
 		class Item19
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7534.0645,5,7679.7495};
+				position[]={7644,5,7676};
 			};
-			title="Ground & Nautic refuel station example";
-			id=200;
+			title="Ground full station example";
+			description="Full staions provide all services available, but only for its doctrine = ground vehicles.";
+			id=69;
 		};
 		class Item20
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7642.0972,5,7679.5884};
+				position[]={7696,5,7696};
 			};
-			title="Ground full station example";
-			description="Full staions provide all services available, but only for its doctrine = ground vehicles.";
-			id=69;
+			title="Ground rearm station example";
+			id=237;
 		};
 		class Item21
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7698.7593,5,7692.7051};
+				position[]={7584,5,7708};
 			};
-			title="Ground rearm station example";
-			id=237;
+			title="Ground repair & fuel station example";
+			id=199;
 		};
 		class Item22
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7585.4077,5,7703.6343};
+				position[]={7888,5,7492};
 			};
-			title="Ground repair & fuel station example";
-			id=199;
+			title="Ground, Air and Nautic mobile rearm stations ";
+			description="It can't rearm itself.";
+			id=202;
 		};
 		class Item23
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7874.3979,5,7493.3999};
+				position[]={7952,5,7492};
 			};
-			title="Ground, Air and Nautic mobile rearm stations ";
-			description="It can't rearm itself.";
-			id=202;
+			title="Ground, Air and Nautic mobile refuel stations ";
+			description="It can't refuel itself.";
+			id=203;
 		};
 		class Item24
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7940.7339,5,7492.6128};
+				position[]={7824,5,7492};
 			};
-			title="Ground, Air and Nautic mobile refuel stations ";
-			description="It can't refuel itself.";
-			id=203;
+			title="Ground, Air and Nautic mobile repair stations ";
+			description="It can't repair itself.";
+			id=187;
 		};
 		class Item25
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7813.0264,5,7492.6826};
+				position[]={7888,5,7616};
 			};
-			title="Ground, Air and Nautic mobile repair stations ";
+			title="Ground, mobile rearm stations ";
 			description="It can't repair itself.";
-			id=187;
+			id=205;
 		};
 		class Item26
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7875.77,5,7614.6333};
+				position[]={7952,5,7616};
 			};
-			title="Ground, mobile rearm stations ";
+			title="Ground, mobile refuel stations ";
 			description="It can't repair itself.";
-			id=205;
+			id=206;
 		};
 		class Item27
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7939.0396,5,7615.7529};
+				position[]={7824,5,7716};
 			};
-			title="Ground, mobile refuel stations ";
-			description="It can't repair itself.";
-			id=206;
+			title="Ground, mobile repair station example";
+			description="It can't repair itself, but can repair another close ground vehicles.";
+			id=270;
 		};
 		class Item28
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7811.7935,5,7713.2456};
-			};
-			title="Ground, mobile repair station example";
-			description="It can't repair itself, but can repair another close ground vehicles.";
-			id=270;
-		};
-		class Item29
-		{
-			dataType="Comment";
-			class PositionInfo
-			{
-				position[]={7813.6216,5,7615.2495};
+				position[]={7824,5,7616};
 			};
 			title="Ground, mobile repair stations ";
 			description="It can't repair itself.";
 			id=204;
 		};
-		class Item30
-		{
-			dataType="Comment";
-			class PositionInfo
-			{
-				position[]={7674.0303,5,7533.6094};
-			};
-			title="Heavy armored in bad condition";
-			id=81;
-		};
-		class Item31
+		class Item29
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3333,39 +3082,17 @@ class Mission
 			description="Here, 2 examples where one of the REARM stations is underwater and, the other, is not under water so will work fine. Use that armored to push the container-station to underwater to see it won't work anymore.";
 			id=259;
 		};
-		class Item32
+		class Item30
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7606.4531,28.528999,7034.7231};
+				position[]={7656,5,7544};
 			};
-			title="Important case: stations over a carrier [+]";
-			description="Unfortunately, aircraft carrier USS Freedom doesnt work well as station because the asset is too big. Then, if you want to use it as AIR station for helicopters, use other assets as station over the carrier like I am doing here! ";
-			id=226;
-			atlOffset=0.00055503845;
-		};
-		class Item33
-		{
-			dataType="Comment";
-			class PositionInfo
-			{
-				position[]={7656.9443,5,7545.1553};
-			};
-			title="Military ground drone in bad condition";
+			title="Military ground drone";
 			id=80;
 		};
-		class Item34
-		{
-			dataType="Comment";
-			class PositionInfo
-			{
-				position[]={7634.7646,5,7527.9795};
-			};
-			title="Military light vehicle in bad condition";
-			id=79;
-		};
-		class Item35
+		class Item31
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3377,41 +3104,41 @@ class Mission
 			id=70;
 			atlOffset=4.8243408;
 		};
-		class Item36
+		class Item32
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7555.209,0.80199999,7531.9028};
+				position[]={7556,1.6371982,7532};
 			};
-			title="Submarine in bad condition";
+			title="Submarine (no weaponry)";
 			id=87;
-			atlOffset=-0.00024610758;
+			atlOffset=0.63719821;
 		};
-		class Item37
+		class Item33
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7694.2021,5,7397.7661};
+				position[]={7692,5,7396};
 				angles[]={0,5.907877,0};
 			};
-			title="Drone into the hangar";
+			title="Drone into the hangar [+]";
 			description="If the Drone is connected once, you as drone operator, never need to be in person at asset (hangar in this case) to start the vehicle repairing/rearming/refueling. Drones can be an excepction." \n "" \n "Planes into the hangar has Parking Helper function as well.";
 			id=302;
 		};
-		class Item38
+		class Item34
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7634.8799,5,7792.373};
+				position[]={7636,5,7800};
 			};
 			title="Here: set your vehicle in a awful condition";
 			description="Come here in this area to set  your vehicle in a bad condition and make new tests with no mission restart.";
 			id=305;
 		};
-		class Item39
+		class Item35
 		{
 			dataType="Group";
 			side="West";
@@ -3489,7 +3216,7 @@ class Mission
 			};
 			id=306;
 		};
-		class Item40
+		class Item36
 		{
 			dataType="Group";
 			side="West";
@@ -3560,13 +3287,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"STRING"
-										};
-									};
+									singleType="STRING";
 									value="Male04GRE";
 								};
 							};
@@ -3579,13 +3300,7 @@ class Mission
 							{
 								class data
 								{
-									class type
-									{
-										type[]=
-										{
-											"SCALAR"
-										};
-									};
+									singleType="SCALAR";
 									value=1.02;
 								};
 							};
@@ -3599,71 +3314,295 @@ class Mission
 			};
 			id=325;
 		};
+		class Item37
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7804,5,7436};
+			};
+			title="Use this to move containers";
+			id=347;
+		};
+		class Item38
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7804,5,7400};
+			};
+			title="Ground, Air and Nautic mobile repair stations ";
+			description="It can't repair itself.";
+			id=348;
+		};
+		class Item39
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7868,5,7400};
+			};
+			title="Ground, Air and Nautic mobile rearm stations ";
+			description="It can't rearm itself.";
+			id=349;
+		};
+		class Item40
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7932,5,7400};
+			};
+			title="Ground, Air and Nautic mobile refuel stations ";
+			description="It can't refuel itself.";
+			id=350;
+		};
 		class Item41
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7640.5161,28.542,7172.377};
+				position[]={7484,5,7640};
 			};
-			title="Important case: planes in carrier (WIP) [+]";
-			description="WIP: I am working to find a smart way to planes get services and parking help over the carrier.";
-			id=327;
-			atlOffset=23.542;
+			title="Provide damages with IFV [+]";
+			description="Use this IFV to hit those 3 vehicles ahead and try to fix them with the repair service car by side. This test is to make sure randomly and located damages can be fixed with ACE ON or OFF, avoiding weird behaviors when ACE ADVANCED VEHICLE DAMAGE is ON on server.";
+			id=361;
 		};
 		class Item42
 		{
-			dataType="Comment";
-			class PositionInfo
-			{
-				position[]={7807.1011,5,7436.1699};
-			};
-			title="Use this to move containers";
-			id=347;
+			dataType="Marker";
+			position[]={7312.6309,5,7946.6128};
+			name="marker_scriptVersion";
+			text="     VERSION 2.0";
+			type="mil_box";
+			id=362;
 		};
 		class Item43
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7810.438,5,7398.1392};
+				position[]={7564,3,7500};
+				angles[]={0,0,0.24497849};
 			};
-			title="Ground, Air and Nautic mobile repair stations ";
-			description="It can't repair itself.";
-			id=348;
+			title="Amphibious (try in nautic and ground stations)";
+			id=376;
 		};
 		class Item44
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7873.5459,5,7399.2959};
+				position[]={7840,5,6840};
 			};
-			title="Ground, Air and Nautic mobile rearm stations ";
-			description="It can't rearm itself.";
-			id=349;
+			title="Targets to test the damages and repairing when ACE ON.";
+			id=383;
 		};
 		class Item45
 		{
-			dataType="Comment";
-			class PositionInfo
+			dataType="Group";
+			side="West";
+			class Entities
 			{
-				position[]={7939.3599,5,7400.0649};
+				items=1;
+				class Item0
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7604,5.0014391,7516.0498};
+						angles[]={0,3.0275073,0};
+					};
+					side="West";
+					flags=7;
+					class Attributes
+					{
+						rank="MAJOR";
+						description="Player 2@Vehicles Overhauling script";
+						isPlayable=1;
+						class Inventory
+						{
+							class primaryWeapon
+							{
+								name="LMG_Zafir_F";
+								class primaryMuzzleMag
+								{
+									name="150Rnd_762x54_Box";
+									ammoLeft=150;
+								};
+							};
+							class vest
+							{
+								typeName="V_BandollierB_rgr";
+								isBackpack=0;
+								class MagazineCargo
+								{
+									items=5;
+									class Item0
+									{
+										name="HandGrenade";
+										count=2;
+										ammoLeft=1;
+									};
+									class Item1
+									{
+										name="SmokeShell";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item2
+									{
+										name="SmokeShellGreen";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item3
+									{
+										name="Chemlight_green";
+										count=1;
+										ammoLeft=1;
+									};
+									class Item4
+									{
+										name="150Rnd_762x54_Box";
+										count=1;
+										ammoLeft=150;
+									};
+								};
+							};
+							compass="ItemCompass";
+							radio="ItemRadio";
+							gps="B_UavTerminal";
+						};
+					};
+					id=390;
+					type="B_crew_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="allowDamage";
+							expression="_this allowdamage _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="BOOL";
+									value=0;
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="Male08ENG";
+								};
+							};
+						};
+						class Attribute2
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="SCALAR";
+									value=0.94999999;
+								};
+							};
+						};
+						class Attribute3
+						{
+							property="enableStamina";
+							expression="_this enablestamina _value;";
+							class Value
+							{
+								class data
+								{
+									singleType="BOOL";
+									value=0;
+								};
+							};
+						};
+						nAttributes=4;
+					};
+				};
 			};
-			title="Ground, Air and Nautic mobile refuel stations ";
-			description="It can't refuel itself.";
-			id=350;
+			class Attributes
+			{
+				garbageCollect=1;
+			};
+			id=389;
 		};
 		class Item46
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7479.4238,5,7638.731};
+				position[]={7640,28.528444,7028};
+				angles[]={0,0.91906369,0};
 			};
-			title="Provide damages with IFV [+]";
-			description="Use this IFV to hit those 3 vehicles ahead and try to fix them with the repair service car by side. This test is to make sure randomly and located damages can be fixed with ACE ON or OFF, avoiding weird behaviors when ACE ADVANCED VEHICLE DAMAGE is ON on server.";
-			id=361;
+			title="Important case: stations over a carrier [+]";
+			description="Aircraft carrier USS Freedom work by itself just with PLANES when Air Doctrine is allowed by you. If you want to serve another air vehicles  or vehicles from Ground over the carrier's deck, you should use the regular stations over the deck, like these examples around! ";
+			id=226;
+		};
+		class Item47
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7596,13.762098,7116};
+			};
+			title="heliport";
+			id=413;
+		};
+		class Item48
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7620,5,7240};
+			};
+			title="Air full station example exclusively for helicopters";
+			id=419;
+		};
+		class Item49
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7768,28.542328,7096};
+			};
+			title="Carrier serves only Planes [+]";
+			description="By default, Aircraft Carrier USS Freedom can serve only PLANES. For attempt another vehicles, you should drop over the carrier's deck some regular station(s). ";
+			id=421;
+		};
+		class Item50
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7680,5,7648};
+			};
+			title="Vehicles with NO ammo at all";
+			id=430;
+		};
+		class Item51
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7600.3169,5,7651.4048};
+			};
+			title="Vehicles 100% rearmed";
+			id=432;
 		};
 	};
 };
