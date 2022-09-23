@@ -1,4 +1,4 @@
-# Arma 3 / Vehicles Overhauling v1.7
+# Arma 3 / Vehicles Overhauling v2.0
 >*Dependencies: none.*
 >*Compatible with ACE, RHS, CUP.*
 
@@ -49,7 +49,8 @@ _
 - The target-vehicle engine must be off.
 
 **Rearming service rules:**
-- The target-vehicle must have onboarded weaponry;
+- The target-vehicle must have on-board weaponry;
+- Some player must be in some target-vehicle's turret;
 - The target-vehicle must have spent some ammunition.
 
 **Ground vehicles rules:**
@@ -79,6 +80,9 @@ Discussion and known issues: https://forums.bohemia.net/forums/topic/239319-rele
 _
 
 ## Changelog
+
+**v2.0 - Sep, 23th 2022**
+- Soon;
 
 **v1.7 - Jul, 14th 2022**
 - ACE auto-detect improvement (now VO knows if "ace_vehicle_damage_enabled" is running);
