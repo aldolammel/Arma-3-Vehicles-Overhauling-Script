@@ -1,76 +1,86 @@
-// VO v1.7
+// VO v2.0
 // File: your_mission\vehiclesOverhauling\fn_VO_coreNau.sqf
 // by thy (@aldolammel)
 
-private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_nauVehicles","_connected","_isServProgrs","_eachPlayer","_eachVeh"];
-
 // Only on the server, you dont want all players checking all players:
-if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
+if ( !VO_nauticDoctrine OR !isServer ) exitWith {};
 
 // NAUTIC SERVICES CORE / BE CAREFUL BELOW:
+[] spawn {
 
-[] spawn 
-{
+	private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_allAssets","_isServProgrs","_players","_eachPlayer","_playerVehList","_currentPlayerVehList","_veh","_isAmphibious","_connected","_eachVeh"];
+
+	sleep 1;  // avoid messages during briefing screen.
+	
 	// arrays that will be populated only with the objects found out more below:
 	_fullAssets = [];
 	_repAssets = [];
 	_refAssets = [];
 	_reaAssets = [];
+	_fullAndRepAssets = [];
+	_fullAndRefAssets = [];
+	_fullAndReaAssets = [];
+	_allAssets = [];
 
-	// if the services are allowed, find out only the assets (classnames) listed through fn_VO_parameters.sqf file:
+	// if the services are allowed, find out only the assets listed (fn_VO_parameters.sqf) and present in the mission:
 	if ( VO_nauServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_nauFullAssets };	
 	if ( VO_nauServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_nauRepairAssets };	
 	if ( VO_nauServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_nauRefuelAssets };	
 	if ( VO_nauServRearm ) then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_nauRearmAssets };
-	
-	// loading the main assets arrays:
-	_fullAndRepAssets = _repAssets + _fullAssets;
-	_fullAndRefAssets = _refAssets + _fullAssets;
-	_fullAndReaAssets = _reaAssets + _fullAssets;
+	// loading the main station's array without duplicated content:
+	{_fullAndRepAssets pushBackUnique _x} forEach _repAssets + _fullAssets;	
+	{_fullAndRefAssets pushBackUnique _x} forEach _refAssets + _fullAssets;
+	{_fullAndReaAssets pushBackUnique _x} forEach _reaAssets + _fullAssets;
+
+	// Checking if there are simpleObject assets (bad):
+	{_allAssets pushBackUnique _x} forEach _fullAndRepAssets + _fullAndRefAssets + _fullAndReaAssets;
+	if ( VO_debugMonitor ) then { VO_nauStationsAmount = count _allAssets } else { VO_nauStationsAmount = 0 };
+	[_allAssets, "nau"] call THY_fnc_VO_isSimpleObjects;
 	
 	// Compatibility checking: 
 	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_compatibility;
 	
-	// initial services condition:
+	// Initial nautical work values:
 	_isServProgrs = false; 
 	
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
-	while { isStationsOkay AND isServicesOkay } do
+	while { VO_isStationsOkay AND VO_isServicesOkay } do
 	{
-		_playersAlive = (allPlayers - (entities "HeadlessClient_F")) select {alive _x};
+		_players = call THY_fnc_VO_playersAlive;
 		
-		{ // _playersAlive forEach starts...
-			
+		{ // _players forEach starts...
 			_eachPlayer = _x;
 			
-			// searching the player's regular vehicles into XXm radius:
-			_nauVehicles = _x nearEntities [VO_nauVehicleTypes, 20];
-			// searching the player's connected nautic drones: 
-			if ( !VO_dronesNeedHuman ) then 
-			{
-				_connected =  getConnectedUAV _x;
-				if ( _connected isKindOf "Ship" OR _connected isKindOf "Submarine" ) then        // WIP: Future improvement > make it search the connected veh type directly in VO_nauVehicleTypes array, and so make it as function.
-				{
-					_nauVehicles append [_connected];
-				};
-			};
+			_playerVehList = [_x, VO_nauVehicleTypes] call THY_fnc_VO_playerVehicles;
 			
-			{ // forEach of _nauVehicles starts...
-				
+			// checking the current player's vec and, if amphibious, add to the nautical vehicles list:
+			if ( !isNull objectParent _x ) then 
+			{
+				_veh = vehicle _x;
+				_isAmphibious = [_veh] call THY_fnc_VO_isAmphibious;
+				if ( _isAmphibious AND !(_veh in _playerVehList) ) then { _playerVehList append [_veh] };
+			}; 
+			
+			_currentPlayerVehList = [_x, "nau", _playerVehList] call THY_fnc_VO_addConnectedDrone;
+			
+			{ // forEach of _currentPlayerVehList starts...
 				_eachVeh = _x;
 			
-				// NAUTIC REPAIR
-				[VO_nauServRepair, _eachVeh, VO_nauServiceRange, _isServProgrs, _fullAndRepAssets, VO_nauServRefuel, _fullAndRefAssets, VO_nauServRearm, _fullAndReaAssets, VO_nauCooldown, true] call THY_fnc_VO_servRepair;
+				[	// NAUTIC REPAIR
+					_eachPlayer, _eachVeh, VO_nauServRepair, VO_nauServiceRange, _isServProgrs, _fullAndRepAssets, VO_nauCooldown, true, false
+				] call THY_fnc_VO_servRepair;
 				
-				// NAUTIC REFUEL
-				[VO_nauServRefuel, _eachVeh, VO_nauServiceRange, _isServProgrs, _fullAndRefAssets, VO_nauServRearm, _fullAndReaAssets, VO_nauServRepair, _fullAndRepAssets, VO_nauCooldown, true] call THY_fnc_VO_servRefuel;
+				[	// NAUTIC REFUEL
+					_eachPlayer, _eachVeh, VO_nauServRefuel, VO_nauServiceRange, _isServProgrs, _fullAndRefAssets, VO_nauCooldown, true, false
+				] call THY_fnc_VO_servRefuel;
 				
-				// NAUTIC REARM
-				[VO_nauServRearm, _eachVeh, VO_nauServiceRange, _eachPlayer, _isServProgrs, _fullAndReaAssets, VO_nauServRepair, _fullAndRepAssets, VO_nauServRefuel, _fullAndRefAssets, VO_nauCooldown, true] call THY_fnc_VO_servRearm;
+				[	// NAUTIC REARM
+					_eachPlayer, _eachVeh, VO_nauServRearm, VO_nauServiceRange, _isServProgrs, _fullAndReaAssets, VO_nauCooldown, true, false
+				] call THY_fnc_VO_servRearm;
 
-			} forEach _nauVehicles;
+			} forEach _currentPlayerVehList;
 		
-		} forEach _playersAlive;
+		} forEach _players;
 		
 		sleep 5;
 		
@@ -78,5 +88,4 @@ if ( !nauticVehiclesOverhauling OR !isServer ) exitWith {};
 		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor; VO_nauCyclesDone = (VO_nauCyclesDone + 1) };
 		
 	};  // while-looping ends.
-
 };  // spawn ends.

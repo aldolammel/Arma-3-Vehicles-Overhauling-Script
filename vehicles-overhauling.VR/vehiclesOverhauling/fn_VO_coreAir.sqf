@@ -1,90 +1,90 @@
-// VO v1.7
+// VO v2.0
 // File: your_mission\vehiclesOverhauling\fn_VO_coreAir.sqf
 // by thy (@aldolammel)
 
-private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_parkingHelperAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_airVehicles","_connected","_isServProgrs","_eachPlayer","_eachVeh"];
-
 // Only on the server, you dont want all players checking all players:
-if ( !airVehiclesOverhauling OR !isServer ) exitWith {};
+if ( !VO_airDoctrine OR !isServer ) exitWith {};
 
 // AIR SERVICES CORE / BE CAREFUL BELOW:
+[] spawn {
 
-[] spawn 
-{
+	private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_allAssets","_parkingHelperAssets","_isServProgrs","_players","_eachPlayer","_playerVehList","_currentPlayerVehList","_connected","_eachVeh"];
+
+	sleep 1;  // avoid messages during briefing screen.
+	
 	// arrays that will be populated only with the objects found out more below:
 	_fullAssets = [];
 	_repAssets = [];
 	_refAssets = [];
 	_reaAssets = [];
+	_fullAndRepAssets = [];
+	_fullAndRefAssets = [];
+	_fullAndReaAssets = [];
+	_allAssets = [];
 	_parkingHelperAssets = [];
 	
-	// if the services are allowed, find out only the assets (classnames) listed through fn_VO_parameters.sqf file:
-	if ( VO_airServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_airFullAssets };	
-	if ( VO_airServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_airRepairAssets };	
-	if ( VO_airServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_airRefuelAssets };	
+	// if the services are allowed, find out only the assets listed (fn_VO_parameters.sqf) and present in the mission:
+	if ( VO_airServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_airFullAssets };
+	if ( VO_airServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_airRepairAssets };
+	if ( VO_airServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_airRefuelAssets };
 	if ( VO_airServRearm ) then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_airRearmAssets };
+	// loading the main station's array without duplicated content:
+	{_fullAndRepAssets pushBackUnique _x} forEach _repAssets + _fullAssets;	
+	{_fullAndRefAssets pushBackUnique _x} forEach _refAssets + _fullAssets;
+	{_fullAndReaAssets pushBackUnique _x} forEach _reaAssets + _fullAssets;
+
+	// Checking if there are simpleObject assets (bad):
+	{_allAssets pushBackUnique _x} forEach _fullAndRepAssets + _fullAndRefAssets + _fullAndReaAssets;
+	if ( VO_debugMonitor ) then { VO_airStationsAmount = count _allAssets } else { VO_airStationsAmount = 0 };
+	[_allAssets, "air"] call THY_fnc_VO_isSimpleObjects;
+	
+	// Compatibility checking:
+	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_compatibility;
 	
 	// List of assets with a parking system to help plane to maneuver:
 	{ _parkingHelperAssets = _parkingHelperAssets + allMissionObjects _x } forEach VO_airParkingHelperAssets;
 	
-	// loading the main station's assets:
-	_fullAndRepAssets = _repAssets + _fullAssets;
-	_fullAndRefAssets = _refAssets + _fullAssets;
-	_fullAndReaAssets = _reaAssets + _fullAssets;
-	
-	// Compatibility checking: 
-	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_compatibility;
-	
-	// Initial services condition:
+	// Initial air work values:
 	_isServProgrs = false;
-	
+
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
-	while { isStationsOkay AND isServicesOkay } do
+	while { VO_isStationsOkay AND VO_isServicesOkay } do 
 	{
-		_playersAlive = (allPlayers - (entities "HeadlessClient_F")) select {alive _x};
+		_players = call THY_fnc_VO_playersAlive;
 		
-		{ // _playersAlive forEach starts...
-			
+		{ // _players forEach starts...
 			_eachPlayer = _x;
 			
-			// searching the player's regular vehicles into XXm radius:
-			_airVehicles = _x nearEntities [VO_airVehicleTypes, 20];
-			// searching the player's connected air drones: 
-			if ( !VO_dronesNeedHuman ) then 
-			{
-				_connected =  getConnectedUAV _x;
-				if ( _connected isKindOf "Helicopter" OR _connected isKindOf "Plane" ) then        // WIP: Future improvement > make it search the connected veh type directly in VO_airVehicleTypes array, and so make it as function.
-				{
-					_airVehicles append [_connected];
-				};
-			};
+			_playerVehList = [_x, VO_airVehicleTypes] call THY_fnc_VO_playerVehicles;
+
+			_currentPlayerVehList = [_x, "air", _playerVehList] call THY_fnc_VO_addConnectedDrone;
 			
-			{ // forEach of _airVehicles starts... 
-				
+			{ // forEach of _currentPlayerVehList starts...
 				_eachVeh = _x; 
 
-				// AIR REPAIR
-				[VO_airServRepair, _eachVeh, VO_airServiceRange, _isServProgrs, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airCooldown] call THY_fnc_VO_servRepair;
+				[	// AIR REPAIR
+					_eachPlayer, _eachVeh, VO_airServRepair, VO_airServiceRange, _isServProgrs, _fullAndRepAssets, VO_airCooldown, false, VO_hasAirRngChanger
+				] call THY_fnc_VO_servRepair;
 				
-				// AIR REFUEL
-				[VO_airServRefuel, _eachVeh, VO_airServiceRange, _isServProgrs, _fullAndRefAssets, VO_airServRearm, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airCooldown] call THY_fnc_VO_servRefuel;
+				[	// AIR REFUEL
+					_eachPlayer, _eachVeh, VO_airServRefuel, VO_airServiceRange, _isServProgrs, _fullAndRefAssets, VO_airCooldown, false, VO_hasAirRngChanger
+				] call THY_fnc_VO_servRefuel;
 	
-				// AIR REARM
-				[VO_airServRearm, _eachVeh, VO_airServiceRange, _eachPlayer, _isServProgrs, _fullAndReaAssets, VO_airServRepair, _fullAndRepAssets, VO_airServRefuel, _fullAndRefAssets, VO_airCooldown] call THY_fnc_VO_servRearm;
+				[	// AIR REARM
+					_eachPlayer, _eachVeh, VO_airServRearm, VO_airServiceRange, _isServProgrs, _fullAndReaAssets, VO_airCooldown, false, VO_hasAirRngChanger
+				] call THY_fnc_VO_servRearm;
 				
 				// Parking plane helper:
 				[_eachVeh, _parkingHelperAssets] call THY_fnc_VO_parkingHelper;
-				
 
-			} forEach _airVehicles;
+			} forEach _currentPlayerVehList;
 		
-		} forEach _playersAlive;
+		} forEach _players;
 		
 		sleep 5;
 		
 		// debug:
 		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor; VO_airCyclesDone = (VO_airCyclesDone + 1) };
-		
-	};  // while-looping ends.
 
+	};  // while-looping ends.
 };  // spawn ends.

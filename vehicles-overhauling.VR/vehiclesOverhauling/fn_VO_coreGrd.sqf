@@ -1,82 +1,83 @@
-// VO v1.7
+// VO v2.0
 // File: your_mission\vehiclesOverhauling\fn_VO_coreGrd.sqf
 // by thy (@aldolammel)
 
-private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_playersAlive","_grdVehicles","_connected","_isServProgrs","_eachPlayer","_eachVeh"];
-
 // Only on the server, you dont want all players checking all players:
-if ( !groundVehiclesOverhauling OR !isServer ) exitWith {};
+if ( !VO_groundDoctrine OR !isServer ) exitWith {};
 
 // GROUND SERVICES CORE / BE CAREFUL BELOW:
+[] spawn {
 
-[] spawn 
-{ 	
-	// arrays that will be populated only with the objects found out more below:
+	private ["_fullAssets","_repAssets","_refAssets","_reaAssets","_fullAndRepAssets","_fullAndRefAssets","_fullAndReaAssets","_allAssets","_isServProgrs","_players","_eachPlayer","_playerVehList","_currentPlayerVehList","_connected","_eachVeh"];
+
+	sleep 1;  // avoid messages during briefing screen.
+	
+	// Arrays that will be populated only with the objects found out more below:
 	_fullAssets = [];
 	_repAssets = [];
 	_refAssets = [];
 	_reaAssets = [];
+	_fullAndRepAssets = [];
+	_fullAndRefAssets = [];
+	_fullAndReaAssets = [];
+	_allAssets = [];
 	
-	// if the services are allowed, find out only the assets (classnames) listed through fn_VO_parameters.sqf file:
+	// If the services are allowed, find out only the assets listed (fn_VO_parameters.sqf) and present in the mission:
 	if ( VO_grdServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_grdFullAssets };	
 	if ( VO_grdServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_grdRepairAssets };	
 	if ( VO_grdServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_grdRefuelAssets };	
 	if ( VO_grdServRearm ) then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_grdRearmAssets };
-	
-	// loading the main assets arrays:
-	_fullAndRepAssets = _repAssets + _fullAssets;
-	_fullAndRefAssets = _refAssets + _fullAssets;
-	_fullAndReaAssets = _reaAssets + _fullAssets;
+	// Loading the main station's array without duplicated content:
+	{_fullAndRepAssets pushBackUnique _x} forEach _repAssets + _fullAssets;
+	{_fullAndRefAssets pushBackUnique _x} forEach _refAssets + _fullAssets;
+	{_fullAndReaAssets pushBackUnique _x} forEach _reaAssets + _fullAssets;
+
+	// Checking if there are simpleObject assets (bad):
+	{_allAssets pushBackUnique _x} forEach _fullAndRepAssets + _fullAndRefAssets + _fullAndReaAssets;
+	if ( VO_debugMonitor ) then { VO_grdStationsAmount = count _allAssets } else { VO_grdStationsAmount = 0 };
+	[_allAssets, "grd"] call THY_fnc_VO_isSimpleObjects;
 	
 	// Compatibility checking: 
 	[_fullAssets, _repAssets, _refAssets, _reaAssets] call THY_fnc_VO_compatibility;
 	
-	// Initial services condition:
+	// Initial ground work values:
 	_isServProgrs = false; 
 	
 	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
-	while { isStationsOkay AND isServicesOkay } do
+	while { VO_isStationsOkay AND VO_isServicesOkay } do
 	{
-		_playersAlive = (allPlayers - (entities "HeadlessClient_F")) select {alive _x};
+		_players = call THY_fnc_VO_playersAlive;
 		
-		{ // _playersAlive forEach starts...
-		
+		{ // _players forEach starts...
 			_eachPlayer = _x;
 			
-			// searching the player's regular vehicles into XXm radius:
-			_grdVehicles = _x nearEntities [VO_grdVehicleTypes, 10];
-			// searching the player's connected ground drones: 
-			if ( !VO_dronesNeedHuman ) then 
-			{
-				_connected =  getConnectedUAV _x;
-				if ( _connected isKindOf "Car" OR _connected isKindOf "Motorcycle" OR _connected isKindOf "Tank" OR _connected isKindOf "WheeledAPC" OR _connected isKindOf "TrackedAPC" ) then    // WIP: to improve > check the VO_grdVehicleTypes array.
-				{
-					_grdVehicles append [_connected];
-				};
-			};
+			_playerVehList = [_x, VO_grdVehicleTypes] call THY_fnc_VO_playerVehicles;
+
+			_currentPlayerVehList = [_x, "grd", _playerVehList] call THY_fnc_VO_addConnectedDrone;
 			
-			{ // forEach of _grdVehicles starts...  
-			
+			{ // forEach of _currentPlayerVehList starts...
 				_eachVeh = _x;
 				
-				// GROUND REPAIR
-				[VO_grdServRepair, _eachVeh, VO_grdServiceRange, _isServProgrs, _fullAndRepAssets, VO_grdServRefuel, _fullAndRefAssets, VO_grdServRearm, _fullAndReaAssets, VO_grdCooldown] call THY_fnc_VO_servRepair;
+				[	// GROUND REPAIR
+					_eachPlayer, _eachVeh, VO_grdServRepair, VO_grdServiceRange, _isServProgrs, _fullAndRepAssets, VO_grdCooldown, false, false
+				] call THY_fnc_VO_servRepair;
 				
-				// GROUND REFUEL
-				[VO_grdServRefuel, _eachVeh, VO_grdServiceRange, _isServProgrs, _fullAndRefAssets, VO_grdServRearm, _fullAndReaAssets, VO_grdServRepair, _fullAndRepAssets, VO_grdCooldown] call THY_fnc_VO_servRefuel;
+				[	// GROUND REFUEL
+					_eachPlayer, _eachVeh, VO_grdServRefuel, VO_grdServiceRange, _isServProgrs, _fullAndRefAssets, VO_grdCooldown, false, false
+				] call THY_fnc_VO_servRefuel;
 				
-				// GROUND REARM
-				[VO_grdServRearm, _eachVeh, VO_grdServiceRange, _eachPlayer, _isServProgrs, _fullAndReaAssets, VO_grdServRepair, _fullAndRepAssets, VO_grdServRefuel, _fullAndRefAssets, VO_grdCooldown] call THY_fnc_VO_servRearm;
+				[	// GROUND REARM
+					_eachPlayer, _eachVeh, VO_grdServRearm, VO_grdServiceRange, _isServProgrs, _fullAndReaAssets, VO_grdCooldown, false, false
+				] call THY_fnc_VO_servRearm;
 
-			} forEach _grdVehicles;
+			} forEach _currentPlayerVehList;
 			
-		} forEach _playersAlive;
+		} forEach _players;
 		
 		sleep 5;
 		
 		// debug:
 		if ( VO_debugMonitor ) then { call THY_fnc_VO_debugMonitor; VO_grdCyclesDone = (VO_grdCyclesDone + 1) };
-		
-	};  // while-looping ends.
 
+	};  // while-looping ends.
 };  // spawn ends.
