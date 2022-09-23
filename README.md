@@ -41,16 +41,19 @@ _
 - AI won't be able to replace a human player to start one or more services.
 
 **Repairing service rules:**
+
 - The target-vehicle must have some damage;
 - The target-vehicle engine must be off.
 
 **Refueling service rules:**
+
 - The target-vehicle must have had some fuel consumption;
 - The target-vehicle engine must be off.
 
 **Rearming service rules:**
+
 - The target-vehicle must have on-board weaponry;
-- Some player must be in some target-vehicle's turret;
+- Rearming will be done just for spawned magazines (empties or not) with the target-vehicle, so the Editor should pay attention if they’ll set ammo limitation in the vehicle attributes;
 - The target-vehicle must have spent some ammunition.
 
 **Ground vehicles rules:**
@@ -85,7 +88,6 @@ _
 - NEW - Now Aircraft Carrier USS Freedom asset can provide all services exclusively for planes. Others vehicles from air and ground doctrine will need some specific assets on carrier's deck to access their available services;
 - NEW - Amphibious vehicles even from Air or Ground doctrine are allowed to get services at stations of Nautical doctrine;
 - NEW - When debug is true, the mission editor has now an expanded handling error messages and other alerts to help them to find out misconfiguration;
-- NEW - Now to rearm a vehicle weapon, the player must be in vehicle's turret as gunner or commander to start the rearming service (except for drone vehicles);
 - FIXED - fixed the rearming issues around vehicle with different amount of magazines and turrets;
 - FIXED - fixed the bug (remoteExec) in Dedicated Server with parking helper assets weren't doing correctly the plane manouver inside the hangars;
 - PERFORMANCE IMPROVED - more functions, less repeatable code lines;
