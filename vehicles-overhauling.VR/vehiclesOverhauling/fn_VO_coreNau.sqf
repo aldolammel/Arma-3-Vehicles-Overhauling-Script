@@ -1,4 +1,4 @@
-// VO v2.0
+// VO v2.1
 // File: your_mission\vehiclesOverhauling\fn_VO_coreNau.sqf
 // by thy (@aldolammel)
 
@@ -65,18 +65,22 @@ if ( !VO_nauticDoctrine OR !isServer ) exitWith {};
 			
 			{ // forEach of _currentPlayerVehList starts...
 				_eachVeh = _x;
-			
-				[	// NAUTIC REPAIR
-					_eachPlayer, _eachVeh, VO_nauServRepair, VO_nauServiceRange, _isServProgrs, _fullAndRepAssets, VO_nauCooldown, true, false
-				] call THY_fnc_VO_servRepair;
-				
-				[	// NAUTIC REFUEL
-					_eachPlayer, _eachVeh, VO_nauServRefuel, VO_nauServiceRange, _isServProgrs, _fullAndRefAssets, VO_nauCooldown, true, false
-				] call THY_fnc_VO_servRefuel;
-				
-				[	// NAUTIC REARM
-					_eachPlayer, _eachVeh, VO_nauServRearm, VO_nauServiceRange, _isServProgrs, _fullAndReaAssets, VO_nauCooldown, true, false
-				] call THY_fnc_VO_servRearm;
+
+				// Check if the vehicle is on water to avoid duplicate service checks when the vehicle is amphibious and it's on ground:
+				if ( surfaceIsWater position _x ) then 
+				{
+					[	// NAUTIC REPAIR
+						_eachPlayer, _eachVeh, VO_nauServRepair, VO_nauServiceRange, _isServProgrs, _fullAndRepAssets, VO_nauCooldown, true, false
+					] call THY_fnc_VO_servRepair;
+					
+					[	// NAUTIC REFUEL
+						_eachPlayer, _eachVeh, VO_nauServRefuel, VO_nauServiceRange, _isServProgrs, _fullAndRefAssets, VO_nauCooldown, true, false
+					] call THY_fnc_VO_servRefuel;
+					
+					[	// NAUTIC REARM
+						_eachPlayer, _eachVeh, VO_nauServRearm, VO_nauServiceRange, _isServProgrs, _fullAndReaAssets, VO_nauCooldown, true, false
+					] call THY_fnc_VO_servRearm;
+				};
 
 			} forEach _currentPlayerVehList;
 		

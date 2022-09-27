@@ -1,4 +1,4 @@
-// VO v2.0
+// VO v2.1
 // File: your_mission\vehiclesOverhauling\fn_VO_globalFunctions.sqf
 // by thy (@aldolammel)
 
@@ -11,7 +11,7 @@ THY_fnc_VO_debugMonitor = {
 
 	_vehCategory = [vehicle player] call BIS_fnc_objectType;
 	
-	format ["\n\n||||||||  VO DEBUG MONITOR  ||||||||\n\n%21.\n%22\n\n- - - YOU'RE BY - - -\n%1\n%28\n%24\n\n- - - YOUR CURRENT STATION - - -\n%20\nBusy with: %23\n\n- - - GROUND - - -\n%2\nAmount stations= %25\nAction range= %3m\nRepairing = %4\nRefueling = %5\nRearming = %6\nGround while-cycles done: %17x\n\n- - - AIR - - -\n%7\nAmount stations= %26\nAction range = %8m\nRepairing = %9\nRefueling = %10\nRearming = %11\nAir while-cycles done: %18x\n\n- - - NAUTICAL - - -\n%12\nAmount stations= %27\nAction range = %13m\nRepairing = %14\nRefueling = %15\nRearming = %16\nNautic while-cycles done: %19x\n\n", _vehCategory, VO_groundDoctrine, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, VO_airDoctrine, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, VO_nauticDoctrine, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, "Soon/WIP", VO_debug_ACE, VO_debug_ACE_vehDamage, "Soon/WIP", if (VO_nauticDoctrine AND ((_vehCategory select 0) isNotEqualTo "Soldier") ) then {format ["Can it float on water? = %1", [vehicle player] call THY_fnc_VO_isAmphibious]} else {""}, if (VO_groundDoctrine) then {VO_grdStationsAmount} else {"0"}, if (VO_airDoctrine) then {VO_airStationsAmount} else {"0"}, if (VO_nauticDoctrine) then {VO_nauStationsAmount} else {"0"}, if ((_vehCategory select 0) isNotEqualTo "Soldier") then {typeOf (vehicle player)} else {"on foot"}] remoteExec ["hintSilent"];
+	format ["\n\n||||||||  VO DEBUG MONITOR  ||||||||\n\n%21.\n%22\n\n- - - YOU'RE BY - - -\n%1\n%28\n%24\n\n- - - YOUR CURRENT STATION - - -\n%20\nBusy with: %23\n\n- - - GROUND - - -\n%2\nAmount stations= %25\nAction range= %3m\nRepairing = %4\nRefueling = %5\nRearming = %6\nGround while-cycles done: %17x\n\n- - - AIR - - -\n%7\nAmount stations= %26\nAction range = %8m\nRepairing = %9\nRefueling = %10\nRearming = %11\nAir while-cycles done: %18x\n\n- - - NAUTICAL - - -\n%12\nAmount stations= %27\nAction range = %13m\nRepairing = %14\nRefueling = %15\nRearming = %16\nNautic while-cycles done: %19x\n\n", _vehCategory, VO_groundDoctrine, VO_grdServiceRange, VO_grdServRepair, VO_grdServRefuel, VO_grdServRearm, VO_airDoctrine, VO_airServiceRange, VO_airServRepair, VO_airServRefuel, VO_airServRearm, VO_nauticDoctrine, VO_nauServiceRange, VO_nauServRepair, VO_nauServRefuel, VO_nauServRearm, VO_grdCyclesDone, VO_airCyclesDone, VO_nauCyclesDone, "Soon/WIP", VO_debug_ACE, VO_debug_ACE_vehDamage, "Soon/WIP", if (VO_nauticDoctrine AND ((_vehCategory select 0) isNotEqualTo "Soldier") ) then {format ["Float on water = %1", [vehicle player] call THY_fnc_VO_isAmphibious]} else {""}, if (VO_groundDoctrine) then {VO_grdStationsAmount} else {"0"}, if (VO_airDoctrine) then {VO_airStationsAmount} else {"0"}, if (VO_nauticDoctrine) then {VO_nauStationsAmount} else {"0"}, if ((_vehCategory select 0) isNotEqualTo "Soldier") then {typeOf (vehicle player)} else {"on foot"}] remoteExec ["hintSilent"];
 
 	true
 };
@@ -32,25 +32,25 @@ THY_fnc_VO_isSimpleObjects = {
 
 	if ( _counter > 0 ) then 
 	{
-		_txtSing = "station is badly set as SimpleObject that will bring a weird beharior to the station.";
-		_txtPlur = "stations are badly set as SimpleObject that will bring a weird beharior to the stations.";
+		_txtSing = "station is badly set as SimpleObject that will bring a weird behavior to the station.";
+		_txtPlur = "stations are badly set as SimpleObject that will bring a weird behavior to the stations.";
 		
 		if (_counter == 1) then 
 		{
 			switch (_doctrine) do 
 			{
-				case "grd": {systemChat format ["VO > %1 GROUND %2", _counter, _txtSing]};
-				case "air": {systemChat format ["VO > %1 AIR %2", _counter, _txtSing]};
-				case "nau": {systemChat format ["VO > %1 NAUTICAL %2", _counter, _txtSing]};
+				case "grd": {systemChat format ["VO ERROR > %1 GROUND %2", _counter, _txtSing]};
+				case "air": {systemChat format ["VO ERROR > %1 AIR %2", _counter, _txtSing]};
+				case "nau": {systemChat format ["VO ERROR > %1 NAUTICAL %2", _counter, _txtSing]};
 			};
 
 		} else {
 
 			switch (_doctrine) do 
 			{
-				case "grd": {systemChat format ["VO > %1 GROUND %2", _counter, _txtPlur]};
-				case "air": {systemChat format ["VO > %1 AIR %2", _counter, _txtPlur]};
-				case "nau": {systemChat format ["VO > %1 NAUTICAL %2", _counter, _txtPlur]};
+				case "grd": {systemChat format ["VO ERROR > %1 GROUND %2", _counter, _txtPlur]};
+				case "air": {systemChat format ["VO ERROR > %1 AIR %2", _counter, _txtPlur]};
+				case "nau": {systemChat format ["VO ERROR > %1 NAUTICAL %2", _counter, _txtPlur]};
 			};
 		};
 	};
@@ -128,7 +128,7 @@ THY_fnc_VO_isDroneConnected = {
 	_isDroneConnected = false;
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_isDroneConnected error: needs a player as parameter."; sleep 15}; _isDroneConnected  /* Returning. */};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_isDroneConnected: needs a player as parameter."; sleep 15}; _isDroneConnected  /* Returning. */};
 
 	_connected = getConnectedUAV _player;
 	if (!isNull _connected) then { _isDroneConnected = true };
@@ -145,7 +145,7 @@ THY_fnc_VO_isAmphibious = {
 	private ["_floatVal", "_canFloat"];
 
 	// Handling Errors:
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_isAmphibious error: needs a vehicle as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_isAmphibious: needs a vehicle as parameter."; sleep 15}};
 
 	_floatVal = _veh getVariable ['TAG_canFloat',-1];
 
@@ -155,7 +155,7 @@ THY_fnc_VO_isAmphibious = {
 	};
 	_canFloat = _floatVal > 0;
 	
-	_canFloat  // returning
+	_canFloat  // returning.
 };
 
 
@@ -167,8 +167,8 @@ THY_fnc_VO_addConnectedDrone = {
 	private ["_isDroneConnected", "_connected"];
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_addConnectedDrone error: needs a player as parameter."; sleep 15}; _playerVehList  /* Returning. */};
-	if (_doctrine == "") exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_addConnectedDrone error: needs a doctrine as parameter."; sleep 15}; _playerVehList  /* Returning. */};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_addConnectedDrone: needs a player as parameter."; sleep 15}; _playerVehList  /* Returning. */};
+	if (_doctrine == "") exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_addConnectedDrone: needs a doctrine as parameter."; sleep 15}; _playerVehList  /* Returning. */};
 
 	_isDroneConnected = [_player] call THY_fnc_VO_isDroneConnected;
 
@@ -208,8 +208,8 @@ THY_fnc_VO_playerVehicles = {
 	_playerVehList = [];
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_playerVehicles error: needs a player as parameter."; sleep 15}; _playerVehList  /* Returning. */};
-	if (count _allowedVehTypes == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_playerVehicles error: check if fn_VO_parameters.sqf has the default list of recognized vehicles by doctrine."; sleep 15}; _playerVehList  /* Returning. */};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_playerVehicles: needs a player as parameter."; sleep 15}; _playerVehList  /* Returning. */};
+	if (count _allowedVehTypes == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_playerVehicles: check if fn_VO_parameters.sqf has the default list of recognized vehicles by doctrine."; sleep 15}; _playerVehList  /* Returning. */};
 
 	// if player in a vehicle, it's avoid to search for new vehicles around:
 	if (!isNull objectParent _player) exitWith 
@@ -231,22 +231,22 @@ THY_fnc_VO_playerVehicles = {
 };
 
 
-THY_fnc_VO_isOnGround = {
-	// This function checks if the object (station or player's vehicle) is on ground. Remember, unfortunately Arma 3 command "isTouchingGround" somehow is not reliable.
-	// returns _isOnGround bool.
+THY_fnc_VO_isOnSurface = {
+	// This function checks if the object (station or player's vehicle) is on ground or water surface. Remember, unfortunately Arma 3 command "isTouchingGround" somehow is not reliable.
+	// returns _isOnSurface bool.
 
 	params [["_obj", objNull]];
-	private ["_isOnGround"];
+	private ["_isOnSurface"];
 
 	// Handling Errors:
-	if (_obj isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_isOnGround error: needs an object (player or station) as parameter."; sleep 15}};
+	if (_obj isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_isOnSurface: needs an object (player or station) as parameter."; sleep 15}};
 
-	_isOnGround = true;
+	_isOnSurface = true;
 
-	// checks if the object's axis Y is NOT close enough to the ground
-	if ( (getPos _obj) select 2 > 0.2 ) then { _isOnGround = false };
+	// checks if the object's axis Y is NOT close enough to the ground of water surface:
+	if ( (getPos _obj) select 2 > 0.2 ) then { _isOnSurface = false };
 
-	_isOnGround  // returning
+	_isOnSurface  // returning
 };
 
 
@@ -263,8 +263,8 @@ THY_fnc_VO_isStationRangeChanger = {
 	if ( !_hasRngChanger ) exitWith { _currentRng  /* Returning. */ };
 	
 	// Handling Errors:
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_isStationRangeChanger error: needs a station as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_isStationRangeChanger error: needs a vehicle as parameter."; sleep 15}};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_isStationRangeChanger: needs a station as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_isStationRangeChanger: needs a vehicle as parameter."; sleep 15}};
 
 	_statType = typeOf _stat;
 
@@ -275,7 +275,7 @@ THY_fnc_VO_isStationRangeChanger = {
 
 		if ( VO_debugMonitor AND (_currentRng >= _rangeChanger) AND ((_veh distance _stat) <= _currentRng) ) then
 		{ 
-			systemChat format ["DEBUG: station %1 is a RANGE-CHANGER, its service range increase to %2m for Planes.", _statType, _currentRng];
+			systemChat format [">> DEBUG > Station %1 is a RANGE-CHANGER, its service range increase to %2m for Planes.", _statType, _currentRng];
 			sleep 3;
 		};
 	};
@@ -289,21 +289,21 @@ THY_fnc_VO_checkMobileStation = {
 	// Returns _isBadAdvCond bool.
 	
 	params [["_player", objNull], ["_veh", objNull], ["_stat", objNull], ["_isNautic", false], ["_isStatRngChanger", false]];
-	private ["_isBadAdvCond", "_isOnGround"];
+	private ["_isBadAdvCond", "_isOnSurface"];
 
 	_isBadAdvCond = false;
 	
 	// Handling errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_checkMobileStation error: needs a player as parameter."; sleep 15; _isBadAdvCond  /* Returning. */}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_checkMobileStation error: needs a vehicle as parameter."; sleep 15; _isBadAdvCond  /* Returning. */}};
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_checkMobileStation error: needs a station as parameter."; sleep 15; _isBadAdvCond  /* Returning. */}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_checkMobileStation: needs a player as parameter."; sleep 15; _isBadAdvCond  /* Returning. */}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_checkMobileStation: needs a vehicle as parameter."; sleep 15; _isBadAdvCond  /* Returning. */}};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_checkMobileStation: needs a station as parameter."; sleep 15; _isBadAdvCond  /* Returning. */}};
 
 	if (_isNautic OR _isStatRngChanger) exitWith { _isBadAdvCond  /* Returning. */ }; 
 
-	_isOnGround = [_stat] call THY_fnc_VO_isOnGround;
+	_isOnSurface = [_stat] call THY_fnc_VO_isOnSurface;
 
 	// checking the advanced stations conditions (to prevent madness with mobile-stations):
-	if ( (underwater _stat) OR (!_isOnGround) OR (speed _stat > 0.2) ) then	
+	if ( (underwater _stat) OR (!_isOnSurface) OR (speed _stat > 0.2) ) then	
 	{ 
 		_isBadAdvCond = True;
 		
@@ -320,6 +320,54 @@ THY_fnc_VO_checkMobileStation = {
 };
 
 
+THY_fnc_VO_isRearmNeeded = {
+	// This function checks the mag capacity and how much ammo still remains within.
+	// Returns _isRearmNeeded bool.
+	
+	params [["_veh", objNull]];
+	private ["_isRearmNeeded", "_vehMagsStr", "_vehMagDetail", "_ammoName", "_ammoInMag", "_capacityMag"];
+
+	_isRearmNeeded = false;
+
+	// Handling Errors:
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_isRearmNeeded: needs a vehicle as parameter."; sleep 15}; _isRearmNeeded /* Returning */};
+
+	// Exit if the vehicle has NO weaponry for gunner and for driver:
+	if ( (count (_veh weaponsTurret [0]) == 0) AND (count (_veh weaponsTurret [-1]) == 0) ) exitWith {if (VO_debugMonitor) then {systemChat format [">> DEBUG > %1 has NO weaponry, then rearm IS NOT needed.", typeOf _veh]; sleep 15}; _isRearmNeeded /* Returning */};
+	
+	_vehMagsStr = magazinesDetail _veh;  // "120mm (2/20)[id/cr:10000011/0]".
+
+	if ( (count _vehMagsStr) > 0 ) then 
+	{
+		{
+			_vehMagDetail = _x splitString "([]/:)";  // ["120mm", "2", "20", "id", "cr", "10000011", "0"]
+			_ammoName = _vehMagDetail select 0;
+			reverse _vehMagDetail;  // ["0", "10000011", "cr", "id", "20", "2", "120mm"] coz the current ammo and ammo capacity don't change their index when reversed.
+			//systemChat str _vehMagDetail;  // Extra debug: checking the index of mag details.
+			_ammoInMag = parseNumber (_vehMagDetail select 5);  // string "2" convert to number 2.
+			_capacityMag = parseNumber (_vehMagDetail select 4);  // string "20" convert to number 20.
+	
+			// Checking if rearm is needed:
+			if ( _ammoInMag < (_capacityMag / 2) ) exitWith 
+			{ 
+				if ( VO_debugMonitor ) then {systemChat format [">> DEBUG > Magazine [%1]: %2 ammo of %3 capacity. Rearm is needed!", _ammoName, _ammoInMag, _capacityMag]; sleep 3};
+				_isRearmNeeded = true;
+			};
+	
+			//if ( VO_debugMonitor ) then {systemChat format [">> DEBUG > Magazine [%1]: %2 ammo of %3 capacity. Rearm NOT needed.", _ammoName, _ammoInMag, _capacityMag]; sleep 3};
+			
+		} forEach _vehMagsStr;
+
+	} else {
+
+		// When the armed-vehicle has NO ammo-capacity (0% ammunition in its attributes) it will force the vehicle to rearm:
+		_isRearmNeeded = true;
+	};
+	
+	_isRearmNeeded // Returning...
+};
+
+
 THY_fnc_VO_serviceCanceled = {
 	// This function displays a message if the service process is broken.
 	// Returns nothing.
@@ -328,9 +376,9 @@ THY_fnc_VO_serviceCanceled = {
 	private ["_msgPrefix","_msg"];
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceCanceled error: needs a player as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceCanceled error: needs a vehicle as parameter."; sleep 15}};
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceCanceled error: needs a station as parameter."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceCanceled: needs a player as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceCanceled: needs a vehicle as parameter."; sleep 15}};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceCanceled: needs a station as parameter."; sleep 15}};
 
 	_msgPrefix = format ["%1 has been canceled!", _txtServ];
 
@@ -342,6 +390,7 @@ THY_fnc_VO_serviceCanceled = {
 		case 3: {_msg = format [">> %1 Keep your %2 on the ground.", _msgPrefix, typeOf _veh]};
 		case 4: {_msg = format [">> The station %1 doesn't meet the conditions to rearm the %2 yet!", typeOf _stat, typeOf _veh]};
 		//case 5: {_msg = format [">> To rearm, someone in control of a vehicle weapon is required (gunner or commander seat)."]};
+		case 6: {_msg = format [">> %1 Careful, the %2 has NO ammo. Try to rearm!", _msgPrefix, typeOf _veh]};
 	};
 	// Finally it prints out feedback message:
 	format ["%1", _msg] remoteExec ["systemChat", _player];  // can't be crew _veh coz if the player out of vehicle, they wont see any feedback.
@@ -359,8 +408,8 @@ THY_fnc_VO_busyService = {
 	params [["_player", objNull], ["_stat", objNull]];
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_busyService error: needs a player as parameter."; sleep 15}};
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_busyService error: needs a station as parameter."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_busyService: needs a player as parameter."; sleep 15}};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_busyService: needs a station as parameter."; sleep 15}};
 
 	sleep 2;
 	format [">> %1, someone is using the service at %2. Hold...", name _player, typeOf _stat] remoteExec ["systemChat", _player];
@@ -379,10 +428,13 @@ THY_fnc_VO_preparingService = {
 	_isServProgrs = false;
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_preparingService error: needs a player as parameter."; sleep 15}; _isServProgrs /* Returning */};
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_preparingService error: needs a station as parameter."; sleep 15}; _isServProgrs /* Returning */};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_preparingService error: needs a vehicle as parameter."; sleep 15}; _isServProgrs /* Returning */};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_preparingService: needs a player as parameter."; sleep 15}; _isServProgrs /* Returning */};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_preparingService: needs a station as parameter."; sleep 15}; _isServProgrs /* Returning */};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_preparingService: needs a vehicle as parameter."; sleep 15}; _isServProgrs /* Returning */};
 
+	// Fist check if the vehicle is on ground or water surface:
+	if ( !([_veh] call THY_fnc_VO_isOnSurface) ) exitWith {_isServProgrs /* Returning */};
+	
 	sleep 2;
 
 	if ( (alive _player) AND (alive _stat) AND (alive _veh) ) then 
@@ -398,14 +450,15 @@ THY_fnc_VO_preparingService = {
 		};
 	};
 
-	// Checks if for rearming, the vehicle has a gunner or commander (mandatory):
-	/* if ( _isRearm AND isNull gunner _veh AND isNull commander _veh ) exitWith 
+	// Checks again if preparation of rearming the player's veh is on ground or water:
+	if ( _isRearm AND !([_veh] call THY_fnc_VO_isOnSurface) ) exitWith 
 	{
-		[_player, _veh, _stat, "Rearming", 5] call THY_fnc_VO_serviceCanceled;
-		_isServProgrs  // Returning.
-	}; */
+		[_player, _veh, _stat, "The service", 3] call THY_fnc_VO_serviceCanceled;
 
-	// Checks if preparetion of repairing or refueling the player turns the vehicle's engine on:
+		_isServProgrs  // Returning.
+	};
+
+	// Checks if preparation of repairing or refueling the player keeps the vehicle's engine off:
 	if ( (!_isRearm AND isEngineOn _veh) OR !alive _player OR !alive _stat OR !alive _veh OR (!_isDroneConnected AND ((_player distance _stat) > _currentRng)) ) exitWith 
 	{
 		[_player, _veh, _stat, "The service", 0] call THY_fnc_VO_serviceCanceled;
@@ -415,7 +468,7 @@ THY_fnc_VO_preparingService = {
 
 	_isServProgrs = true; 
 
-	_isServProgrs  // returning
+	_isServProgrs  // Returning.
 };
 
 
@@ -426,8 +479,8 @@ THY_fnc_VO_soundEffect = {
 	params [["_stat", objNull], ["_serv", ""], ["_isNautic", false]];
 
 	// Handling Errors:
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_soundEffect error: needs a station as parameter."; sleep 15}};
-	if (_serv == "resource") then {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_soundEffect NOT working properly: the function 'THY_fnc_VO_checkingMsg' needs a specific resource as parameter."; sleep 15}};  // if it happens, this condition wont stop the function, just warning the editor.
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_soundEffect: needs a station as parameter."; sleep 15}};
+	if (_serv == "resource") then {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_soundEffect NOT working properly: the function 'THY_fnc_VO_checkingMsg' needs a specific resource as parameter."; sleep 15}};  // if it happens, this condition wont stop the function, just warning the editor.
 
 	if ( !_isNautic ) then
 	{
@@ -462,9 +515,9 @@ THY_fnc_VO_checkingMsg = {
 	params [["_player", objNull], ["_stat", objNull], ["_veh", objNull], ["_resource", "resource"], ["_isNautic", false]];
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_checkingMsg error: needs a player as parameter."; sleep 15}};
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_checkingMsg error: needs a station as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_checkingMsg error: needs a vehicle as parameter."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_checkingMsg: needs a player as parameter."; sleep 15}};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_checkingMsg: needs a station as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_checkingMsg: needs a vehicle as parameter."; sleep 15}};
 
 	if ( VO_feedbackMsgs ) then { format [">> Checking the %1 of %2...", _resource, typeOf _veh] remoteExec ["systemChat", _player] };
 	[_stat, _resource, _isNautic] call THY_fnc_VO_soundEffect;
@@ -483,9 +536,9 @@ THY_fnc_VO_servRepair = {
 	if ( !_serv ) exitWith {};
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRepair error: needs a player as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRepair error: needs a vehicle as parameter."; sleep 15}};
-	if (count _statAssets == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRepair error: no assets set up as repair station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRepair: needs a player as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRepair: needs a vehicle as parameter."; sleep 15}};
+	if (count _statAssets == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRepair: no assets set up as repair station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
 
 	{ // forEach of _statAssets starts...
 		// initial values:
@@ -544,9 +597,9 @@ THY_fnc_VO_servRefuel = {
 	if ( !_serv ) exitWith {};
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRefuel error: needs a player as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRefuel error: needs a vehicle as parameter."; sleep 15}};
-	if (count _statAssets == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRefuel error: no assets set up as refuel station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: needs a player as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: needs a vehicle as parameter."; sleep 15}};
+	if (count _statAssets == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: no assets set up as refuel station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
 
 	{ // forEach of _statAssets starts...
 		// initial values:
@@ -594,14 +647,14 @@ THY_fnc_VO_servRearm = {
 	// Returns nothing.
 
 	params [["_player", objNull], ["_veh", objNull], ["_serv", false], ["_servRng", 20], ["_isServProgrs", false], ["_statAssets", []], ["_cooldown", 10], ["_isNautic", false], ["_hasRngChanger", false]];
-	private ["_currentRng", "_isStatRngChanger", "_isBadAdvCond", "_isDroneConnected"];
+	private ["_currentRng", "_isStatRngChanger", "_isBadAdvCond", "_isRearmNeeded", "_isDroneConnected"];
 	
 	if ( !_serv ) exitWith {};
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRearm error: needs a player as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRearm error: needs a vehicle as parameter."; sleep 15}};
-	if (count _statAssets == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_servRearm error: no assets set up as rearm station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRearm: needs a player as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRearm: needs a vehicle as parameter."; sleep 15}};
+	if (count _statAssets == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_servRearm: no assets set up as rearm station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
 
 	{ // forEach of _statAssets starts...
 		// initial values:
@@ -618,9 +671,12 @@ THY_fnc_VO_servRearm = {
 			_isBadAdvCond = [_player, _veh, _x, _isNautic, _isStatRngChanger] call THY_fnc_VO_checkMobileStation;
 			if ( _isBadAdvCond ) exitWith {};
 
+			_isRearmNeeded = [_veh] call THY_fnc_VO_isRearmNeeded;
+
 			// checking the player's vehicle:
-			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND (count weapons _veh > 0) AND (({getNumber (configFile >> "CfgMagazines" >> _x select 0 >> "count") == _x select 1} count magazinesAmmo _veh) == 0) ) then
+			if ( (alive _veh) AND (abs speed _veh < 2) AND (!underwater _veh) AND _isRearmNeeded ) then
 			{
+
 				// checking if the station is NOT busy:
 				if ( !_isServProgrs ) then 
 				{
@@ -655,8 +711,8 @@ THY_fnc_VO_parkingHelper = {
 	params [["_veh", objNull], ["_assetsToHelp", []]];
 
 	// Handling Errors:
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_parkingHelper error: needs a vehicle as parameter."; sleep 15}};
-	if (count _assetsToHelp == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_parkingHelper error: check fn_VO_parameters.sqf > VO_airParkingHelperAssets list (looks empty)."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_parkingHelper: needs a vehicle as parameter."; sleep 15}};
+	if (count _assetsToHelp == 0) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_parkingHelper: check fn_VO_parameters.sqf > VO_airParkingHelperAssets list (looks empty)."; sleep 15}};
 
 	// Parking plane helper:
 	if ( (_veh isKindOf "Plane") AND (!isEngineOn _veh) AND (speed _veh == 0) ) then 
@@ -684,13 +740,13 @@ THY_fnc_VO_serviceExecution = {
 	// Returns nothing.
 	
 	params [["_player", objNull], ["_stat", objNull], ["_veh", objNull], ["_service", ""], ["_currentRng", 20], ["_isStatRngChanger", false], ["_isNautic", false], ["_isDroneConnected", false], ["_txtServ1", "fixed"], ["_txtServ2", "The service"]];
-	private ["_vehCrew", "_vehType", "_isObjOnGround", "_isRepaired", "_isRefueled", "_isRearmed", "_vehMags", "_magsRemoved", "_mag"];
+	private ["_vehCrew", "_vehType", "_isObjOnSurface", "_isRepaired", "_isRefueled", "_isRearmed", "_vehMags", "_magsRemoved", "_magsLoopChecker", "_mag"];
 
 	// Handling Errors:
-	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceExecution error: needs a player as parameter."; sleep 15}};
-	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceExecution error: needs a service station as parameter."; sleep 15}};
-	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceExecution error: needs a vehicle as parameter."; sleep 15}};
-	if (_service == "") exitWith {if (VO_debugMonitor) then {systemChat "VO > THY_fnc_VO_serviceExecution error: needs a service as parameter."; sleep 15}};
+	if (_player isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceExecution: needs a player as parameter."; sleep 15}};
+	if (_stat isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceExecution: needs a service station as parameter."; sleep 15}};
+	if (_veh isEqualTo objNull) exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceExecution: needs a vehicle as parameter."; sleep 15}};
+	if (_service == "") exitWith {if (VO_debugMonitor) then {systemChat "VO ERROR > THY_fnc_VO_serviceExecution: needs a service as parameter."; sleep 15}};
 	
 	_vehCrew = crew _veh;
 	_vehType = typeOf _veh;
@@ -700,14 +756,15 @@ THY_fnc_VO_serviceExecution = {
 	// checks the station and vehicle current conditions:
 	if ( (_isStatRngChanger OR !underwater _stat) AND (alive _stat) AND (alive _veh) AND (!underwater _veh) AND (speed _stat < 1) AND (speed _veh < 1) AND ((_veh distance _stat) <= _currentRng) ) then  // important: if the station is a range-changer, it's crucial considere large ship assets can be a bit under the water, that's why that "OR".
 	{
-		// Condition for veh and station:
+		// Checks if player's vehicle is touching some surface:
+		_isObjOnSurface = [_veh] call THY_fnc_VO_isOnSurface;
+		if ( !_isObjOnSurface ) exitWith { [_player, _veh, _stat, _txtServ2, 3] call THY_fnc_VO_serviceCanceled };  // checking vehicle.
+		
+		// Checks if the station is touching some surface (ignore it for nautical stations):
 		if ( !_isNautic ) then
 		{
-			// Checks if everything non-nautical is touching the ground:
-			_isObjOnGround = [_veh] call THY_fnc_VO_isOnGround;
-			if ( !_isObjOnGround ) exitWith { [_player, _veh, _stat, _txtServ2, 3] call THY_fnc_VO_serviceCanceled };  // checking the vehicle.
-			_isObjOnGround = [_stat] call THY_fnc_VO_isOnGround;
-			if ( !_isStatRngChanger AND !_isObjOnGround ) exitWith { [_player, _veh, _stat, _txtServ2, 2] call THY_fnc_VO_serviceCanceled };  // checking the station.
+			_isObjOnSurface = [_stat] call THY_fnc_VO_isOnSurface;
+			if ( !_isStatRngChanger AND !_isObjOnSurface ) exitWith { [_player, _veh, _stat, _txtServ2, 2] call THY_fnc_VO_serviceCanceled };  // checking station.
 		};
 
 		// Initial services status values:
@@ -757,37 +814,52 @@ THY_fnc_VO_serviceExecution = {
 						// Effects:
 						playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _veh];
 						[[1, 6, 3]] remoteExec ["addCamShake", _vehCrew];
+						
 						sleep 3;
+						_isRearmed = true;
 
 					} else {
 					
-						_vehMags = magazinesAllTurrets _veh;  // list of all magazines (include the empty ones) and its data as projectiles left, etc.
-
+						// Mapping all vehicle mags capacity:
+						_vehMags = magazinesAllTurrets _veh;  // list of all magazines (include the empty ones) and its additional data.
 						_magsRemoved = [];
+						_magsLoopChecker = true;
 							
-						for "_i" from 0 to ((count _vehMags) - 1) do  // building the removing mag looping from the amout of vehicle magazine capacity.
-						{
-							_mag = (_vehMags select _i) select 0;  // selecting only the magazine classname;
-							_veh removeMagazines _mag;
+						{  // Looping for remove each mag from the vehicle:
+							_mag = _x select 0;  // selecting only the magazine's classname;
+							
+							// Removing the mag:
+							_veh removeMagazineTurret [_mag, [0]];  // [magazineClassname, [turretPath]] https://community.bistudio.com/wiki/Turret_Path
 							_magsRemoved pushBack _mag;
-						};
 
-						{  // forEach for add new mags based on those ones already removed:
-							_veh addMagazine _x;
-							format [">> Ammo %1 on board...", _x] remoteExec ["systemChat", _player];
+						} forEach _vehMags;
+						
+						{  // Looping for add again each mapped mags:
+							// Check service condition before each mag reload:
+							if ( ((abs speed _veh) > 1) OR ((abs speed _stat) > 1) OR (!alive _stat) OR ((_player distance _stat) > _currentRng) ) exitWith
+							{ 
+								{_veh removeMagazinesTurret [_x, [0]]} forEach _magsRemoved;  // Removes the all mags, including the loaded one to avoid automatic ammo repacking;
+								{_veh addMagazineTurret [_x, [0], 1]} forEach _magsRemoved;  // Forces to add again all mags but with 1 ammo only as punishment. Wirhout this line, the code wont reload again when the vehicle return to rearm because it would have all its magazines to rearm.
+
+								[_player, _veh, _stat, "Rearming", 6] call THY_fnc_VO_serviceCanceled;
+
+								_magsLoopChecker = false;
+							};
+							
+							// Adding a new mag:
+							_veh addMagazineTurret [_x, [0]];
+							if ( VO_feedbackMsgs ) then { format [">> Ammo added: [%1]...", _x] remoteExec ["systemChat", _player] };
 
 							// Effects:
 							playSound3D ["a3\sounds_f\sfx\ui\vehicles\vehicle_rearm.wss", _veh];
-							[[1, 6, 3]] remoteExec ["addCamShake", _vehCrew];
-							sleep 3;
+							[[1, 3, 3]] remoteExec ["addCamShake", _vehCrew];
+							sleep 1.5;
 
 						} forEach _magsRemoved;
 
-						// if something goes wrong with reloading, this will help to fix:
-						[_veh, 1] remoteExec ["setVehicleAmmo", _veh];
+						// This (setVehicleAmmo) will force the rearming for all ammo-capacity of the vehicle:
+						if ( _magsLoopChecker ) then { [_veh, 1] remoteExec ["setVehicleAmmo", _veh]; _isRearmed = true };
 					};
-
-					_isRearmed = true;
 				};
 			};
 

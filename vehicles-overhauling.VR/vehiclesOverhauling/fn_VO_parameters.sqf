@@ -7,7 +7,7 @@ if (!isServer) exitWith {};
 
 // EDITOR'S OPTIONS:
 
-	VO_debugMonitor = true;           // true = turn on to test your script config / false = turn it off. Default: false.
+	VO_debugMonitor = false;           // true = turn on to test your script config / false = turn it off. Default: false.
 	VO_feedbackMsgs = true;           // true = the station shows all service msgs for the driver (recommended) / false = turns off the most msgs, keeping the critical ones. Default: true.
 	VO_dronesNeedHuman = false;       // true = player presence's mandatory for the drone to get a service / false = to get a service, player to be close to drone OR it's enough a connection between player's UAV terminal and drone itself. Default: false.
 	
