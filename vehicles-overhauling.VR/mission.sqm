@@ -8,7 +8,7 @@ class EditorData
 	toggles=1541;
 	class ItemIDProvider
 	{
-		nextID=435;
+		nextID=440;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class LayerIndexProvider
 	{
-		nextID=276;
+		nextID=292;
 	};
 	class Camera
 	{
-		pos[]={7518.376,56.959316,7317.644};
-		dir[]={0.63409293,-0.48108992,0.60553527};
-		up[]={0.34795421,0.87661141,0.33228311};
-		aside[]={0.69070476,-2.1664891e-007,-0.72328693};
+		pos[]={7698.811,62.131393,7486.499};
+		dir[]={-0.63182008,-0.51892155,0.57578796};
+		up[]={-0.38354665,0.85482234,0.34953204};
+		aside[]={0.67357564,-2.7939677e-008,0.73912311};
 	};
 };
 binarizationWanted=0;
@@ -53,12 +53,13 @@ addons[]=
 	"A3_Boat_F_Exp_Scooter_Transport_01",
 	"A3_Drones_F_Air_F_Gamma_UAV_01",
 	"A3_Drones_F_Soft_F_Gamma_UGV_01",
-	"A3_Soft_F_Gamma_Hatchback_01",
 	"A3_Air_F_Heli_Heli_Transport_04",
 	"A3_Drones_F_Air_F_Gamma_UAV_02",
 	"A3_Armor_F_Beta_APC_Wheeled_01",
+	"A3_Soft_F_Gamma_Hatchback_01",
 	"A3_Armor_F_Beta_APC_Wheeled_02",
 	"A3_Air_F_Jets_Plane_Fighter_01",
+	"A3_Armor_F_EPC_MBT_01",
 	"A3_Characters_F",
 	"A3_Weapons_F_Machineguns_Zafir",
 	"A3_Weapons_F_Mark_Machineguns_Zafir",
@@ -81,7 +82,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=32;
+		items=33;
 		class Item0
 		{
 			className="A3_Modules_F_Curator";
@@ -238,68 +239,75 @@ class AddonsMetaData
 		};
 		class Item22
 		{
+			className="A3_Armor_F_EPC";
+			name="Arma 3 Win Episode - Armored Land Vehicles";
+			author="Bohemia Interactive";
+			url="https://www.arma3.com";
+		};
+		class Item23
+		{
 			className="A3_Weapons_F";
 			name="Arma 3 Alpha - Weapons and Accessories";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item23
+		class Item24
 		{
 			className="A3_Weapons_F_Mark";
 			name="Arma 3 Marksmen - Weapons and Accessories";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item24
+		class Item25
 		{
 			className="A3_Structures_F_Enoch_Military";
 			name="Arma 3 Contact Platform - Military Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item25
+		class Item26
 		{
 			className="A3_Rocks_F_Argo";
 			name="Arma 3 Malden - Rocks and Stones";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item26
+		class Item27
 		{
 			className="A3_Boat_F_Jets";
 			name="Arma 3 Jets - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item27
+		class Item28
 		{
 			className="A3_Boat_F_Destroyer";
 			name="Arma 3 Jets - Boats and Submersibles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item28
+		class Item29
 		{
 			className="A3_Soft_F_EPC";
 			name="Arma 3 Win Episode - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item29
+		class Item30
 		{
 			className="A3_Soft_F_Exp";
 			name="Arma 3 Apex - Unarmored Land Vehicles";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item30
+		class Item31
 		{
 			className="A3_Supplies_F_Heli";
 			name="Arma 3 Helicopters - Ammoboxes and Supplies";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item31
+		class Item32
 		{
 			className="A3_Ui_F";
 			name="Arma 3 - User Interface";
@@ -344,7 +352,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=51;
+		items=52;
 		class Item0
 		{
 			dataType="Logic";
@@ -442,12 +450,13 @@ class Mission
 						position[]={7607.188,7.0907774,7535.5649};
 					};
 					side="West";
-					flags=6;
+					flags=2;
 					class Attributes
 					{
 					};
 					id=60;
 					type="B_UAV_AI";
+					atlOffset=2.0893388;
 				};
 			};
 			class Attributes
@@ -833,7 +842,7 @@ class Mission
 			state=1;
 			class Entities
 			{
-				items=24;
+				items=25;
 				class Item0
 				{
 					dataType="Object";
@@ -883,7 +892,7 @@ class Mission
 					class Attributes
 					{
 						health=0.60166037;
-						ammo=0.30091506;
+						ammo=0.30000001;
 						fuel=0.10182983;
 					};
 					id=36;
@@ -919,7 +928,7 @@ class Mission
 					class Attributes
 					{
 						health=0.65249074;
-						ammo=0.03405622;
+						ammo=0.30000001;
 						fuel=0.15266021;
 					};
 					id=66;
@@ -930,15 +939,14 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7600,6.6262865,7544};
-						angles[]={-0,6.1936154,0};
+						position[]={7588,6.6262865,7544};
+						angles[]={0,6.1936154,0};
 					};
 					side="Empty";
 					flags=4;
 					class Attributes
 					{
 						health=0.3988781;
-						ammo=0.10374299;
 						fuel=0.09952686;
 					};
 					id=15;
@@ -967,13 +975,13 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7546.0742,2.3654282,7518.876};
-						angles[]={0,4.412324,0};
+						angles[]={0,4.4123321,0};
 					};
 					side="Empty";
 					class Attributes
 					{
 						health=0.60125613;
-						ammo=0.029820438;
+						ammo=0.30000001;
 						fuel=0.086878151;
 					};
 					id=54;
@@ -1003,13 +1011,13 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7545.877,1.3008465,7531.1631};
-						angles[]={0,4.1502275,0};
+						angles[]={0,4.1502357,0};
 					};
 					side="Empty";
 					class Attributes
 					{
 						health=0.69822907;
-						ammo=0;
+						ammo=0.30000001;
 						fuel=0.061581068;
 					};
 					id=65;
@@ -1046,7 +1054,7 @@ class Mission
 					class Attributes
 					{
 						health=0.5042358;
-						ammo=0.038292002;
+						ammo=0.30000001;
 						fuel=0;
 					};
 					id=263;
@@ -1174,7 +1182,7 @@ class Mission
 					class Attributes
 					{
 						health=0.6054728;
-						ammo=0.057364605;
+						ammo=0.30000001;
 						fuel=0.082662024;
 						reportOwnPosition=1;
 					};
@@ -1199,41 +1207,6 @@ class Mission
 					};
 				};
 				class Item11
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={7584,6.4501238,7544.002};
-					};
-					side="Empty";
-					flags=4;
-					class Attributes
-					{
-						health=0.50006711;
-						ammo=0;
-						fuel=0.050000001;
-					};
-					id=74;
-					type="C_Hatchback_01_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="ammoBox";
-							expression="[_this,_value] call bis_fnc_initAmmoBox;";
-							class Value
-							{
-								class data
-								{
-									singleType="STRING";
-									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
-								};
-							};
-						};
-						nAttributes=1;
-					};
-				};
-				class Item12
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1268,20 +1241,20 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item13
+				class Item12
 				{
 					dataType="Object";
 					class PositionInfo
 					{
 						position[]={7698.9248,6.5683393,7391.437};
-						angles[]={0,2.4767866,0};
+						angles[]={0,2.4767792,0};
 					};
 					side="West";
 					flags=6;
 					class Attributes
 					{
 						health=0.5;
-						ammo=0.021348676;
+						ammo=0.30000001;
 						fuel=0.038292002;
 						reportRemoteTargets=1;
 						reportOwnPosition=1;
@@ -1289,20 +1262,20 @@ class Mission
 					id=288;
 					type="B_UAV_02_dynamicLoadout_F";
 				};
-				class Item14
+				class Item13
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7635.6133,7.0893388,7702.6089};
-						angles[]={0,2.2341175,0};
+						position[]={7635.6128,7.0893388,7702.6084};
+						angles[]={0,2.2341087,0};
 					};
 					side="West";
 					flags=6;
 					class Attributes
 					{
 						health=0.6054728;
-						ammo=0.057364605;
+						ammo=0.30000001;
 						fuel=0.082662024;
 						reportOwnPosition=1;
 					};
@@ -1326,7 +1299,7 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item15
+				class Item14
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1359,7 +1332,7 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item16
+				class Item15
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1393,7 +1366,7 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item17
+				class Item16
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1426,7 +1399,7 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item18
+				class Item17
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1459,7 +1432,7 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item19
+				class Item18
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1492,25 +1465,25 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item20
+				class Item19
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7553.9468,3.0435371,7499.8848};
-						angles[]={0,4.6995649,0.24497849};
+						position[]={7553.9468,3.0432258,7499.8848};
+						angles[]={0,4.6995611,0.24497442};
 					};
 					side="Empty";
 					flags=4;
 					class Attributes
 					{
 						health=0.59742439;
-						ammo=0.021348676;
+						ammo=0.30000001;
 						fuel=0.10182983;
 					};
 					id=366;
 					type="O_APC_Wheeled_02_rcws_v2_F";
-					atlOffset=-0.078688622;
+					atlOffset=-0.078999996;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -1529,39 +1502,39 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item21
+				class Item20
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7768.04,31.037159,7105.6265};
+						position[]={7768.04,31.037052,7105.6265};
 						angles[]={0,3.9225929,0};
 					};
 					side="Empty";
 					class Attributes
 					{
 						health=0.55506617;
-						ammo=0.050999645;
+						ammo=0.30000001;
 						fuel=0.30091506;
 					};
 					id=391;
 					type="B_Plane_Fighter_01_F";
-					atlOffset=23.542107;
+					atlOffset=23.542;
 				};
-				class Item22
+				class Item21
 				{
 					dataType="Object";
 					class PositionInfo
 					{
 						position[]={7640,7.9853611,7544};
-						angles[]={-0,6.2815537,0};
+						angles[]={0,6.2815447,0};
 					};
 					side="Empty";
 					flags=4;
 					class Attributes
 					{
 						health=0.5042358;
-						ammo=0;
+						ammo=0.30000001;
 						fuel=0.10182983;
 						reportRemoteTargets=1;
 						receiveRemoteTargets=1;
@@ -1586,13 +1559,13 @@ class Mission
 						nAttributes=1;
 					};
 				};
-				class Item23
+				class Item22
 				{
 					dataType="Object";
 					class PositionInfo
 					{
 						position[]={7616,7.2335663,7544.0425};
-						angles[]={-0,0.02274164,0};
+						angles[]={0,0.02274164,0};
 					};
 					side="Empty";
 					flags=4;
@@ -1622,9 +1595,81 @@ class Mission
 						nAttributes=1;
 					};
 				};
+				class Item23
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7656,7.7264757,7544};
+						angles[]={0,6.2468996,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						health=0.49576423;
+						ammo=0.30000001;
+						fuel=0.19925441;
+					};
+					id=436;
+					type="B_MBT_01_TUSK_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
+				class Item24
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={7600,7.2335663,7544.0425};
+						angles[]={0,0.02274164,0};
+					};
+					side="Empty";
+					flags=4;
+					class Attributes
+					{
+						health=0.5;
+						ammo=0.30000001;
+						fuel=0.10182983;
+					};
+					id=438;
+					type="B_G_Offroad_01_armed_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="ammoBox";
+							expression="[_this,_value] call bis_fnc_initAmmoBox;";
+							class Value
+							{
+								class data
+								{
+									singleType="STRING";
+									value="[[[[],[]],[[],[]],[[],[]],[[],[]]],false]";
+								};
+							};
+						};
+						nAttributes=1;
+					};
+				};
 			};
 			id=73;
-			atlOffset=2.6654067;
+			atlOffset=0.6663084;
 		};
 		class Item5
 		{
@@ -1638,8 +1683,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7592,5.0014391,7512.0498};
-						angles[]={0,2.4372876,-0};
+						position[]={7588,5.0014391,7504.0498};
+						angles[]={0,1.6708516,0};
 					};
 					side="West";
 					flags=7;
@@ -1781,7 +1826,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7709.6084,5.0014386,7373.8955};
-						angles[]={0,2.4767866,0};
+						angles[]={0,2.4767792,0};
 					};
 					side="West";
 					flags=6;
@@ -1797,7 +1842,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7709.6084,6.569778,7373.8843};
-						angles[]={0,2.4767866,0};
+						angles[]={0,2.4767792,0};
 					};
 					side="West";
 					class Attributes
@@ -2794,7 +2839,7 @@ class Mission
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7600,5,7540};
+				position[]={7588,5,7540};
 			};
 			title="Bike (no weaponry)";
 			id=78;
@@ -2825,23 +2870,13 @@ class Mission
 			dataType="Comment";
 			class PositionInfo
 			{
-				position[]={7584,5,7540};
-			};
-			title="Civilian car (no weaponry)";
-			id=77;
-		};
-		class Item16
-		{
-			dataType="Comment";
-			class PositionInfo
-			{
 				position[]={7556,1,7520};
 				angles[]={0,0,0.24497849};
 			};
 			title="Combat boat";
 			id=86;
 		};
-		class Item17
+		class Item16
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2851,7 +2886,7 @@ class Mission
 			title="Ground & Nautic refuel station example";
 			id=200;
 		};
-		class Item18
+		class Item17
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2862,7 +2897,7 @@ class Mission
 			description="Full staions provide all services available, but only for its doctrine = ground vehicles.";
 			id=69;
 		};
-		class Item19
+		class Item18
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2872,7 +2907,7 @@ class Mission
 			title="Ground rearm station example";
 			id=237;
 		};
-		class Item20
+		class Item19
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2882,7 +2917,7 @@ class Mission
 			title="Ground repair & fuel station example";
 			id=199;
 		};
-		class Item21
+		class Item20
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2893,7 +2928,7 @@ class Mission
 			description="It can't rearm itself.";
 			id=202;
 		};
-		class Item22
+		class Item21
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2904,7 +2939,7 @@ class Mission
 			description="It can't refuel itself.";
 			id=203;
 		};
-		class Item23
+		class Item22
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2915,7 +2950,7 @@ class Mission
 			description="It can't repair itself.";
 			id=187;
 		};
-		class Item24
+		class Item23
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2926,7 +2961,7 @@ class Mission
 			description="It can't repair itself.";
 			id=205;
 		};
-		class Item25
+		class Item24
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2937,7 +2972,7 @@ class Mission
 			description="It can't repair itself.";
 			id=206;
 		};
-		class Item26
+		class Item25
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2948,7 +2983,7 @@ class Mission
 			description="It can't repair itself, but can repair another close ground vehicles.";
 			id=270;
 		};
-		class Item27
+		class Item26
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2959,7 +2994,7 @@ class Mission
 			description="It can't repair itself.";
 			id=204;
 		};
-		class Item28
+		class Item27
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2971,7 +3006,7 @@ class Mission
 			description="Here, 2 examples where one of the REARM stations is underwater and, the other, is not under water so will work fine. Use that armored to push the container-station to underwater to see it won't work anymore.";
 			id=259;
 		};
-		class Item29
+		class Item28
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2981,7 +3016,7 @@ class Mission
 			title="Military ground drone";
 			id=80;
 		};
-		class Item30
+		class Item29
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -2993,7 +3028,7 @@ class Mission
 			id=70;
 			atlOffset=4.8243408;
 		};
-		class Item31
+		class Item30
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3004,7 +3039,7 @@ class Mission
 			id=87;
 			atlOffset=0.63719821;
 		};
-		class Item32
+		class Item31
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3016,7 +3051,7 @@ class Mission
 			description="If the Drone is connected once, you as drone operator, never need to be in person at asset (hangar in this case) to start the vehicle repairing/rearming/refueling. Drones can be an excepction." \n "" \n "Planes into the hangar has Parking Helper function as well.";
 			id=302;
 		};
-		class Item33
+		class Item32
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3027,7 +3062,7 @@ class Mission
 			description="Come here in this area to set  your vehicle in a bad condition and make new tests with no mission restart.";
 			id=305;
 		};
-		class Item34
+		class Item33
 		{
 			dataType="Group";
 			side="West";
@@ -3040,7 +3075,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7584.0786,5.0014386,7667.0146};
-						angles[]={0,2.2341175,0};
+						angles[]={0,2.2341087,0};
 					};
 					side="West";
 					flags=4;
@@ -3056,7 +3091,7 @@ class Mission
 					class PositionInfo
 					{
 						position[]={7584.0786,7.0907774,7666.9683};
-						angles[]={0,2.2341175,0};
+						angles[]={0,2.2341087,0};
 					};
 					side="West";
 					flags=2;
@@ -3105,7 +3140,7 @@ class Mission
 			};
 			id=306;
 		};
-		class Item35
+		class Item34
 		{
 			dataType="Group";
 			side="West";
@@ -3203,7 +3238,7 @@ class Mission
 			};
 			id=325;
 		};
-		class Item36
+		class Item35
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3213,7 +3248,7 @@ class Mission
 			title="Use this to move containers";
 			id=347;
 		};
-		class Item37
+		class Item36
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3224,7 +3259,7 @@ class Mission
 			description="It can't repair itself.";
 			id=348;
 		};
-		class Item38
+		class Item37
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3235,7 +3270,7 @@ class Mission
 			description="It can't rearm itself.";
 			id=349;
 		};
-		class Item39
+		class Item38
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3246,7 +3281,7 @@ class Mission
 			description="It can't refuel itself.";
 			id=350;
 		};
-		class Item40
+		class Item39
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3257,16 +3292,16 @@ class Mission
 			description="Use this IFV to hit those 3 vehicles ahead and try to fix them with the repair service car by side. This test is to make sure randomly and located damages can be fixed with ACE ON or OFF, avoiding weird behaviors when ACE ADVANCED VEHICLE DAMAGE is ON on server.";
 			id=361;
 		};
-		class Item41
+		class Item40
 		{
 			dataType="Marker";
 			position[]={7312.6309,5,7946.6128};
 			name="marker_scriptVersion";
-			text="     VERSION 2.0";
+			text="     VERSION 2.1";
 			type="mil_box";
 			id=362;
 		};
-		class Item42
+		class Item41
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3277,7 +3312,7 @@ class Mission
 			title="Amphibious (try in nautic and ground stations)";
 			id=376;
 		};
-		class Item43
+		class Item42
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3287,7 +3322,7 @@ class Mission
 			title="Targets to test the damages and repairing when ACE ON.";
 			id=383;
 		};
-		class Item44
+		class Item43
 		{
 			dataType="Group";
 			side="West";
@@ -3299,8 +3334,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={7616,5.0014391,7524.0498};
-						angles[]={0,0.02367498,-0};
+						position[]={7632,5.0014391,7528.0498};
+						angles[]={0,0.02367498,0};
 					};
 					side="West";
 					flags=7;
@@ -3430,7 +3465,7 @@ class Mission
 			};
 			id=389;
 		};
-		class Item45
+		class Item44
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3442,7 +3477,7 @@ class Mission
 			description="Aircraft carrier USS Freedom work by itself just with PLANES when Air Doctrine is allowed by you. If you want to serve another air vehicles  or vehicles from Ground over the carrier's deck, you should use the regular stations over the deck, like these examples around! ";
 			id=226;
 		};
-		class Item46
+		class Item45
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3452,7 +3487,7 @@ class Mission
 			title="heliport";
 			id=413;
 		};
-		class Item47
+		class Item46
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3462,7 +3497,7 @@ class Mission
 			title="Air full station example exclusively for helicopters";
 			id=419;
 		};
-		class Item48
+		class Item47
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3473,17 +3508,17 @@ class Mission
 			description="By default, Aircraft Carrier USS Freedom can serve only PLANES. For attempt another vehicles, you should drop over the carrier's deck some regular station(s). ";
 			id=421;
 		};
-		class Item49
+		class Item48
 		{
 			dataType="Comment";
 			class PositionInfo
 			{
 				position[]={7616,5,7540};
 			};
-			title="Vehicle with simple weaponry";
+			title="Armed vehicle with 0% ammo capacity";
 			id=433;
 		};
-		class Item50
+		class Item49
 		{
 			dataType="Comment";
 			class PositionInfo
@@ -3492,6 +3527,26 @@ class Mission
 			};
 			title="Heavy Vehicle with complex weaponry";
 			id=434;
+		};
+		class Item50
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7656.1519,5,7535.8271};
+			};
+			title="Heavy Vehicle with complex weaponry";
+			id=437;
+		};
+		class Item51
+		{
+			dataType="Comment";
+			class PositionInfo
+			{
+				position[]={7600,5,7540};
+			};
+			title="Armed vehicle with some ammo capacity";
+			id=439;
 		};
 	};
 };
