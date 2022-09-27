@@ -1,4 +1,4 @@
-# Arma 3 / Vehicles Overhauling v2.0
+# Arma 3 / Vehicles Overhauling v2.1
 >*Dependencies: none.*
 >*Compatible with ACE, RHS, CUP.*
 
@@ -83,6 +83,11 @@ Discussion and known issues: https://forums.bohemia.net/forums/topic/239319-rele
 _
 
 ## Changelog
+
+**v2.1 - Sep, 27th 2022**
+- FIXED - bug that made ground and nautical vehicles with complex weaponry don't rearm properly;
+- FIXED - bug where amphibious vehicles were receiving duplicate services when at an asset configured as ground and nautical station simultaneously. 
+- FIXED - bug that, after a landing, helicopters were able to rearm if they take off but stay into the service range, even on air;
 
 **v2.0 - Sep, 23th 2022**
 - NEW - Now Aircraft Carrier USS Freedom asset can provide all services exclusively for planes. Others vehicles from air and ground doctrine will need some specific assets on carrier's deck to access their available services;
