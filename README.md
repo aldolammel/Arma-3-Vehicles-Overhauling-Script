@@ -1,4 +1,4 @@
-# Arma 3 / Vehicles Overhauling v2.1
+# Arma 3 / Vehicles Overhauling v2.2
 >*Dependencies: none.*
 >*Compatible with ACE, RHS, CUP.*
 
@@ -83,6 +83,11 @@ Discussion and known issues: https://forums.bohemia.net/forums/topic/239319-rele
 _
 
 ## Changelog
+
+**v2.2 - Oct, 7th 2022**
+- Fixed - when feedback messages On, the messages are shown just for the vehicle owner and not for the whole crew team;
+- Fixed - bug where vehicles are rearming even when there's no on-board weaponry;
+- Fixed - bug where drones could not get serviced when player wasn't close.
 
 **v2.1 - Sep, 27th 2022**
 - FIXED - bug that made ground and nautical vehicles with complex weaponry don't rearm properly;
