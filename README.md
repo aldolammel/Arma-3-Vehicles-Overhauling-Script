@@ -85,9 +85,9 @@ _
 ## Changelog
 
 **v2.2 - Oct, 7th 2022**
-- Fixed - when feedback messages On, the messages are shown just for the vehicle owner and not for the whole crew team;
-- Fixed - bug where vehicles are rearming even when there's no on-board weaponry;
-- Fixed - bug where drones could not get serviced when player wasn't close.
+- FIXED - when feedback messages On, the messages are shown just for the vehicle owner and not for the whole crew team;
+- FIXED - bug where vehicles are rearming even when there's no on-board weaponry;
+- FIXED - bug where drones could not get serviced when player wasn't close.
 
 **v2.1 - Sep, 27th 2022**
 - FIXED - bug that made ground and nautical vehicles with complex weaponry don't rearm properly;
