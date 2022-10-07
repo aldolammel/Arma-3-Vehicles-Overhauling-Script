@@ -1,4 +1,4 @@
-// VO v2.0
+// VO v2.2
 // File: your_mission\vehiclesOverhauling\fn_VO_coreGrd.sqf
 // by thy (@aldolammel)
 
@@ -34,7 +34,7 @@ if ( !VO_groundDoctrine OR !isServer ) exitWith {};
 
 	// Checking if there are simpleObject assets (bad):
 	{_allAssets pushBackUnique _x} forEach _fullAndRepAssets + _fullAndRefAssets + _fullAndReaAssets;
-	if ( VO_debugMonitor ) then { VO_grdStationsAmount = count _allAssets } else { VO_grdStationsAmount = 0 };
+	if ( VO_debugMonitor ) then { VO_grdStationsAmount = count _allAssets }; 
 	[_allAssets, "grd"] call THY_fnc_VO_isSimpleObjects;
 	
 	// Compatibility checking: 

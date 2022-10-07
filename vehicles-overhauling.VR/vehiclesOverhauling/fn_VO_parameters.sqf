@@ -1,4 +1,4 @@
-// VO v2.0
+// VO v2.2
 // File: your_mission\vehiclesOverhauling\fn_VO_parameters.sqf
 // Documentation: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
 // by thy (@aldolammel)
@@ -693,8 +693,8 @@ if (!isServer) exitWith {};
 		if ( VO_isACErun ) then	{
 			if ( ace_vehicle_damage_enabled ) then { ["ACE-Vehicle-Damage is ON on server. Highly recommended to turn it OFF."] remoteExec ["systemChat"]; VO_minRepairService = 0 } else { VO_minRepairService = 0.1 };
 		} else { VO_minRepairService = 0.1 };
-		// Debug initial counting of while-cycles:
-		VO_grdCyclesDone = 0; VO_airCyclesDone = 0; VO_nauCyclesDone = 0;
+		// Debug initial counting:
+		VO_grdCyclesDone = 0; VO_airCyclesDone = 0; VO_nauCyclesDone = 0; VO_grdStationsAmount = 0; VO_airStationsAmount = 0; VO_nauStationsAmount = 0;
 		// checking if this file is properly configured:
 		VO_isStationsOkay = false;
 		VO_isServicesOkay = false;

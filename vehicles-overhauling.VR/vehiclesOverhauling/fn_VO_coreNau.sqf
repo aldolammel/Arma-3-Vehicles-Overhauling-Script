@@ -1,4 +1,4 @@
-// VO v2.1
+// VO v2.2
 // File: your_mission\vehiclesOverhauling\fn_VO_coreNau.sqf
 // by thy (@aldolammel)
 
@@ -34,7 +34,7 @@ if ( !VO_nauticDoctrine OR !isServer ) exitWith {};
 
 	// Checking if there are simpleObject assets (bad):
 	{_allAssets pushBackUnique _x} forEach _fullAndRepAssets + _fullAndRefAssets + _fullAndReaAssets;
-	if ( VO_debugMonitor ) then { VO_nauStationsAmount = count _allAssets } else { VO_nauStationsAmount = 0 };
+	if ( VO_debugMonitor ) then { VO_nauStationsAmount = count _allAssets }; 
 	[_allAssets, "nau"] call THY_fnc_VO_isSimpleObjects;
 	
 	// Compatibility checking: 
