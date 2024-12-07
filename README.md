@@ -1,8 +1,9 @@
-# Arma 3 / Vehicles Overhauling v2.2
+# Arma 3 / Vehicles Overhauling v2.5
 >*Dependencies: none.*
->*Compatible with ACE, RHS, CUP.*
 
-Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repairing, refueling, and rearming vehicles by proximity and with any asset of your choice. Also, the services are divided by doctrine: Ground, Air, and Nautical. Each doctrine and even service is easily turned Off or On, according to the editor's needs. If needed, the editor can allow repairing just for ground vehicles while unavailable for air ones, for example. Triggering or code via Eden Editor is needless. VO is configured through only one file, prioritizing implementation simplicity and quick change management that the mission editor might want.  
+Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repairing, refueling, and rearming vehicles by proximity and with any asset of your choice. Also, the services are divided by doctrine: Ground, Air, and Nautical. Each doctrine and even service is easily turned Off or On, according to the editor's needs. If needed, the editor can allow repairing just for ground vehicles while unavailable for air ones, for example. Triggering or code via Eden Editor is needless. VO is configured through only one file, prioritizing implementation simplicity and quick change management that the mission editor might want.
+
+<img src="vo_mission_example.VR/images/thumb.jpg" />
 
 **What to expect from VO script**
 
@@ -84,18 +85,26 @@ _
 
 ## Changelog
 
-**v2.2 - Oct, 7th 2022**
+**v2.5 - Dec 7th 2024**
+- Added support for CDLC Western Sahara fuel, ammo, and repair assets;
+- Added support for CDLC Reaction Forces fuel, ammo, and repair assets;
+- Added support for CDLC Expeditionary Forces fuel, ammo, and repair assets;
+- Performance improvements;
+- New structure of folders to make the installation easier;
+- Documentation updated.
+
+**v2.2 - Oct 7th 2022**
 - FIXED - when feedback messages On, the messages are shown just for the vehicle owner and not for the whole crew team;
 - FIXED - bug where vehicles are rearming even when there's no on-board weaponry;
 - FIXED - bug where drones could not get serviced when player wasn't close.
 
-**v2.1 - Sep, 27th 2022**
+**v2.1 - Sep 27th 2022**
 - FIXED - bug that made ground and nautical vehicles with complex weaponry don't rearm properly;
 - FIXED - bug where amphibious vehicles were receiving duplicate services when at an asset configured as ground and nautical station simultaneously. 
 - FIXED - bug that, after a landing, helicopters were able to rearm if they take off but stay into the service range, even on air;
 - Documentation has been updated.
 
-**v2.0 - Sep, 23th 2022**
+**v2.0 - Sep 23th 2022**
 - NEW - Now Aircraft Carrier USS Freedom asset can provide all services exclusively for planes. Others vehicles from air and ground doctrine will need some specific assets on carrier's deck to access their available services;
 - NEW - Amphibious vehicles even from Air or Ground doctrine are allowed to get services at stations of Nautical doctrine;
 - NEW - When debug is true, the mission editor has now an expanded handling error messages and other alerts to help them to find out misconfiguration;
@@ -105,17 +114,17 @@ _
 - PERFORMANCE IMPROVED - duplicated content inside asset arrays are automatically deleted; 
 - Documentation has been updated.
 
-**v1.7 - Jul, 14th 2022**
+**v1.7 - Jul 14th 2022**
 - ACE auto-detect improvement (now VO knows if "ace_vehicle_damage_enabled" is running);
 - Palliative adjustment for "ace_vehicle_damage_enabled" then it's ON; 
 - Documentation updated about "ace_vehicle_damage_enabled";
 - Documentation updated about "The stations doesn't meet the conditions...".
 
-**v1.5 - Jul, 7th 2022**
+**v1.5 - Jul 7th 2022**
 - ACE auto-detect;
 - RHS and CUP assets tracked by default;
 - Some bug fixes and performance improvements; 
 - Documentation included.
 
-**v1.0 - Mar, 4th 2022**
+**v1.0 - Mar 4th 2022**
 - Hello world.

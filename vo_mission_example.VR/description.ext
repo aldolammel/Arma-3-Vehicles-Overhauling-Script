@@ -34,12 +34,8 @@ class Header
 // CBA MOD
 cba_settings_hasSettingsFile = 0;
 
-
-// - - - - - - - - - EVERYTHING ABOVE IS NOT NEEDED FOR THIS SCRIPT WORKS - - - - - - - - -
-// - - - - - - - - - - - TAKE ONLY THESE LINES BELOW FOR YOUR MISSION - - - - - - - - - - -
-
 class cfgFunctions 
 {
-	// VEHICLES OVERHAULING: REPAIR, REARM, REFUEL
+	// VO: VEHICLES OVERHAULING: REPAIR, REARM, REFUEL
 	#include "vehiclesOverhauling\THY_VO_functions.hpp"
 };

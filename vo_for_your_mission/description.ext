@@ -1,0 +1,6 @@
+
+class cfgFunctions 
+{
+	// VO: VEHICLES OVERHAULING: REPAIR, REARM, REFUEL
+	#include "vehiclesOverhauling\THY_VO_functions.hpp"
+};
