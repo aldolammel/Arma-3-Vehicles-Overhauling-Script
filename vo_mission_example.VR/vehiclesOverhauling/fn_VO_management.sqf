@@ -697,7 +697,7 @@ VO_isOn = true;                    // Turn on or off the entire script without t
 		VO_prefix         = toUpper "VO";  // CAUTION: NEVER include/insert the VO_spacer character as part of the VO_prefix too.
 		VO_spacer         = toUpper "_";    // CAUTION: try do not change it!
 		// Global escape:
-		if !VO_isOn exitWith {if VO_debug_isOn then {systemChat format ["%1 The script was turned off manually via 'fn_VO_management.sqf' file.", VO_txtWarnHeader]}};
+		if !VO_isOn exitWith {if VO_debug_isOn then {publicVariable "VO_isOn"; systemChat format ["%1 The script was turned off manually via 'fn_VO_management.sqf' file.", VO_txtWarnHeader]}};
 		if (VO_isOn && !VO_groundDoctrine && !VO_airDoctrine && !VO_nauticDoctrine) exitWith {VO_isOn=false; systemChat format ["%1 You turned off all doctrine services but you're keeping the 'VO_isOn' as 'true' in fn_VO_management.sqf file. To fix it, turn one or more doctrine services 'true', or turn the 'VO_isOn' to 'false'. The script stopped automatically!", VO_txtWarnHeader]};
 		// Vehicle types recognized by doctrine:
 		VO_grdVehicleTypes = [ "Car","Motorcycle","Tank","WheeledAPC","TrackedAPC" ];
