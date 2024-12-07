@@ -692,49 +692,49 @@ VO_isOn = true;                    // Turn on or off the entire script without t
 
 
 	// VO VORE / TRY TO CHANGE NOTHING BELOW!!! ---------------------------------------------------------------------
-		VO_txtDebugHeader = toUpper "VO DEBUG >";
-		VO_txtWarnHeader  = toUpper "VO WARNING >";
-		VO_prefix         = toUpper "VO";  // CAUTION: NEVER include/insert the VO_spacer character as part of the VO_prefix too.
-		VO_spacer         = toUpper "_";    // CAUTION: try do not change it!
-		// Global escape:
-		if !VO_isOn exitWith {if VO_debug_isOn then {publicVariable "VO_isOn"; systemChat format ["%1 The script was turned off manually via 'fn_VO_management.sqf' file.", VO_txtWarnHeader]}};
-		if (VO_isOn && !VO_groundDoctrine && !VO_airDoctrine && !VO_nauticDoctrine) exitWith {VO_isOn=false; systemChat format ["%1 You turned off all doctrine services but you're keeping the 'VO_isOn' as 'true' in fn_VO_management.sqf file. To fix it, turn one or more doctrine services 'true', or turn the 'VO_isOn' to 'false'. The script stopped automatically!", VO_txtWarnHeader]};
-		// Vehicle types recognized by doctrine:
-		VO_grdVehicleTypes = [ "Car","Motorcycle","Tank","WheeledAPC","TrackedAPC" ];
-		VO_airVehicleTypes = [ "Helicopter","Plane" ];
-		VO_nauVehicleTypes = [ "Ship","Submarine" ];
-		// Huge assets with ability to change the editor's service range choice:
-		VO_assetsRangeChanger = ["Land_Carrier_01_hull_08_1_F","Land_Carrier_01_hull_07_1_F","Land_Carrier_01_hull_06_1_F"]; 
-		VO_hasAirRngChanger = false; /* VO_hasGrdRngChanger = false; VO_hasNauRngChanger = false; */
-		// ACE detection for server:
-		if ( isClass(configfile >> "CfgPatches" >> "ace_medical") || isClass(configfile >> "CfgPatches" >> "ace_repair") ) then { VO_isACErun = true } else { VO_isACErun = false };
-		// Minimal vehicle conditions for overhauling:
-		VO_minRefuelService = 0.8;
-		if VO_isACErun then	{if ace_vehicle_damage_enabled then { ["ACE-Vehicle-Damage is ON on server. Highly recommended to turn it OFF."] remoteExec ["systemChat"]; VO_minRepairService = 0 } else { VO_minRepairService = 0.1 }} else { VO_minRepairService = 0.1 };
-		// Debug initial counting:
-		VO_grdCyclesDone = 0; VO_airCyclesDone = 0; VO_nauCyclesDone = 0; VO_grdStationsAmount = 0; VO_airStationsAmount = 0; VO_nauStationsAmount = 0;
-		// checking if this file is properly configured:
-		VO_isStationsOkay = false; VO_isServicesOkay = false;
-		if (VO_groundDoctrine || VO_airDoctrine || VO_nauticDoctrine) then {
-			VO_isStationsOkay = true;
-			if VO_groundDoctrine then {
-				//{ if (_x in (VO_grdFullAssets + VO_grdRepairAssets + VO_grdRefuelAssets + VO_grdRearmAssets)) exitWith {VO_hasGrdRngChanger = true}} forEach VO_assetsRangeChanger;
-				if ( VO_grdServRepair || VO_grdServRefuel || VO_grdServRearm ) then {VO_isServicesOkay = true} else {systemChat format ["%1 fn_VO_management.sqf > No GROUND services set as TRUE!", VO_txtWarnHeader]}; 
-				if ( VO_grdServRepair && count (VO_grdRepairAssets + VO_grdFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No GROUND REPAIR assets configured!", VO_txtWarnHeader]};
-				if ( VO_grdServRefuel && count (VO_grdRefuelAssets + VO_grdFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No GROUND REFUEL assets configured!", VO_txtWarnHeader]};
-				if ( VO_grdServRearm && count (VO_grdRearmAssets + VO_grdFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No GROUND REARM assets configured!", VO_txtWarnHeader]}};
-			if VO_airDoctrine then {
-				{ if (_x in (VO_airFullAssets + VO_airRepairAssets + VO_airRefuelAssets + VO_airRearmAssets)) exitWith {VO_hasAirRngChanger = true}} forEach VO_assetsRangeChanger;
-				if ( VO_airServRepair || VO_airServRefuel || VO_airServRearm ) then {VO_isServicesOkay = true} else {systemChat format ["%1 fn_VO_management.sqf > No AIR services set as TRUE!", VO_txtWarnHeader]};
-				if ( VO_airServRepair && count (VO_airRepairAssets + VO_airFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REPAIR assets configured!", VO_txtWarnHeader]};
-				if ( VO_airServRefuel && count (VO_airRefuelAssets + VO_airFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REFUEL assets configured!", VO_txtWarnHeader]};
-				if ( VO_airServRearm && count (VO_airRearmAssets + VO_airFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REARM assets configured!", VO_txtWarnHeader]}};
-			if VO_nauticDoctrine then {
-				//{ if (_x in (VO_nauFullAssets + VO_nauRepairAssets + VO_nauRefuelAssets + VO_nauRearmAssets)) exitWith {VO_hasNauRngChanger = true}} forEach VO_assetsRangeChanger;
-				if ( VO_nauServRepair || VO_nauServRefuel || VO_nauServRearm ) then {VO_isServicesOkay = true} else {systemChat format ["%1 fn_VO_management.sqf > No NAUTIC services set as TRUE!", VO_txtWarnHeader]};
-				if ( VO_nauServRepair && count (VO_nauRepairAssets + VO_nauFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REPAIR assets configured!", VO_txtWarnHeader]};
-				if ( VO_nauServRefuel && count (VO_nauRefuelAssets + VO_nauFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REFUEL assets configured!", VO_txtWarnHeader]};
-				if ( VO_nauServRearm && count (VO_nauRearmAssets + VO_nauFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REARM assets configured!", VO_txtWarnHeader]}};
-		} else {systemChat format ["%1 fn_VO_management.sqf > Vehicle Overhauling script is NOT running!", VO_txtWarnHeader]};
-		// Broadcasting public variables:
-		publicVariable "VO_isOn"; publicVariable "VO_debug_isOn"; publicVariable "VO_txtDebugHeader"; publicVariable "VO_txtWarnHeader"; publicVariable "VO_prefix"; publicVariable "VO_spacer"; publicVariable "VO_isReporting"; publicVariable "VO_dronesNeedHuman"; publicVariable "VO_groundDoctrine"; publicVariable "VO_grdServRepair"; publicVariable "VO_grdServRefuel"; publicVariable "VO_grdServRearm"; publicVariable "VO_grdServFull"; publicVariable "VO_grdServiceRange"; publicVariable "VO_grdCooldown"; publicVariable "VO_airDoctrine"; publicVariable "VO_airServRepair"; publicVariable "VO_airServRefuel"; publicVariable "VO_airServRearm"; publicVariable "VO_airServFull"; publicVariable "VO_airServiceRange"; publicVariable "VO_airCooldown"; publicVariable "VO_nauticDoctrine"; publicVariable "VO_nauServRepair"; publicVariable "VO_nauServRefuel"; publicVariable "VO_nauServRearm"; publicVariable "VO_nauServFull"; publicVariable "VO_nauServiceRange"; publicVariable "VO_nauCooldown"; publicVariable "VO_grdFullAssets"; publicVariable "VO_grdRepairAssets"; publicVariable "VO_grdRefuelAssets"; publicVariable "VO_grdRearmAssets"; publicVariable "VO_airFullAssets"; publicVariable "VO_airRepairAssets"; publicVariable "VO_airRefuelAssets"; publicVariable "VO_airRearmAssets"; publicVariable "VO_airParkingHelperAssets"; publicVariable "VO_nauFullAssets"; publicVariable "VO_nauRepairAssets"; publicVariable "VO_nauRefuelAssets"; publicVariable "VO_nauRearmAssets"; publicVariable "VO_grdVehicleTypes"; publicVariable "VO_airVehicleTypes"; publicVariable "VO_nauVehicleTypes"; publicVariable "VO_assetsRangeChanger"; publicVariable "VO_hasAirRngChanger"; publicVariable "VO_minRefuelService"; publicVariable "VO_isACErun"; publicVariable "VO_grdCyclesDone"; publicVariable "VO_airCyclesDone"; publicVariable "VO_nauCyclesDone"; publicVariable "VO_grdStationsAmount"; publicVariable "VO_airStationsAmount"; publicVariable "VO_nauStationsAmount"; publicVariable "VO_isStationsOkay"; publicVariable "VO_isServicesOkay"; publicVariable "VO_minRepairService";
+	VO_txtDebugHeader = toUpper "VO DEBUG >";
+	VO_txtWarnHeader  = toUpper "VO WARNING >";
+	VO_prefix         = toUpper "VO";  // CAUTION: NEVER include/insert the VO_spacer character as part of the VO_prefix too.
+	VO_spacer         = toUpper "_";    // CAUTION: try do not change it!
+	// Global escape:
+	if !VO_isOn exitWith {if VO_debug_isOn then {publicVariable "VO_isOn"; systemChat format ["%1 The script was turned off manually via 'fn_VO_management.sqf' file.", VO_txtWarnHeader]}};
+	if (VO_isOn && !VO_groundDoctrine && !VO_airDoctrine && !VO_nauticDoctrine) exitWith {VO_isOn=false; publicVariable "VO_isOn"; systemChat format ["%1 You turned off all doctrine services but you're keeping the 'VO_isOn' as 'true' in fn_VO_management.sqf file. To fix it, turn one or more doctrine services 'true', or turn the 'VO_isOn' to 'false'. The script stopped automatically!", VO_txtWarnHeader]};
+	// Vehicle types recognized by doctrine:
+	VO_grdVehicleTypes = [ "Car","Motorcycle","Tank","WheeledAPC","TrackedAPC" ];
+	VO_airVehicleTypes = [ "Helicopter","Plane" ];
+	VO_nauVehicleTypes = [ "Ship","Submarine" ];
+	// Huge assets with ability to change the editor's service range choice:
+	VO_assetsRangeChanger = ["Land_Carrier_01_hull_08_1_F","Land_Carrier_01_hull_07_1_F","Land_Carrier_01_hull_06_1_F"]; 
+	VO_hasAirRngChanger = false; /* VO_hasGrdRngChanger = false; VO_hasNauRngChanger = false; */
+	// ACE detection for server:
+	if ( isClass(configfile >> "CfgPatches" >> "ace_medical") || isClass(configfile >> "CfgPatches" >> "ace_repair") ) then { VO_isACErun = true } else { VO_isACErun = false };
+	// Minimal vehicle conditions for overhauling:
+	VO_minRefuelService = 0.8;
+	if VO_isACErun then	{if ace_vehicle_damage_enabled then { ["ACE-Vehicle-Damage is ON on server. Highly recommended to turn it OFF."] remoteExec ["systemChat"]; VO_minRepairService = 0 } else { VO_minRepairService = 0.1 }} else { VO_minRepairService = 0.1 };
+	// Debug initial counting:
+	VO_grdCyclesDone = 0; VO_airCyclesDone = 0; VO_nauCyclesDone = 0; VO_grdStationsAmount = 0; VO_airStationsAmount = 0; VO_nauStationsAmount = 0;
+	// checking if this file is properly configured:
+	VO_isStationsOkay = false; VO_isServicesOkay = false;
+	if (VO_groundDoctrine || VO_airDoctrine || VO_nauticDoctrine) then {
+		VO_isStationsOkay = true;
+		if VO_groundDoctrine then {
+			//{ if (_x in (VO_grdFullAssets + VO_grdRepairAssets + VO_grdRefuelAssets + VO_grdRearmAssets)) exitWith {VO_hasGrdRngChanger = true}} forEach VO_assetsRangeChanger;
+			if ( VO_grdServRepair || VO_grdServRefuel || VO_grdServRearm ) then {VO_isServicesOkay = true} else {systemChat format ["%1 fn_VO_management.sqf > No GROUND services set as TRUE!", VO_txtWarnHeader]}; 
+			if ( VO_grdServRepair && count (VO_grdRepairAssets + VO_grdFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No GROUND REPAIR assets configured!", VO_txtWarnHeader]};
+			if ( VO_grdServRefuel && count (VO_grdRefuelAssets + VO_grdFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No GROUND REFUEL assets configured!", VO_txtWarnHeader]};
+			if ( VO_grdServRearm && count (VO_grdRearmAssets + VO_grdFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No GROUND REARM assets configured!", VO_txtWarnHeader]}};
+		if VO_airDoctrine then {
+			{ if (_x in (VO_airFullAssets + VO_airRepairAssets + VO_airRefuelAssets + VO_airRearmAssets)) exitWith {VO_hasAirRngChanger = true}} forEach VO_assetsRangeChanger;
+			if ( VO_airServRepair || VO_airServRefuel || VO_airServRearm ) then {VO_isServicesOkay = true} else {systemChat format ["%1 fn_VO_management.sqf > No AIR services set as TRUE!", VO_txtWarnHeader]};
+			if ( VO_airServRepair && count (VO_airRepairAssets + VO_airFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REPAIR assets configured!", VO_txtWarnHeader]};
+			if ( VO_airServRefuel && count (VO_airRefuelAssets + VO_airFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REFUEL assets configured!", VO_txtWarnHeader]};
+			if ( VO_airServRearm && count (VO_airRearmAssets + VO_airFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REARM assets configured!", VO_txtWarnHeader]}};
+		if VO_nauticDoctrine then {
+			//{ if (_x in (VO_nauFullAssets + VO_nauRepairAssets + VO_nauRefuelAssets + VO_nauRearmAssets)) exitWith {VO_hasNauRngChanger = true}} forEach VO_assetsRangeChanger;
+			if ( VO_nauServRepair || VO_nauServRefuel || VO_nauServRearm ) then {VO_isServicesOkay = true} else {systemChat format ["%1 fn_VO_management.sqf > No NAUTIC services set as TRUE!", VO_txtWarnHeader]};
+			if ( VO_nauServRepair && count (VO_nauRepairAssets + VO_nauFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REPAIR assets configured!", VO_txtWarnHeader]};
+			if ( VO_nauServRefuel && count (VO_nauRefuelAssets + VO_nauFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REFUEL assets configured!", VO_txtWarnHeader]};
+			if ( VO_nauServRearm && count (VO_nauRearmAssets + VO_nauFullAssets) isEqualTo 0 ) then {systemChat format ["%1 fn_VO_management.sqf > No AIR REARM assets configured!", VO_txtWarnHeader]}};
+	} else {systemChat format ["%1 fn_VO_management.sqf > Vehicle Overhauling script is NOT running!", VO_txtWarnHeader]};
+	// Broadcasting public variables:
+	publicVariable "VO_isOn"; publicVariable "VO_debug_isOn"; publicVariable "VO_txtDebugHeader"; publicVariable "VO_txtWarnHeader"; publicVariable "VO_prefix"; publicVariable "VO_spacer"; publicVariable "VO_isReporting"; publicVariable "VO_dronesNeedHuman"; publicVariable "VO_groundDoctrine"; publicVariable "VO_grdServRepair"; publicVariable "VO_grdServRefuel"; publicVariable "VO_grdServRearm"; publicVariable "VO_grdServFull"; publicVariable "VO_grdServiceRange"; publicVariable "VO_grdCooldown"; publicVariable "VO_airDoctrine"; publicVariable "VO_airServRepair"; publicVariable "VO_airServRefuel"; publicVariable "VO_airServRearm"; publicVariable "VO_airServFull"; publicVariable "VO_airServiceRange"; publicVariable "VO_airCooldown"; publicVariable "VO_nauticDoctrine"; publicVariable "VO_nauServRepair"; publicVariable "VO_nauServRefuel"; publicVariable "VO_nauServRearm"; publicVariable "VO_nauServFull"; publicVariable "VO_nauServiceRange"; publicVariable "VO_nauCooldown"; publicVariable "VO_grdFullAssets"; publicVariable "VO_grdRepairAssets"; publicVariable "VO_grdRefuelAssets"; publicVariable "VO_grdRearmAssets"; publicVariable "VO_airFullAssets"; publicVariable "VO_airRepairAssets"; publicVariable "VO_airRefuelAssets"; publicVariable "VO_airRearmAssets"; publicVariable "VO_airParkingHelperAssets"; publicVariable "VO_nauFullAssets"; publicVariable "VO_nauRepairAssets"; publicVariable "VO_nauRefuelAssets"; publicVariable "VO_nauRearmAssets"; publicVariable "VO_grdVehicleTypes"; publicVariable "VO_airVehicleTypes"; publicVariable "VO_nauVehicleTypes"; publicVariable "VO_assetsRangeChanger"; publicVariable "VO_hasAirRngChanger"; publicVariable "VO_minRefuelService"; publicVariable "VO_isACErun"; publicVariable "VO_grdCyclesDone"; publicVariable "VO_airCyclesDone"; publicVariable "VO_nauCyclesDone"; publicVariable "VO_grdStationsAmount"; publicVariable "VO_airStationsAmount"; publicVariable "VO_nauStationsAmount"; publicVariable "VO_isStationsOkay"; publicVariable "VO_isServicesOkay"; publicVariable "VO_minRepairService";
