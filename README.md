@@ -88,6 +88,7 @@ _
 ## Changelog
 
 **v2.5 - Dec 7th 2024**
+- Fixed the "Error Undefined variable" in dedicated servers. Some publicVariables declarations were missing;
 - Added support for CDLC Western Sahara fuel, ammo, and repair assets;
 - Added support for CDLC Reaction Forces fuel, ammo, and repair assets;
 - Added support for CDLC Expeditionary Forces fuel, ammo, and repair assets;
