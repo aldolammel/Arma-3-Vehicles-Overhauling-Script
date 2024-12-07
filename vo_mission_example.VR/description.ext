@@ -1,0 +1,45 @@
+// MISSION CONFIGS
+class Header 
+{
+	gameType 			= Sandbox; 	
+	minPlayers			= 1;		
+	maxPlayers			= 3;
+};
+
+	// About
+	onLoadName 			= "VEHICLES OVERHAULING";
+	author 				= "thy"; 						
+	overviewPicture 	= "images\thumb.jpg"; 			
+	onLoadMission 		= "VO is a script that provides a system of repairing, refueling, and rearming vehicles by proximity. The services are divided by doctrine: Ground, Air, and Nautical."; 
+
+	// Gameplay
+	joinUnassigned 		= 0;
+	respawnButton 		= 0;
+	respawnDialog 		= 0;
+	debriefing 			= 0;
+	saving 				= 0;
+	enableDebugConsole 	= 1;
+	
+	// Performance
+	DisabledAI				= 1;
+	corpseManagerMode 		= 1;
+	corpseLimit 			= 30;
+	corpseRemovalMinTime	= 1200;
+	corpseRemovalMaxTime 	= 3600;
+	wreckManagerMode 		= 1;
+	wreckLimit 				= 5;
+	wreckRemovalMinTime 	= 1200;
+	wreckRemovalMaxTime 	= 3600;
+
+// CBA MOD
+cba_settings_hasSettingsFile = 0;
+
+
+// - - - - - - - - - EVERYTHING ABOVE IS NOT NEEDED FOR THIS SCRIPT WORKS - - - - - - - - -
+// - - - - - - - - - - - TAKE ONLY THESE LINES BELOW FOR YOUR MISSION - - - - - - - - - - -
+
+class cfgFunctions 
+{
+	// VEHICLES OVERHAULING: REPAIR, REARM, REFUEL
+	#include "vehiclesOverhauling\THY_VO_functions.hpp"
+};
