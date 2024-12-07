@@ -1,6 +1,6 @@
 // VO v2.5
 // File: your_mission\vehiclesOverhauling\THY_VO_functions.hpp
-// Documentation: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
+// Documentation: https://github.com/aldolammel/Arma-3-Vehicles-Overhauling-Script/blob/main/_VO_Script_Documentation.pdf
 // by thy (@aldolammel)
 
 class THY_VO_functions {

@@ -3,7 +3,9 @@
 
 Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repairing, refueling, and rearming vehicles by proximity and with any asset of your choice. Also, the services are divided by doctrine: Ground, Air, and Nautical. Each doctrine and even service is easily turned Off or On, according to the editor's needs. If needed, the editor can allow repairing just for ground vehicles while unavailable for air ones, for example. Triggering or code via Eden Editor is needless. VO is configured through only one file, prioritizing implementation simplicity and quick change management that the mission editor might want.
 
+
 <img src="vo_mission_example.VR/images/thumb.jpg" />
+
 
 **What to expect from VO script**
 
@@ -24,7 +26,7 @@ _
 
 Video demo: https://www.youtube.com/watch?v=9wAF2JSfV14
 
-Doc: https://docs.google.com/document/d/1l0MGrLNk6DXZdtq41brhtQLgSxpgPQ4hOj_5fm_KaI8/edit?usp=sharing
+Doc: https://github.com/aldolammel/Arma-3-Vehicles-Overhauling-Script/blob/main/_VO_Script_Documentation.pdf
 
 _
 
@@ -90,6 +92,7 @@ _
 - Added support for CDLC Reaction Forces fuel, ammo, and repair assets;
 - Added support for CDLC Expeditionary Forces fuel, ammo, and repair assets;
 - Performance improvements;
+- The 'fn_VO_paremeters.sqf' file was renamed to 'fn_VO_management.sqf';
 - New structure of folders to make the installation easier;
 - Documentation updated.
 

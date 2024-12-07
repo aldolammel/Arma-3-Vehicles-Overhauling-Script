@@ -1,6 +1,6 @@
 // VO v2.5
 // File: your_mission\vehiclesOverhauling\fn_VO_coreNau.sqf
-
+// Documentation: https://github.com/aldolammel/Arma-3-Vehicles-Overhauling-Script/blob/main/_VO_Script_Documentation.pdf
 // by thy (@aldolammel)
 
 // Only on the server, you dont want all players checking all players:
