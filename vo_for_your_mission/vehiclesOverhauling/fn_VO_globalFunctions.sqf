@@ -43,66 +43,70 @@ THY_fnc_VO_debugMonitor = {
 	format [
 		"\n" +
 		"\n--- VO DEBUG MONITOR ---\n" +
-		"\n%21." +
-		"\n%22\n" +
+		"\n%1." +
+		"\n%2\n" +
 		"\n- - - YOU'RE BY - - -" +
-		"\n%1" +
-		"\n%28" +
-		"\n%24\n" +
-		"\n- - - YOUR CURRENT STATION - - -\n" +
-		"%20\nBusy with: %23\n" +
+		"\n%3" +
+		"\n%4" +
+		"\n%5" +
+		// "\n- - - YOUR CURRENT STATION - - -\n" +
+		// "%20" +
+		// "\nBusy with: %23\n" +
 		"\n- - - GROUND - - -" +
-		"\n%2" +
-		"\nAmount stations= %25" +
-		"\nAction range= %3m" +
-		"\nRepairing = %4" +
-		"\nRefueling = %5" +
-		"\nRearming = %6" +
-		"\nGround while-cycles done: %17x" +
-		"\n\n- - - AIR - - -" +
-		"\n%7" +
-		"\nAmount stations= %26" +
-		"\nAction range = %8m" +
+		"\n%6" +
+		"\nAmount stations= %7" +
+		"\nAction range= %8m" +
 		"\nRepairing = %9" +
 		"\nRefueling = %10" +
 		"\nRearming = %11" +
-		"\nAir while-cycles done: %18x" +
+		"\nGround while-cycles done: %12x" +
+		"\n\n- - - AIR - - -" +
+		"\n%13" +
+		"\nAmount stations= %14" +
+		"\nAction range = %15m" +
+		"\nRepairing = %16" +
+		"\nRefueling = %17" +
+		"\nRearming = %18" +
+		"\nAir while-cycles done: %19x" +
 		"\n\n- - - NAUTICAL - - -" +
-		"\n%12\nAmount stations= %27" +
-		"\nAction range = %13m" +
-		"\nRepairing = %14" +
-		"\nRefueling = %15" +
-		"\nRearming = %16" +
-		"\nNautic while-cycles done: %19x" +
+		"\n%20" +
+		"\nAmount stations= %21" +
+		"\nAction range = %22m" +
+		"\nRepairing = %23" +
+		"\nRefueling = %24" +
+		"\nRearming = %25" +
+		"\nNautic while-cycles done: %26x" +
 		"\n\n",
+		VO_debug_ACE,
+		VO_debug_ACE_vehDamage,
 		_vehCategory,
+		if ((_vehCategory # 0) != "Soldier") then {typeOf (vehicle player)} else {"on foot"},
+		if (VO_nauticDoctrine && (_vehCategory # 0) != "Soldier" ) then {format ["Float on water = %1", [vehicle player] call THY_fnc_VO_isAmphibious]} else {""},
+
 		VO_groundDoctrine,
+		if VO_groundDoctrine then {VO_grdStationsAmount} else {""},
 		VO_grdServiceRange,
 		VO_grdServRepair,
 		VO_grdServRefuel,
 		VO_grdServRearm,
+		VO_grdCyclesDone,
+
 		VO_airDoctrine,
+		if VO_airDoctrine then {VO_airStationsAmount} else {""},
 		VO_airServiceRange,
 		VO_airServRepair,
 		VO_airServRefuel,
 		VO_airServRearm,
+		VO_airCyclesDone,
+
 		VO_nauticDoctrine,
+		if VO_nauticDoctrine then {VO_nauStationsAmount} else {""},
 		VO_nauServiceRange,
 		VO_nauServRepair,
 		VO_nauServRefuel,
 		VO_nauServRearm,
-		VO_grdCyclesDone,
-		VO_airCyclesDone,
-		VO_nauCyclesDone,
-		"Soon/WIP", 
-		VO_debug_ACE, 
-		VO_debug_ACE_vehDamage, 
-		"Soon/WIP", 
-		if (VO_nauticDoctrine && (_vehCategory # 0) != "Soldier" ) then {format ["Float on water = %1", [vehicle player] call THY_fnc_VO_isAmphibious]} else {""},
-		if VO_groundDoctrine then {VO_grdStationsAmount}, 
-		if VO_airDoctrine then {VO_airStationsAmount}, 
-		if VO_nauticDoctrine then {VO_nauStationsAmount}, 
-		if ((_vehCategory # 0) != "Soldier") then {typeOf (vehicle player)} else {"on foot"}
+		VO_nauCyclesDone
+
 	] remoteExec ["hintSilent", player];
 
 	true
@@ -294,7 +298,7 @@ THY_fnc_VO_playerVehicles = {
 
 	// Handling Errors:
 	if (_player isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_playerVehicles: needs a player as parameter."; sleep 15}; _playerVehList  /* Returning. */};
-	if (count _allowedVehTypes isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_playerVehicles: check if fn_VO_parameters.sqf has the default list of recognized vehicles by doctrine."; sleep 15}; _playerVehList  /* Returning. */};
+	if (count _allowedVehTypes isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_playerVehicles: check if fn_VO_management.sqf has the default list of recognized vehicles by doctrine."; sleep 15}; _playerVehList  /* Returning. */};
 
 	// if player in a vehicle, it's avoid to search for new vehicles around:
 	if (!isNull objectParent _player) exitWith {
@@ -633,7 +637,7 @@ THY_fnc_VO_soundEffect = {
 		};
 	};
 
-	sleep 10;  // to give time for the sfx if the Editor sets a lower cooldown service in fn_VO_parameters.sqf.
+	sleep 10;  // to give time for the sfx if the Editor sets a lower cooldown service in fn_VO_management.sqf.
 
 	true
 };
@@ -676,7 +680,7 @@ THY_fnc_VO_servRepair = {
 	// Handling Errors:
 	if (_player isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRepair: needs a player as parameter."; sleep 15}};
 	if (_veh isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRepair: needs a vehicle as parameter."; sleep 15}};
-	if (count _statAssets isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRepair: no assets set up as repair station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
+	if (count _statAssets isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRepair: no assets set up as repair station (or full service) for this doctrine in fn_VO_management.sqf."; sleep 15}};
 
 	{ // forEach of _statAssets starts...
 		// initial values:
@@ -734,7 +738,7 @@ THY_fnc_VO_servRefuel = {
 	// Handling Errors:
 	if (_player isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: needs a player as parameter."; sleep 15}};
 	if (_veh isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: needs a vehicle as parameter."; sleep 15}};
-	if (count _statAssets isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: no assets set up as refuel station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
+	if (count _statAssets isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRefuel: no assets set up as refuel station (or full service) for this doctrine in fn_VO_management.sqf."; sleep 15}};
 
 	{ // forEach of _statAssets starts...
 		// initial values:
@@ -788,7 +792,7 @@ THY_fnc_VO_servRearm = {
 	// Handling Errors:
 	if (_player isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRearm: needs a player as parameter."; sleep 15}};
 	if (_veh isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRearm: needs a vehicle as parameter."; sleep 15}};
-	if (count _statAssets isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRearm: no assets set up as rearm station (or full service) for this doctrine in fn_VO_parameters.sqf."; sleep 15}};
+	if (count _statAssets isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_servRearm: no assets set up as rearm station (or full service) for this doctrine in fn_VO_management.sqf."; sleep 15}};
 
 	{ // forEach of _statAssets starts...
 		// initial values:
@@ -838,14 +842,14 @@ THY_fnc_VO_servRearm = {
 
 
 THY_fnc_VO_parkingHelper = {
-	// This function: as it's not possible to maneuver planes inside hangars with a single entrance, this function provides a automatic help to reposition the player plane inside some buildings pre-configured in "fn_VO_parameters.sqf" file.
+	// This function: as it's not possible to maneuver planes inside hangars with a single entrance, this function provides a automatic help to reposition the player plane inside some buildings pre-configured in "fn_VO_management.sqf" file.
 	// Returns nothing.
 	
 	params [["_veh", objNull], ["_assetsToHelp", []]];
 
 	// Handling Errors:
 	if (_veh isEqualTo objNull) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_parkingHelper: needs a vehicle as parameter."; sleep 15}};
-	if (count _assetsToHelp isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_parkingHelper: check fn_VO_parameters.sqf > VO_airParkingHelperAssets list (looks empty)."; sleep 15}};
+	if (count _assetsToHelp isEqualTo 0) exitWith {if VO_debug_isOn then {systemChat "VO ERROR > THY_fnc_VO_parkingHelper: check fn_VO_management.sqf > VO_airParkingHelperAssets list (looks empty)."; sleep 15}};
 
 	// Parking plane helper:
 	if ( (_veh isKindOf "Plane") && (!isEngineOn _veh) && (speed _veh isEqualTo 0) ) then 

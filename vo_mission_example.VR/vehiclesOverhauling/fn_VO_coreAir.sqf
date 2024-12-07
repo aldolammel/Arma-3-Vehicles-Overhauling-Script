@@ -4,7 +4,7 @@
 // by thy (@aldolammel)
 
 // Only on the server, you dont want all players checking all players:
-if ( !VO_airDoctrine || !isServer ) exitWith {};
+if ( !isServer || !VO_isOn || !VO_airDoctrine ) exitWith {};
 
 // AIR SERVICES CORE / BE CAREFUL BELOW:
 [] spawn {
@@ -24,11 +24,11 @@ if ( !VO_airDoctrine || !isServer ) exitWith {};
 	_allAssets = [];
 	_parkingHelperAssets = [];
 	
-	// if the services are allowed, find out only the assets listed (fn_VO_parameters.sqf) and present in the mission:
-	if ( VO_airServFull ) then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_airFullAssets };
-	if ( VO_airServRepair ) then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_airRepairAssets };
-	if ( VO_airServRefuel ) then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_airRefuelAssets };
-	if ( VO_airServRearm ) then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_airRearmAssets };
+	// if the services are allowed, find out only the assets listed (fn_VO_management.sqf) and present in the mission:
+	if VO_airServFull then { { _fullAssets = _fullAssets + allMissionObjects _x } forEach VO_airFullAssets };
+	if VO_airServRepair then { { _repAssets = _repAssets + allMissionObjects _x } forEach VO_airRepairAssets };
+	if VO_airServRefuel then { { _refAssets = _refAssets + allMissionObjects _x } forEach VO_airRefuelAssets };
+	if VO_airServRearm then { { _reaAssets = _reaAssets + allMissionObjects _x } forEach VO_airRearmAssets };
 	// loading the main station's array without duplicated content:
 	{_fullAndRepAssets pushBackUnique _x} forEach _repAssets + _fullAssets;	
 	{_fullAndRefAssets pushBackUnique _x} forEach _refAssets + _fullAssets;
@@ -48,9 +48,8 @@ if ( !VO_airDoctrine || !isServer ) exitWith {};
 	// Initial air work values:
 	_isServProgrs = false;
 
-	// Checking if fn_VO_parameters.sqf has been configured to start the looping:
-	while { VO_isStationsOkay AND VO_isServicesOkay } do 
-	{
+	// Checking if fn_VO_management.sqf has been configured to start the looping:
+	while { VO_isStationsOkay && VO_isServicesOkay } do {
 		_players = call THY_fnc_VO_playersAlive;
 		
 		{ // _players forEach starts...
