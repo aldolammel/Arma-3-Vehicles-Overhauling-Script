@@ -9,15 +9,16 @@ Vehicles Overhauling (VO) is a free Arma 3 script that provides a system of repa
 
 **What to expect from VO script**
 
-- Define what vehicle type have automatically access to ground, air or nautical services (rearm, repair, refuel);
-- Define what service each station (asset) will provide: repair, refuel or rearm or all of them (full service);
-- Every object/asset on Eden Editor can be traceable as station automatically, it's up to the mission-editor;
-- Once defined which assets are stations, on Eden you just drag and drop the asset and the script will track them;
-- All repair, refuel, and rearm Arma 3 and its DLCs assets are already tracked;
-- All repair, refuel, and rearm RHS and CUP assets are already tracked;
+- Set what vehicle type has automatic access to ground, air, or nautical services (rearm, repair, refuel);
+- Set what service each station (asset) will provide: repair, refuel, or rearm or all of them (full service);
+- Every object/asset on Eden Editor can be traceable as a station automatically, it's up to the mission-editor;
+- Once configured which assets are stations, on Eden you just drag and drop the asset and the script will track them;
+- All repair, refueling, and rearming of Arma 3 and its DLCs and CDLCs assets are already tracked;
+- All repair, refueling, and rearming of RHS and CUP assets are already tracked as well;
 - 100% compatible with CBA+ACE.
-- No code or triggers is needed on Eden Editor;
-- Just one file to set easely your mission needs: _fn_VO_parameters.sqf_;
+- No code or triggers are needed on Eden Editor;
+- Just one file to set your mission easily: _fn_VO_management.sqf_;
+- A parking-helper system for planes/jets, no matter where or what is the plane station (including carriers);
 - Script working as gold on hosted and dedicated servers;
 
 _
